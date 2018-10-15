@@ -1,0 +1,12 @@
+<procedure name='SpecializationCenter'>
+
+  <action name='Insert'>
+    Insert into SpecializationCenter
+    (center_id , specialization_id )
+    output inserted.Id
+    values
+    (@center_id,@specialization_id);
+  </action>
+
+
+</procedure>

@@ -1,0 +1,19 @@
+<procedure name='Branch'>
+
+  <action name='Insert'>
+    Insert into Branch
+    (center_id , name , address)
+    output inserted.Id
+    values
+    (@center_id,@name ,@address);
+  </action>
+
+  <action name='UpdateLocation'>
+    Update Branch set
+    lat=@lat ,
+    lng = @lng  
+    where id=@id;
+  </action>
+
+
+</procedure>

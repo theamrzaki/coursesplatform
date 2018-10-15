@@ -1,0 +1,12 @@
+<procedure name='User'>
+
+  <action name='Insert'>
+    Insert into User
+    (username , password , type )
+    output inserted.Id
+    values
+    (@username,@password,@type);
+  </action>
+
+
+</procedure>

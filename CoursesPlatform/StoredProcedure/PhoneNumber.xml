@@ -1,0 +1,10 @@
+<procedure name='PhoneNumber'>
+
+	<action name='Insert'>
+		Insert into PhoneNumber
+		(fk_id,table_type , phone_number , phone_type )
+		output inserted.Id
+		values
+		(@fk_id,@table_type ,@phone_number , @phone_type);
+	</action>
+</procedure>

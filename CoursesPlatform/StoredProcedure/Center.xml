@@ -1,6 +1,6 @@
 ﻿<procedure name='Center'>
 
-  <declares>
+ <!-- <declares>
     @Id integer= Null;
     @Name nvarchar(50)= Null;
     @Version_ID integer = Null;
@@ -9,16 +9,25 @@
     @Vacation_Version_ID       integer = Null;
     @Mission_Version_ID        integer = Null;
     @Wages_Version_ID          integer = Null;
-  </declares>
+  </declares> -->
 
 
-  <action name='Insert'>
-    Insert into Companies
-      (Name,ArrivalTime_Version_ID , Vacation_Version_ID , Mission_Version_ID , Wages_Version_ID ,Installments_Version_ID )
+  <action name='InsertPrimary'>
+    Insert into Center
+      (name,about , email , website )
       output inserted.Id
       values
-      (@Name,@ArrivalTime_Version_ID ,@Vacation_Version_ID , @Mission_Version_ID ,@Wages_Version_ID ,@Installments_Version_ID );
+      (@name,@about ,@email , @website);
  
+  </action>
+  
+  <action name='UpdateSocialMedia'>
+    Update Center set 
+      fb_page=@fb_page ,
+      instagram_page = @instagram_page  ,
+      twitter_page	= @twitter_page	   ,
+      linked_in_page		= @linked_in_page	    
+      where id=@id;
   </action>
   
   

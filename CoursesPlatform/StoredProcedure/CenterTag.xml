@@ -1,0 +1,12 @@
+<procedure name='CenterTag'>
+
+	<action name='Insert'>
+		Insert into CenterTag
+		(center_id , name )
+		output inserted.Id
+		values
+		(@center_id,@name);
+	</action>
+
+
+</procedure>

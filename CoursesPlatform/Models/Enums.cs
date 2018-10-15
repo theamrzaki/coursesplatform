@@ -7,6 +7,27 @@ namespace HRsystem.Models
 {
     public class Enums
     {
+        #region Courses_Platform
+        public enum PhonesTableType
+        {
+            Center = 0,
+            Branch = 1
+        }
+
+        public enum PhonesTypes
+        {
+            Mobile = 0,
+            Home = 1,
+            Work = 2
+        }
+
+        public enum UsersTypes
+        {
+            CenterAdmin = 0,
+            BranchAdmin = 1
+        }
+        #endregion
+
         #region Installment
         #region Installments Object
         public enum Installment_State_enum
