@@ -50,15 +50,19 @@
             <div class="tab" id="tab_2">
                 <form action="../../index.html" method="post" style="margin-top:20px">
                     <div class="form-group has-feedback">
-                        <input type="email" class="form-control" placeholder="FB page">
+                        <input type="text" id="fb_page" class="form-control" placeholder="FB page">
                         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
-                        <input type="email" class="form-control" placeholder="Twitter Page">
+                        <input type="text" id="twitter_page" class="form-control" placeholder="Twitter Page">
                         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
-                        <input type="email" class="form-control" placeholder="LinkedIn">
+                        <input type="text" id="linked_in_page" class="form-control" placeholder="LinkedIn">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="text" id="instagram_page" class="form-control" placeholder="instagram">
                         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     </div>
                 </form>
@@ -66,15 +70,15 @@
             <div class="tab" id="tab_3">
                 <form action="../../index.html" method="post" style="margin-top:20px">
                     <div class="form-group has-feedback">
-                        <input type="text" class="form-control" placeholder="Name">
+                        <input type="text" id="name" class="form-control" placeholder="Name">
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
-                        <input type="text" class="form-control" placeholder="Address">
+                        <input type="text" id="address" class="form-control" placeholder="Address">
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
-                        <input type="text" class="form-control" placeholder="PhoneNo.">
+                        <input type="text" id="phoneno" class="form-control" placeholder="PhoneNo.">
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     </div>
                 </form>
@@ -191,7 +195,7 @@
             </style>
             <div style="overflow:auto;">
                 <div style="float:right;">
-                    <button type="button" id="prevBtn" class="btn btn-primary btn-block btn-flat" onclick="nextPrev(-1)">Previous</button>
+                    @*<button style="display:none" type="button" id="prevBtn" class="btn btn-primary btn-block btn-flat" onclick="nextPrev(-1)">Previous</button>*@
                     <button type="button" id="nextBtn" class="btn btn-primary btn-block btn-flat" onclick="nextPrev(1)">Next</button>
                 </div>
             </div>
@@ -226,6 +230,7 @@
                     fixStepIndicator(n)
                 }
                 var inputs = {};
+                var step = 1;
                 function nextPrev(n) {
 
                     // This function will figure out which tab to display
@@ -240,7 +245,7 @@
                         type: "POST",
                         url: '@Url.Action("step")',
                         data: {
-                            'step_number': n,
+                            'step_number': step,
                             'content': dataToSend
                         },
                         dataType: 'json',
@@ -264,10 +269,11 @@
                         }
                     });
 
-
+                    step += 1
                 }
                 
                 function validateForm() {
+                    inputs = {}
                     // This function deals with validation of the form fields
                     var x, y, i, valid = true;
                     x = document.getElementsByClassName("tab");

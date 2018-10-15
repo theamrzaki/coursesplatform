@@ -29,7 +29,26 @@ namespace CoursesPlatform.Controllers
                     Center center = (Center)deserializer.ReadObject(ms);
                 }
             }
-           
+
+            else if (step_number == "2")
+            {
+                using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(content)))
+                {
+                    // Deserialization from JSON  
+                    DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(Center));
+                    Center center = (Center)deserializer.ReadObject(ms);
+                }
+            }
+
+            else if (step_number == "3")
+            {
+                using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(content)))
+                {
+                    // Deserialization from JSON  
+                    DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(Branch));
+                    Branch center = (Branch)deserializer.ReadObject(ms);
+                }
+            }
 
             return Json("chamara", JsonRequestBehavior.AllowGet);
         }

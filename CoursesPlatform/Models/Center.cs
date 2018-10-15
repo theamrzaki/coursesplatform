@@ -12,6 +12,11 @@ namespace CoursesPlatform.Models
         public string email { get; set; }
         public string website { get; set; }
         public string phoneno { get; set; }
+        
+        public string fb_page { get; set; }
+        public string twitter_page { get; set; }
+        public string linked_in_page { get; set; }
+        public string instagram_page { get; set; }
 
     }
 }
