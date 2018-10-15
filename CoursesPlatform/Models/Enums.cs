@@ -26,6 +26,15 @@ namespace HRsystem.Models
             CenterAdmin = 0,
             BranchAdmin = 1
         }
+
+        public enum RegistirationsSteps
+        {
+            Step1 = 0,
+            Step2 = 1,
+            Step3 = 2,
+            Step4 = 3,
+            Completed = 4
+        }
         #endregion
 
         #region Installment
