@@ -1,0 +1,6 @@
+<procedure name='Global_Helpers'><action name='GetCities'    
+>    
+ select * from Cities;    
+</action>    
+
+</procedure>

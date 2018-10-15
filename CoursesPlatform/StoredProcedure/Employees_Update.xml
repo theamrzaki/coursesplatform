@@ -1,0 +1,95 @@
+<procedure name='Employees_Update'>
+
+  <declares>
+    @National_ID                          nvarchar(50) = null;
+    @Birth_Location                       nvarchar(50) = null;
+    @CV                                   nvarchar(50) = null;
+    @National_ID_Image                    nvarchar(50) = null;
+    @Birth_Certificate                    nvarchar(50) = null;
+    @Social_Insurance_Certificate         nvarchar(50) = null;
+    @Feesh                                nvarchar(50) = null;
+    @S6                                   nvarchar(50) = null;
+    @Ka3b_3aml                            nvarchar(50) = null;
+    @Tagneed                              nvarchar(50) = null;
+    @S1                                   nvarchar(50) = null;
+    @S1_2                                 nvarchar(50) = null;
+    @Clearance_form                       nvarchar(50) = null;
+    @User_Name                            nvarchar(50) = null;
+  </declares>
+  
+  <action name='Employees_Update'>
+  
+Update Employees set 
+ Name						  =@Name						  ,
+ PhoneNo					 =@PhoneNo					  ,
+ 
+ User_Name= @User_Name ,
+ Email = @Email ,
+
+ MobileNo					 =@MobileNo					  ,
+ Address					 =@Address					  ,
+ City						 =@City						  ,
+ Hire_Date					=@Hire_Date					,
+
+ National_ID				 =@National_ID				  ,
+ National_id_expire_date = @National_id_expire_date,
+ Job_ID 					 =@Job_ID 					  ,
+
+ Company_ID_Emp =			@Company_ID 					  ,
+ Department_ID 					 =@Department_ID					  ,
+
+ Sex						 =@Sex						  ,
+ Religion					= @Religion,
+
+ casual_leave_days			  = @casual_leave_days,
+ annual_leave_days			  = @annual_leave_days,
+ casual_leave_days_additional = @casual_leave_days_additional,
+ annual_leave_days_additional = @annual_leave_days_additional,
+
+ Birth_Date					=@Birth_Date					,
+ Birth_Location				=@Birth_Location				,
+
+ Actual_Salary   			 =@Actual_Salary   			  ,
+ Taxtable_Salary			 =@Taxtable_Salary			  ,
+ Variable_Salary			 = @Variable_Salary,
+ Other_Salary				 = @Other_Salary,
+
+ Education					=@Education					,
+ Bachlor_Degree_Date		 =@Bachlor_Degree_Date		  ,
+ Courses					 =@Courses					  ,
+ Martial_Status				=@Martial_Status				,
+ Military_Status			 =@Military_Status			  ,
+ 
+ CV							=@CV							,
+ National_ID_Image			=@National_ID_Image			,
+ Birth_Certificate			=@Birth_Certificate			,
+ 
+  Feesh			=@Feesh		,
+  S6			=@S6		,
+  Ka3b_3aml		=@Ka3b_3aml	,
+  Tagneed		=@Tagneed	,
+  S1			=@S1
+ where Id=@Id;    
+ </action>
+
+  <action name="Update_Files" type="optional">
+    UPDATE Employees
+   SET 
+       [National_ID]				            = Coalesce(@National_ID					          ,National_ID				          )
+      ,[Birth_Location]				          = Coalesce(@Birth_Location				        ,Birth_Location			          )
+      ,[CV]							                = Coalesce(@CV							              ,CV						                )
+      ,[National_ID_Image]			        = Coalesce(@National_ID_Image			        ,National_ID_Image			      )
+      ,[Birth_Certificate]			        = Coalesce(@Birth_Certificate			        ,Birth_Certificate			      )
+      ,[Social_Insurance_Certificate]   = Coalesce(@Social_Insurance_Certificate  ,Social_Insurance_Certificate )
+      ,[Feesh]							            = Coalesce(@Feesh						              ,Feesh						            )
+      ,[S6]								              = Coalesce(@S6							              ,S6						                )
+      ,[Ka3b_3aml]						          = Coalesce(@Ka3b_3aml					            ,Ka3b_3aml					          )
+      ,[Tagneed]						            = Coalesce(@Tagneed						            ,Tagneed					            )
+      ,[S1]								              = Coalesce(@S1							              ,S1						                )
+      ,[S1_2]							              = Coalesce(@S1_2					                ,S1_2						              )
+      ,[Clearance_form]					        = Coalesce(@Clearance_form				        ,Clearance_form	              )
+     
+ WHERE 
+ Employees.User_Name = @User_Name
+  </action>
+</procedure>

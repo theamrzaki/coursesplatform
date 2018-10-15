@@ -1,0 +1,79 @@
+<procedure name='Bonus_Deduction_InsertUpdateDeleteSelect'>
+
+  <declares>
+    @Id					 integer = null;
+    @Emp_ID 			 integer = null;
+    @Emp_ID_Issue		 integer = null;
+    @Workflow_ID		 integer = null;
+    @Name				 NVARCHAR (30)  = NULL;
+    @Reason				 NVARCHAR (200) = NULL;
+    @Value				 FLOAT (53)     = NULL;
+    @Bonus_Deduction_Bit BIT            = NULL;
+    @Bulk_Percentage_Bit INT            = NULL;
+    @On_Which_Salary	 INT            = NULL;
+    @Month 			 INT            = NULL;
+    @Status				 INT            = NULL;
+    @Date_Of_Issue		 DATETIME       = NULL;
+
+  </declares>
+  
+  <action name='Insert'    
+>    
+ Insert into Bonus_Deduction
+ (Emp_ID				,
+  Emp_ID_Issue		    ,
+  Workflow_ID		    ,
+  Name				    ,
+  Reason				,
+  Value				    ,
+  Bonus_Deduction_Bit   ,
+  Bulk_Percentage_Bit   ,
+  On_Which_Salary	    ,
+  Month				    ,
+  Status				,
+  Date_Of_Issue		    ) 
+  output inserted.Id
+ values
+ (@Emp_ID				,
+  @Emp_ID_Issue		    ,
+  @Workflow_ID		    ,
+  @Name				    ,
+  @Reason				,
+  @Value				,
+  @Bonus_Deduction_Bit  ,
+  @Bulk_Percentage_Bit  ,
+  @On_Which_Salary	    ,
+  @Month				,
+  @Status,--1	--pending  or assign if hr
+  GETDATE()		    );    
+</action>    
+
+<action name='Select'     type='optional'
+>    
+	select * from Bonus_Deduction where Emp_ID=@Emp_ID And
+	(@Month	 IS NULL OR		( Month 	= @Month))
+</action>    
+
+<action name='Selectid'    
+>    
+	select * from Bonus_Deduction where Id=@Id
+</action>  
+ 
+<action name='SelectAll'    type='optional'
+>    
+	select * from Bonus_Deduction where 
+	@Month	 IS NULL OR		( Month 	= @Month)
+ 
+</action>  
+ 
+
+<action name='FinalReply'    
+>    
+ Update Bonus_Deduction 
+ set 
+	 Status=@Status	 ,
+	 Date_Of_Change_State=GETDATE()
+ where Id=@Id;    
+</action>
+
+</procedure>

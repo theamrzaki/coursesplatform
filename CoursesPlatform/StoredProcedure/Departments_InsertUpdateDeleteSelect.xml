@@ -1,0 +1,299 @@
+<procedure name='Departments_InsertUpdateDeleteSelect'>
+
+  <declares>--still not uodated to have ubsatllments version id
+    @Id integer = NULL;
+    @Name nvarchar(50) = NULL;
+    @Manager_ID nvarchar(50) = NULL;
+    @Company_ID nvarchar(50) = NULL;
+    @Version_ID nvarchar(50) = NULL;
+
+    @ArrivalTime_Version_ID integer= NULL;
+    @Vacation_Version_ID integer= NULL;
+    @Mission_Version_ID  integer= NULL;
+    @Wages_Version_ID integer= NULL;
+
+    @WorkFlow_Vacation_Version_ID integer= NULL;
+    @WorkFlow_Mission_Version_ID integer= NULL;
+    @WorkFlow_Bonus_Deductions_Version_ID integer= NULL;
+  </declares>
+
+
+  <action name='Count'>
+    select count(Id)  from Departments
+  </action>
+  
+  <action name='Insert'    
+>
+    Insert into
+    Departments(Name,Manager_ID,Company_ID,ArrivalTime_Version_ID ,  Vacation_Version_ID ,  Mission_Version_ID ,  Wages_Version_ID ,Installments_Version_ID ,WorkFlow_Vacation_Version_ID , WorkFlow_Mission_Version_ID , WorkFlow_Bonus_Deductions_Version_ID   , WorkFlow_Installments_Version_ID)
+    values
+    (@Name,@Manager_ID,@Company_ID		  ,@ArrivalTime_Version_ID , @Vacation_Version_ID , @Mission_Version_ID , @Wages_Version_ID ,-1                        ,@WorkFlow_Vacation_Version_ID , @WorkFlow_Mission_Version_ID , @WorkFlow_Bonus_Deductions_Version_ID  ,@WorkFlow_Installments_Version_ID);
+
+  </action>    
+<action name='Update'    
+>    
+ Update Departments set 
+ Name=@Name , 
+ Manager_ID=@Manager_ID  ,
+ 
+ ArrivalTime_Version_ID = @ArrivalTime_Version_ID,
+ Vacation_Version_ID = @Vacation_Version_ID,
+ Mission_Version_ID = @Mission_Version_ID,
+ Wages_Version_ID = @Wages_Version_ID,
+
+ WorkFlow_Vacation_Version_ID = @WorkFlow_Vacation_Version_ID,
+ WorkFlow_Mission_Version_ID = @WorkFlow_Mission_Version_ID,
+ WorkFlow_Bonus_Deductions_Version_ID = @WorkFlow_Bonus_Deductions_Version_ID,
+ WorkFlow_Installments_Version_ID = @WorkFlow_Installments_Version_ID
+ 
+ where Id=@Id;    
+</action>  
+
+<action name='set_manager'    
+>    
+ Update Departments set Manager_ID=@Manager_ID where Id=@Id;    
+</action>  
+
+<action name='Delete'    
+>    
+ Delete Departments where Id=@Id;      
+</action>    
+<action name='Select'    
+>
+  Select
+  Departments.Id as 'DepId',
+  Departments.Name as 'DepName' ,
+
+  --Departments.Version_ID as 'DepVersion' ,
+  --Companies.Version_ID as 'CompVersion' ,
+
+  Departments.Company_ID as 'Company_ID' ,
+  Companies.Name as 'Company_Name',
+
+  Manager_ID as 'Manager_ID' ,
+  Employees.Name as 'Manager_Name' ,
+
+  Departments.ArrivalTime_Version_ID  ,
+  Departments.Vacation_Version_ID ,
+  Departments.Mission_Version_ID ,
+  Departments.Wages_Version_ID	,
+  Departments.Installments_Version_ID,
+
+  arrival.Name  as 'Arrival Version',
+  vacation.Name as 'Vacation Version',
+  mission.Name as 'Mission Version',
+  wages.Name	as 'Wages Version',
+  installments.Name	as 'Installments Version',
+
+  Companies.ArrivalTime_Version_ID  as   'Comp Arrival Version',
+  Companies.Vacation_Version_ID		as 	 'Comp Vacation Version',
+  Companies.Mission_Version_ID		as   'Comp Mission Version',
+  Companies.Wages_Version_ID		as 	 'Comp Wages Version',
+  Companies.Installments_Version_ID		as 	 'Comp installments Version',
+
+  WorkFlow_Vacation_Version_ID,
+  WorkFlow_Mission_Version_ID,
+  WorkFlow_Bonus_Deductions_Version_ID,
+  WorkFlow_Installments_Version_ID
+  from Departments
+
+  full join   SettingsVersion  as arrival on arrival.id =  Departments.ArrivalTime_Version_ID
+  full join   SettingsVersion  as vacation on vacation.id =  Departments.Vacation_Version_ID
+  full join   SettingsVersion  as mission on mission.id =  Departments.Mission_Version_ID
+  full join   SettingsVersion  as wages  on wages.id =  Departments.Wages_Version_ID
+  full join   SettingsVersion  as installments  on installments.id =  Departments.Installments_Version_ID
+
+  inner join   Companies on Companies.Id = Departments.Company_ID
+  inner join  Employees  on Employees.Id = Departments.Manager_ID
+</action>    
+
+
+<action name='Select_no_manager'    
+>
+  Select
+  Departments.Id as 'DepId',
+  Departments.Name as 'DepName' ,
+
+  --Departments.Version_ID as 'DepVersion' ,
+  --Companies.Version_ID as 'CompVersion' ,
+
+  Company_ID as 'Company_ID' ,
+  Companies.Name as 'Company_Name',
+
+  Departments.ArrivalTime_Version_ID  ,
+  Departments.Vacation_Version_ID ,
+  Departments.Mission_Version_ID ,
+  Departments.Wages_Version_ID	,
+  Departments.Installments_Version_ID,
+
+  arrival.Name  as 'Arrival Version',
+  vacation.Name as 'Vacation Version',
+  mission.Name as 'Mission Version',
+  wages.Name	as 'Wages Version',
+  installments.Name	as 'Installments Version',
+
+
+  Companies.ArrivalTime_Version_ID  as   'Comp Arrival Version',
+  Companies.Vacation_Version_ID		as 	 'Comp Vacation Version',
+  Companies.Mission_Version_ID		as   'Comp Mission Version',
+  Companies.Wages_Version_ID		as 	 'Comp Wages Version',
+  Companies.Installments_Version_ID		as 	 'Comp installments Version',
+
+  WorkFlow_Vacation_Version_ID,
+  WorkFlow_Mission_Version_ID,
+  WorkFlow_Bonus_Deductions_Version_ID,
+  WorkFlow_Installments_Version_ID
+
+  from Departments
+
+  full join   SettingsVersion  as arrival on arrival.id =  Departments.ArrivalTime_Version_ID
+  full join   SettingsVersion  as vacation on vacation.id =  Departments.Vacation_Version_ID
+  full join   SettingsVersion  as mission on mission.id =  Departments.Mission_Version_ID
+  full join   SettingsVersion  as wages  on wages.id =  Departments.Wages_Version_ID
+  full join   SettingsVersion  as installments  on installments.id =  Departments.Installments_Version_ID
+
+  inner join Companies on Companies.Id = Company_ID
+  where Manager_ID = 0;
+</action> 
+
+
+<action name='Specific'    
+>    
+ Select 
+   Departments.Id as 'DepId', 
+  Departments.Name as 'DepName' , 
+
+ --Departments.Version_ID as 'DepVersion' , 
+ --Companies.Version_ID as 'CompVersion' , 
+  
+  Departments.Company_ID as 'Company_ID' , 
+  Companies.Name as 'Company_Name', 
+  
+  Manager_ID as 'Manager_ID' , 
+  Employees.Name as 'Manager_Name' ,
+
+  Departments.ArrivalTime_Version_ID  ,
+  Departments.Vacation_Version_ID ,
+  Departments.Mission_Version_ID ,
+  Departments.Wages_Version_ID	,
+  Departments.Installments_Version_ID,
+
+  arrival.Name  as 'Arrival Version',
+  vacation.Name as 'Vacation Version',
+  mission.Name as 'Mission Version',
+  wages.Name	as 'Wages Version',
+  installments.Name	as 'Installments Version',
+
+
+  Companies.ArrivalTime_Version_ID  as   'Comp Arrival Version',
+  Companies.Vacation_Version_ID		as 	 'Comp Vacation Version',
+  Companies.Mission_Version_ID		as   'Comp Mission Version',
+  Companies.Wages_Version_ID		as 	 'Comp Wages Version',
+  Companies.Installments_Version_ID		as 	 'Comp installments Version',
+
+  WorkFlow_Vacation_Version_ID ,
+  WorkFlow_Mission_Version_ID,
+  WorkFlow_Bonus_Deductions_Version_ID,
+  WorkFlow_Installments_Version_ID
+
+  from Departments 
+
+  full join   SettingsVersion  as arrival on arrival.id =  Departments.ArrivalTime_Version_ID 
+  full join   SettingsVersion  as vacation on vacation.id =  Departments.Vacation_Version_ID 
+  full join   SettingsVersion  as mission on mission.id =  Departments.Mission_Version_ID 
+  full join   SettingsVersion  as wages  on wages.id =  Departments.Wages_Version_ID 
+  full join   SettingsVersion  as installments  on installments.id =  Departments.Installments_Version_ID
+
+  inner join   Companies on Companies.Id = Departments.Company_ID
+  inner join  Employees  on Employees.Id = Departments.Manager_ID   
+   where Departments.Id =  @Id;         
+</action> 
+
+<action name='Specific_no_manager'    
+>    
+ Select 
+  Departments.Id as 'DepId', 
+  Departments.Name as 'DepName' , 
+
+ --Departments.Version_ID as 'DepVersion' , 
+ --Companies.Version_ID as 'CompVersion' , 
+
+  Company_ID as 'Company_ID' , 
+  Companies.Name as 'Company_Name',
+
+  Departments.ArrivalTime_Version_ID  ,
+  Departments.Vacation_Version_ID ,
+  Departments.Mission_Version_ID ,
+  Departments.Wages_Version_ID	,
+  Departments.Installments_Version_ID,
+
+  arrival.Name  as 'Arrival Version',
+  vacation.Name as 'Vacation Version',
+  mission.Name as 'Mission Version',
+  wages.Name	as 'Wages Version',
+  installments.Name	as 'Installments Version',
+
+  Companies.ArrivalTime_Version_ID  as   'Comp Arrival Version',
+  Companies.Vacation_Version_ID		as 	 'Comp Vacation Version',
+  Companies.Mission_Version_ID		as   'Comp Mission Version',
+  Companies.Wages_Version_ID		as 	 'Comp Wages Version',
+  Companies.Installments_Version_ID		as 	 'Comp installments Version',
+
+  WorkFlow_Vacation_Version_ID,
+  WorkFlow_Mission_Version_ID,
+  WorkFlow_Bonus_Deductions_Version_ID,
+  WorkFlow_Installments_Version_ID
+
+  from Departments
+  
+  full join   SettingsVersion  as arrival on arrival.id =  Departments.ArrivalTime_Version_ID 
+  full join   SettingsVersion  as vacation on vacation.id =  Departments.Vacation_Version_ID 
+  full join   SettingsVersion  as mission on mission.id =  Departments.Mission_Version_ID 
+  full join   SettingsVersion  as wages  on wages.id =  Departments.Wages_Version_ID 
+  full join   SettingsVersion  as installments  on installments.id =  Departments.Installments_Version_ID
+
+  inner join   Companies on Companies.Id = Company_ID
+   where Departments.Id =  @Id;         
+</action> 
+
+
+
+
+
+<action name ='get_depts_by_compamny'
+>
+    Select  
+	Departments.Id as 'DepId',
+	Departments.Name  as 'DepName'
+	--Departments.Version_ID as 'DepVersion'
+
+	from Departments 
+	where  Departments.Company_ID = @Company_ID
+</action> 
+
+
+<action name ='get_emps_by_dept'
+>
+    Select  
+	Employees.Id as 'EmpID' , 
+	Employees.Name as 'EmpName',
+	Employees.Personal_ID_Arrival_Time as 'Personal_ID_Arrival_Time'
+   from Employees 
+			where  Employees.Department_ID = @Id
+</action> 
+
+<action name ='get_manager_of_dept'
+>
+	 Select Manager_ID  from Departments
+			where  Departments.Id = @Id
+</action> 
+
+<action name ='get_emps_by_comp'
+>
+	 Select Employees.Id as 'EmpID' , Employees.Name as 'EmpName'   from Employees
+			where  Employees.Company_ID_Emp = @Company_ID
+</action> 
+
+
+
+</procedure>

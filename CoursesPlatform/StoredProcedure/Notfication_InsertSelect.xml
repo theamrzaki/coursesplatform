@@ -1,0 +1,38 @@
+<procedure name='Notfication_InsertSelect'><action name='Insert'    
+>    
+ Insert into Notifications(Emp_ID,Type,Content,Redirect_ID,Seen) 
+					values(@Emp_ID,@Type,@Content,@Redirect_ID,'0');   
+</action>    
+ 
+<action name='Seen'    
+>    
+ Update Notifications set Seen='1' where Id=@Id;
+</action>  
+   
+<action name='Select'    
+>    
+	select * from Notifications        
+</action> 
+
+<action name='SpecificUnseen'    
+>    
+	select * from Notifications  where Emp_ID =@Emp_ID    and Seen = '0'
+</action>    
+
+<action name='SpecificAll'    
+>    
+	select 
+	Employees.Name as 'Emp_Name',
+	Notifications.Id as 'Notifications_ID' , 
+	Emp_ID as 'Emp_ID' , 
+	Type,
+	Seen,
+	Content,
+	Redirect_ID
+	
+	 from Notifications  
+	inner join Employees on Employees.Id = Emp_ID
+	where Emp_ID =@Emp_ID   
+</action>    
+    
+</procedure>

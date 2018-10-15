@@ -1,0 +1,274 @@
+<procedure name='Vacations_InsertSelect'>
+
+  <declares>
+    @Id integer= null;
+    @Start_Date  date= null;
+    @Days integer = null;
+    @Emp_ID integer  = null;
+    @Comp_ID integer   = null;
+    @Dept_ID integer  = null;
+    @Type integer = null;
+    @Comment nvarchar(50)= null;
+    @State integer= null;
+
+    @Vacation_Start_From_or_Bigger date= null;
+    @Vacation_Start_From_or_Bigger_End date= null;
+
+    @Vacation_Start_From  date= null;
+    @Vacation_Start_To  date= null;
+    @Name nvarchar(50)= null;
+
+    @LeaveDays integer = null;
+
+    @Day_of_Vac date= null;
+    @from date= null;
+    @to date= null;
+
+    @Canceled_Cause nvarchar(50) = null;
+    @Canceled_ID integer = null;
+    @Canceled_Type integer = null;
+
+    @State_Day integer = null;
+  </declares>
+  
+  
+  
+  
+  <action name='Insert'    
+>    
+ Insert into Vacations(Start_Date,Days,Requested_Days,Emp_ID,State ,Type,Comment) 
+				OUTPUT inserted.Id
+				values(@Start_Date,@Days,@Requested_Days,@Emp_ID,0, @Type,@Comment);    
+</action>    
+   
+<action name='InsertSimple'    
+>
+  Insert into Vacations(Start_Date,Days,Requested_Days,Emp_ID,State ,Type,Comment)
+  OUTPUT inserted.Id
+  values(@Start_Date,@Days,@Requested_Days,@Emp_ID,@State, @Type,@Comment);
+</action> 
+
+<action name='InsertDay'    
+> 
+ Insert into Vacation_Days(Vacation_ID,Emp_ID,Day_of_Vac,State_Day) 
+				values(@Id,@Emp_ID,@Day_of_Vac,@State_Day); 
+</action>
+
+<action name='Select'    
+>    
+	select 	Vacations.Id  as 'Vac_ID'  ,
+		State ,
+		Days       	 ,
+    Requested_Days,
+		Start_Date 	 ,
+		Type 	 ,
+		Comment ,
+		Employees.Id     as 'Emp_ID'	 ,
+		Employees.Name   as 'Emp_Name'	 
+	 from Vacations 
+	inner join Employees 
+	on Employees.Id = Vacations.Emp_ID   
+</action> 
+
+<action name='Specific'    
+>    
+	select Vacations.Id  as 'Vac_ID'  ,
+		State ,
+		Days       	 ,
+    Requested_Days,
+		Start_Date 	 ,
+		Type 	 ,
+		Comment ,
+		Employees.Id     as 'Emp_ID'	 ,
+		Employees.Name   as 'Emp_Name'	 
+	 from Vacations 
+	inner join Employees 
+	on Employees.Id = Vacations.Emp_ID   
+	where Emp_ID =@Emp_ID    
+</action>   
+
+--not used
+<action name='get_vacations_range'    
+>    
+	select 	
+		distinct Vacations.Id  as 'Vac_ID'  ,
+		State ,
+		Days       	 ,
+		Start_Date 	 ,
+		Type 	 ,
+		Comment ,
+		Employees.Id     as 'Emp_ID'	 ,
+		Employees.Name   as 'Emp_Name'	 ,
+
+		Canceled,
+		Canceled_Cause,
+		Canceled_ID,
+		Canceled_On,
+		Canceled_Type,
+		Day_of_Vac
+
+	 from Vacation_Days 
+	
+	inner join Vacations on Vacation_Days.Vacation_ID = Vacations.Id
+
+	inner join Employees on Employees.Id = Vacations.Emp_ID   
+	inner join Departments on Departments.Id = Employees.Department_ID
+	inner join Companies on Companies.Id = Employees.Company_ID_Emp
+ 
+	where 
+
+	Vacation_Days.Emp_ID =@Emp_ID    
+	and
+	Day_of_Vac between @from and @to
+</action>   
+
+<action name='SpecificVac'    
+>
+  select
+  Vacations.Id  as 'Vac_ID'  ,
+  State ,
+  Type ,
+  Days       	 ,
+  Requested_Days,
+  Start_Date 	 ,
+  Comment ,
+  Employees.Id     as 'Emp_ID'	 ,
+  Employees.Name   as 'Emp_Name'
+
+  from Vacations  inner join Employees on
+  Vacations.Emp_ID = Employees.Id where Vacations.Id =@Id
+</action>  
+   
+<action name='SpecificDeptComp'    
+>  
+  
+	select
+		Vacations.Id  as 'Vac_ID'  ,
+		State ,
+		Days       	 ,
+    Requested_Days,
+		Type ,
+		Start_Date 	 ,
+		Comment ,
+		Employees.Id     as 'Emp_ID'	 ,
+		Employees.Name   as 'Emp_Name'	 
+	 from Vacations 
+	inner join Employees 
+	on Employees.Id = Vacations.Emp_ID
+ where  Employees.Company_ID_Emp = @Comp_ID
+	 and 
+  Employees.Department_ID = @Dept_ID
+
+</action> 
+
+<action name='Final_Reply'    
+>    
+	Update Vacations set 
+	Vacations.State= @State
+	where Id=@Id;  
+</action>    
+  
+  
+<action name='Update_days_state'    
+>    
+	Update Vacation_Days set 
+	State_Day= @State_Day
+	where 
+	Day_of_Vac = @Day_of_Vac 
+	and
+	Emp_ID = @Emp_ID;  
+</action>
+
+<action name='Cancel_Vacation'    
+>    
+	Update Vacation_Days set 
+	Canceled= 1,
+	Canceled_Cause = @Canceled_Cause, 
+	Canceled_On = GETDATE(),
+	Canceled_Type = @Canceled_Type,
+	Canceled_ID = @Canceled_ID
+	where 
+	Day_of_Vac = @Day_of_Vac 
+	and
+	Emp_ID = @Emp_ID;  
+</action>
+
+<action name='check_if_canceled'    
+>   
+	select * from Vacation_Days where 
+	Day_of_Vac = @Day_of_Vac 
+	and
+	Emp_ID = @Emp_ID;  
+</action>
+
+
+<action name='vac_id_from_day'    
+>   
+	select Vacation_ID from Vacation_Days where 
+	Day_of_Vac = @Day_of_Vac 
+	and
+	Emp_ID = @Emp_ID;  
+</action>
+
+<action name='days_of_vac'    
+>   
+	select Day_of_Vac , State_Day from Vacation_Days where 
+	Vacation_ID = @Id 
+	and
+	Emp_ID = @Emp_ID;  
+</action>
+
+<action name='days_of_vac_range'    
+>
+  select Day_of_Vac, State_Day,
+  Canceled , Canceled_Cause , Canceled_ID , Canceled_On , Canceled_Type,Vacation_ID
+  from Vacation_Days where
+  Emp_ID = @Emp_ID
+  and
+  Day_of_Vac between @from and @to
+</action>
+
+
+
+<action name ='Filter' type='optional'
+>  
+	select 	Vacations.Id  as 'Vac_ID'  ,
+		State ,
+		Days       	 ,
+    Requested_Days,
+		Start_Date 	 ,
+		Type 	 ,
+		Comment ,
+		Employees.Id     as 'Emp_ID'	 ,
+		Employees.Name   as 'Emp_Name'	 
+	 from Vacations 
+	inner join Employees 
+	on Employees.Id = Vacations.Emp_ID   
+
+	inner join Departments on Departments.Id = Employees.Department_ID
+	inner join Companies on Companies.Id = Employees.Company_ID_Emp
+
+	where 
+	          
+	(@Name 								 IS NULL OR		( Employees.Name 	 like '%'+@Name+'%' 	    ))
+AND	(@Emp_ID 							 IS NULL OR		( Employees.Id 		= @Emp_ID 	    ))--only found in profile page
+AND	(@Dept_ID  							 IS NULL OR		( Departments.Id    = @Dept_ID  	    ))	--here they are ids not names
+AND	(@Comp_ID  							 IS NULL OR		( Companies.Id      = @Comp_ID  	    ))	--here they are ids not names
+AND (@State  							 IS NULL OR		( State				= @State  	    ))	
+AND (@Type  							 IS NULL OR		( Type				= @Type  	    ))	
+AND (@Type  							 IS NULL OR		( Type				= @Type  	    ))	
+AND	(@Days 								 IS NULL OR		( Days				 = @Days ))
+AND	(@Vacation_Start_From 				 IS NULL OR		(Start_Date	between @Vacation_Start_From and @Vacation_Start_To))
+AND	(@Vacation_Start_From_or_Bigger 	 IS NULL OR		
+	( convert(varchar(10),Start_Date,111) 	&lt;= @Vacation_Start_From_or_Bigger --it means smaller
+	and 
+		DATEADD(Day ,Vacations.Days-1 , Start_Date)	>=	@Vacation_Start_From_or_Bigger_End) )--when looking for a start and end inside a range
+</action>
+   
+
+<action name='Reset_leave_days'    
+>    
+	Update Employees set 
+	Employees.Leave_Days = @LeaveDays
+</action>       
+</procedure>

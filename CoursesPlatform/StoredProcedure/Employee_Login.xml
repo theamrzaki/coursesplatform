@@ -1,0 +1,18 @@
+<procedure name='Employee_Login'>
+
+  <declares>
+    @UserName nvarchar(50) ;
+    @Email nvarchar(50);
+  </declares>
+  
+  <action name='user_name'    
+>    
+ select * from Employees where User_Name = @UserName;    
+</action>    
+  
+<action name='email'    
+>    
+ select * from Employees where User_Name = @Email;   
+</action>  
+     
+</procedure>

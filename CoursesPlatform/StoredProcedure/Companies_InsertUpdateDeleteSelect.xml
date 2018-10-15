@@ -1,0 +1,100 @@
+<procedure name='Companies_InsertUpdateDeleteSelect'>
+
+  <declares>
+    @Id integer= Null;
+    @Name nvarchar(50)= Null;
+    @Version_ID integer = Null;
+
+    @ArrivalTime_Version_ID    integer = Null;
+    @Vacation_Version_ID       integer = Null;
+    @Mission_Version_ID        integer = Null;
+    @Wages_Version_ID          integer = Null;
+  </declares>
+
+
+  <action name='Count'>
+    select count(Id)  from Companies
+  </action>
+  
+    <action name='Insert'>
+      Insert into Companies
+      (Name,ArrivalTime_Version_ID , Vacation_Version_ID , Mission_Version_ID , Wages_Version_ID ,Installments_Version_ID )
+      output inserted.Id
+      values
+      (@Name,@ArrivalTime_Version_ID ,@Vacation_Version_ID , @Mission_Version_ID ,@Wages_Version_ID ,@Installments_Version_ID );
+    </action>
+  
+<action name='Update'    
+>    
+ Update Companies set 
+ Name=@Name ,
+ ArrivalTime_Version_ID = @ArrivalTime_Version_ID  ,
+ Vacation_Version_ID	= @Vacation_Version_ID	   ,
+ Mission_Version_ID		= @Mission_Version_ID	   ,
+ Wages_Version_ID		= @Wages_Version_ID	   
+ where Id=@Id;    
+</action>   
+
+<action name='Delete'    
+>    
+ Delete Companies where Id=@Id;      
+</action>    
+<action name='Select'    
+>    
+ Select  
+ 
+ Companies.Id,
+ Companies.Name,
+
+ Companies.ArrivalTime_Version_ID , 
+ Companies.Vacation_Version_ID,
+ Companies.Mission_Version_ID,
+ Companies.Wages_Version_ID,
+ Companies.Installments_Version_ID,
+
+ arrival.Name  as 'Arrival Version',
+ vacation.Name as 'Vacation Version',
+ mission.Name as 'Mission Version',
+ wages.Name	as 'Wages Version',
+ installments.Name	as 'installments Version'
+
+ from Companies
+
+ left join   SettingsVersion  as arrival on arrival.id	 =  Companies.ArrivalTime_Version_ID 
+ left join   SettingsVersion  as vacation on vacation.id =  Companies.Vacation_Version_ID 
+ left join   SettingsVersion  as mission on mission.id	 =  Companies.Mission_Version_ID 
+ left join   SettingsVersion  as wages  on wages.id		 =  Companies.Wages_Version_ID 
+ left join   SettingsVersion  as installments  on installments.id		 =   Companies.Installments_Version_ID
+
+</action> 
+
+<action name='Specfic'    
+>   
+Select 
+ Companies.Id,
+ Companies.Name,
+
+ Companies.ArrivalTime_Version_ID , 
+ Companies.Vacation_Version_ID,
+ Companies.Mission_Version_ID,
+ Companies.Wages_Version_ID,
+ Companies.Installments_Version_ID,
+
+ arrival.Name  as 'Arrival Version',
+ vacation.Name as 'Vacation Version',
+ mission.Name as 'Mission Version',
+ wages.Name	as 'Wages Version',
+ installments.Name	as 'installments Version'
+
+ from Companies
+
+ left join   SettingsVersion  as arrival on arrival.id	 =  Companies.ArrivalTime_Version_ID 
+ left join   SettingsVersion  as vacation on vacation.id =  Companies.Vacation_Version_ID 
+ left join   SettingsVersion  as mission on mission.id	 =  Companies.Mission_Version_ID 
+ left join   SettingsVersion  as wages  on wages.id		 =  Companies.Wages_Version_ID 
+ left join   SettingsVersion  as installments  on installments.id		 =   Companies.Installments_Version_ID
+
+ where Companies.Id = @Id;
+</action>  
+     
+</procedure>

@@ -1,0 +1,704 @@
+﻿@{
+    ViewBag.Title = "Contact";
+}
+
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Dashboard
+        <small>Sheraton</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div style="text-align:center;margin-bottom:20px">
+            <div>
+                <ul class="nav nav-tabs" style=" display: inline-block;
+                    vertical-align: bottom;">
+                    <li class="active"><a href="#tab_1" data-toggle="tab">Sales</a></li>
+                    <li><a href="#tab_2" data-toggle="tab">Courses</a></li>
+                    <li><a href="#tab_3" data-toggle="tab">Instructors</a></li>
+                    <li><a href="#tab_4" data-toggle="tab">Users</a></li>
+                </ul>
+            </div>
+
+        </div>
+       
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab_1">
+                <!-- Main content -->
+                <section class="content">
+
+                    <!-- Small boxes (Stat box) -->
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="info-box bg-aqua" style="background-color: #3c8dbc !important;">
+                                <span class="info-box-icon"><i class="fas fa-chart-line"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Sales</span>
+                                    <span class="info-box-number">3,410</span>
+
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 70%"></div>
+                                    </div>
+                                    <span class="progress-description">
+                                        70% Increase in 30 Days
+                                    </span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="info-box bg-aqua" style="background-color: #3c8dbc !important;">
+                                <span class="info-box-icon"><i class="fa fa-graduation-cap"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Courses</span>
+                                    <span class="info-box-number">53</span>
+
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 70%"></div>
+                                    </div>
+                                    <span class="progress-description">
+                                        70% Increase in 30 Days
+                                    </span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="info-box bg-aqua" style="background-color: #3c8dbc !important;">
+                                <span class="info-box-icon"><i class="fa fa-user-graduate"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Instructor</span>
+                                    <span class="info-box-number">20</span>
+
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 70%"></div>
+                                    </div>
+                                    <span class="progress-description">
+                                        70% Increase in 30 Days
+                                    </span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="info-box bg-aqua" style="background-color: #3c8dbc !important;">
+                                <span class="info-box-icon"><i class="fa fa-user-plus"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Users</span>
+                                    <span class="info-box-number">410</span>
+
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 70%"></div>
+                                    </div>
+                                    <span class="progress-description">
+                                        70% Increase in 30 Days
+                                    </span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+
+                    </div>
+                    <!-- /.row -->
+                    <!-- Main row -->
+                    <div class="row">
+                        <!-- Left col -->
+                        <section class="col-lg-7 connectedSortable">
+                            <!-- Custom tabs (Charts with tabs)-->
+                            <div class="nav-tabs-custom">
+                                <!-- Tabs within a box -->
+                                <ul class="nav nav-tabs pull-right">
+                                    <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
+                                    <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
+                                    <li class="pull-left header"><i class="fa fa-inbox"></i> Sales</li>
+                                </ul>
+                                <div class="tab-content no-padding">
+                                    <!-- Morris chart - Sales -->
+                                    <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
+                                    <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
+                                </div>
+                            </div>
+                            <!-- /.nav-tabs-custom -->
+                            <!-- /.box -->
+                        </section>
+                        <!-- /.Left col -->
+                        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                        <section class="col-lg-5 connectedSortable">
+                            <!-- solid sales graph -->
+                            <div class="box box-solid bg-teal-gradient">
+                                <div class="box-header">
+                                    <i class="fa fa-th"></i>
+                                    <h3 class="box-title">Users Graph</h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn bg-teal btn-sm" data-widget="collapse">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                        <button type="button" class="btn bg-teal btn-sm" data-widget="remove">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="box-body border-radius-none">
+                                    <div class="chart" id="line-chart" style="height: 250px;"></div>
+                                </div>
+                                <!-- /.box-body -->
+                                <div class="box-footer no-border">
+                                    <div class="row">
+                                        <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+                                            <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60"
+                                                   data-fgColor="#39CCCC">
+                                            <div class="knob-label">Mail-Orders</div>
+                                        </div>
+                                        <!-- ./col -->
+                                        <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+                                            <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60"
+                                                   data-fgColor="#39CCCC">
+                                            <div class="knob-label">Online</div>
+                                        </div>
+                                        <!-- ./col -->
+                                        <div class="col-xs-4 text-center">
+                                            <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
+                                                   data-fgColor="#39CCCC">
+                                            <div class="knob-label">In-Store</div>
+                                        </div>
+                                        <!-- ./col -->
+                                    </div>
+                                    <!-- /.row -->
+                                </div>
+                                <!-- /.box-footer -->
+                            </div>
+                            <!-- /.box -->
+                        </section>
+                        <!-- right col -->
+                    </div>
+                    <!-- /.row (main row) -->
+                </section>
+            </div>
+
+            <div class="tab-pane" id="tab_2">
+                <div class="col-md-4">
+                    <!-- Widget: user widget style 1 -->
+                    <div class="box box-widget widget-user">
+                        <div class="widget-user-header bg-black" style="background: url('../dist/img/photo1.png') center center;">
+                            <h3 class="widget-user-username">Elizabeth Pierce</h3>
+                            <h5 class="widget-user-desc">Web Designer</h5>
+                        </div>
+                        <div class="widget-user-image">
+                            <img class="img-circle" src="../dist/img/user1-128x128.jpg" alt="User Avatar">
+                        </div>
+                        <div class="box-footer">
+                            <div class="row">
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">3,200</h5>
+                                        <span class="description-text">SALES</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">13,000</h5>
+                                        <span class="description-text">FOLLOWERS</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4">
+                                    <div class="description-block">
+                                        <h5 class="description-header">35</h5>
+                                        <span class="description-text">PRODUCTS</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                            </div>
+
+                            <!-- /.row -->
+                        </div>
+                        <div class="box-footer no-padding">
+                            <ul class="nav nav-stacked">
+                                <li><a href="#">Projects <span class="pull-right badge bg-blue">31</span></a></li>
+                                <li><a href="#">Tasks <span class="pull-right badge bg-aqua">5</span></a></li>
+                                <li><a href="#">Completed Projects <span class="pull-right badge bg-green">12</span></a></li>
+                                <li><a href="#">Followers <span class="pull-right badge bg-red">842</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /.widget-user -->
+                </div>
+                <div class="col-md-4">
+                    <!-- Widget: user widget style 1 -->
+                    <div class="box box-widget widget-user">
+                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                        <div class="widget-user-header bg-black" style="background: url('../dist/img/photo1.png') center center;">
+                            <h3 class="widget-user-username">Elizabeth Pierce</h3>
+                            <h5 class="widget-user-desc">Web Designer</h5>
+                        </div>
+                        <div class="widget-user-image">
+                            <img class="img-circle" src="../dist/img/user1-128x128.jpg" alt="User Avatar">
+                        </div>
+                        <div class="box-footer">
+                            <div class="row">
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">3,200</h5>
+                                        <span class="description-text">SALES</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">13,000</h5>
+                                        <span class="description-text">FOLLOWERS</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4">
+                                    <div class="description-block">
+                                        <h5 class="description-header">35</h5>
+                                        <span class="description-text">PRODUCTS</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                            </div>
+
+                            <!-- /.row -->
+                        </div>
+                        <div class="box-footer no-padding">
+                            <ul class="nav nav-stacked">
+                                <li><a href="#">Projects <span class="pull-right badge bg-blue">31</span></a></li>
+                                <li><a href="#">Tasks <span class="pull-right badge bg-aqua">5</span></a></li>
+                                <li><a href="#">Completed Projects <span class="pull-right badge bg-green">12</span></a></li>
+                                <li><a href="#">Followers <span class="pull-right badge bg-red">842</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /.widget-user -->
+                </div>
+                <div class="col-md-4">
+                    <!-- Widget: user widget style 1 -->
+                    <div class="box box-widget widget-user">
+                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                        <div class="widget-user-header bg-black" style="background: url('../dist/img/photo1.png') center center;">
+                            <h3 class="widget-user-username">Elizabeth Pierce</h3>
+                            <h5 class="widget-user-desc">Web Designer</h5>
+                        </div>
+                        <div class="widget-user-image">
+                            <img class="img-circle" src="../dist/img/user1-128x128.jpg" alt="User Avatar">
+                        </div>
+                        <div class="box-footer">
+                            <div class="row">
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">3,200</h5>
+                                        <span class="description-text">SALES</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">13,000</h5>
+                                        <span class="description-text">FOLLOWERS</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4">
+                                    <div class="description-block">
+                                        <h5 class="description-header">35</h5>
+                                        <span class="description-text">PRODUCTS</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                            </div>
+
+                            <!-- /.row -->
+                        </div>
+                        <div class="box-footer no-padding">
+                            <ul class="nav nav-stacked">
+                                <li><a href="#">Projects <span class="pull-right badge bg-blue">31</span></a></li>
+                                <li><a href="#">Tasks <span class="pull-right badge bg-aqua">5</span></a></li>
+                                <li><a href="#">Completed Projects <span class="pull-right badge bg-green">12</span></a></li>
+                                <li><a href="#">Followers <span class="pull-right badge bg-red">842</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /.widget-user -->
+                </div>
+                <div class="col-md-4">
+                    <!-- Widget: user widget style 1 -->
+                    <div class="box box-widget widget-user">
+                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                        <div class="widget-user-header bg-black" style="background: url('../dist/img/photo1.png') center center;">
+                            <h3 class="widget-user-username">Elizabeth Pierce</h3>
+                            <h5 class="widget-user-desc">Web Designer</h5>
+                        </div>
+                        <div class="widget-user-image">
+                            <img class="img-circle" src="../dist/img/user1-128x128.jpg" alt="User Avatar">
+                        </div>
+                        <div class="box-footer">
+                            <div class="row">
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">3,200</h5>
+                                        <span class="description-text">SALES</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">13,000</h5>
+                                        <span class="description-text">FOLLOWERS</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4">
+                                    <div class="description-block">
+                                        <h5 class="description-header">35</h5>
+                                        <span class="description-text">PRODUCTS</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                            </div>
+
+                            <!-- /.row -->
+                        </div>
+                        <div class="box-footer no-padding">
+                            <ul class="nav nav-stacked">
+                                <li><a href="#">Projects <span class="pull-right badge bg-blue">31</span></a></li>
+                                <li><a href="#">Tasks <span class="pull-right badge bg-aqua">5</span></a></li>
+                                <li><a href="#">Completed Projects <span class="pull-right badge bg-green">12</span></a></li>
+                                <li><a href="#">Followers <span class="pull-right badge bg-red">842</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /.widget-user -->
+                </div>
+                <div class="col-md-4">
+                    <!-- Widget: user widget style 1 -->
+                    <div class="box box-widget widget-user">
+                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                        <div class="widget-user-header bg-black" style="background: url('../dist/img/photo1.png') center center;">
+                            <h3 class="widget-user-username">Elizabeth Pierce</h3>
+                            <h5 class="widget-user-desc">Web Designer</h5>
+                        </div>
+                        <div class="widget-user-image">
+                            <img class="img-circle" src="../dist/img/user1-128x128.jpg" alt="User Avatar">
+                        </div>
+                        <div class="box-footer">
+                            <div class="row">
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">3,200</h5>
+                                        <span class="description-text">SALES</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">13,000</h5>
+                                        <span class="description-text">FOLLOWERS</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4">
+                                    <div class="description-block">
+                                        <h5 class="description-header">35</h5>
+                                        <span class="description-text">PRODUCTS</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                            </div>
+
+                            <!-- /.row -->
+                        </div>
+                        <div class="box-footer no-padding">
+                            <ul class="nav nav-stacked">
+                                <li><a href="#">Projects <span class="pull-right badge bg-blue">31</span></a></li>
+                                <li><a href="#">Tasks <span class="pull-right badge bg-aqua">5</span></a></li>
+                                <li><a href="#">Completed Projects <span class="pull-right badge bg-green">12</span></a></li>
+                                <li><a href="#">Followers <span class="pull-right badge bg-red">842</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /.widget-user -->
+                </div>
+            </div>
+
+            <div class="tab-pane" id="tab_3">
+                <div class="col-md-4">
+                    <!-- Widget: user widget style 1 -->
+                    <div class="box box-widget widget-user-2">
+                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                        <div class="widget-user-header bg-yellow">
+                            <div class="widget-user-image">
+                                <img class="img-circle" src="../dist/img/user7-128x128.jpg" alt="User Avatar">
+                            </div>
+                            <!-- /.widget-user-image -->
+                            <h3 class="widget-user-username">Nadia Carmichael</h3>
+                            <h5 class="widget-user-desc">Lead Developer</h5>
+                        </div>
+                        <div class="box-footer no-padding">
+                            <div class="row">
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">3,200</h5>
+                                        <span class="description-text">SALES</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">13,000</h5>
+                                        <span class="description-text">FOLLOWERS</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4">
+                                    <div class="description-block">
+                                        <h5 class="description-header">35</h5>
+                                        <span class="description-text">PRODUCTS</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.widget-user -->
+                </div>
+                <div class="col-md-4">
+                    <!-- Widget: user widget style 1 -->
+                    <div class="box box-widget widget-user-2">
+                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                        <div class="widget-user-header bg-yellow">
+                            <div class="widget-user-image">
+                                <img class="img-circle" src="../dist/img/user7-128x128.jpg" alt="User Avatar">
+                            </div>
+                            <!-- /.widget-user-image -->
+                            <h3 class="widget-user-username">Nadia Carmichael</h3>
+                            <h5 class="widget-user-desc">Lead Developer</h5>
+                        </div>
+                        <div class="box-footer no-padding">
+                            <div class="row">
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">3,200</h5>
+                                        <span class="description-text">SALES</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">13,000</h5>
+                                        <span class="description-text">FOLLOWERS</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4">
+                                    <div class="description-block">
+                                        <h5 class="description-header">35</h5>
+                                        <span class="description-text">PRODUCTS</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.widget-user -->
+                </div>
+                <div class="col-md-4">
+                    <!-- Widget: user widget style 1 -->
+                    <div class="box box-widget widget-user-2">
+                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                        <div class="widget-user-header bg-yellow">
+                            <div class="widget-user-image">
+                                <img class="img-circle" src="../dist/img/user7-128x128.jpg" alt="User Avatar">
+                            </div>
+                            <!-- /.widget-user-image -->
+                            <h3 class="widget-user-username">Nadia Carmichael</h3>
+                            <h5 class="widget-user-desc">Lead Developer</h5>
+                        </div>
+                        <div class="box-footer no-padding">
+                            <div class="row">
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">3,200</h5>
+                                        <span class="description-text">SALES</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">13,000</h5>
+                                        <span class="description-text">FOLLOWERS</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4">
+                                    <div class="description-block">
+                                        <h5 class="description-header">35</h5>
+                                        <span class="description-text">PRODUCTS</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.widget-user -->
+                </div>
+                <div class="col-md-4">
+                    <!-- Widget: user widget style 1 -->
+                    <div class="box box-widget widget-user-2">
+                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                        <div class="widget-user-header bg-yellow">
+                            <div class="widget-user-image">
+                                <img class="img-circle" src="../dist/img/user7-128x128.jpg" alt="User Avatar">
+                            </div>
+                            <!-- /.widget-user-image -->
+                            <h3 class="widget-user-username">Nadia Carmichael</h3>
+                            <h5 class="widget-user-desc">Lead Developer</h5>
+                        </div>
+                        <div class="box-footer no-padding">
+                            <div class="row">
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">3,200</h5>
+                                        <span class="description-text">SALES</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">13,000</h5>
+                                        <span class="description-text">FOLLOWERS</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4">
+                                    <div class="description-block">
+                                        <h5 class="description-header">35</h5>
+                                        <span class="description-text">PRODUCTS</span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.widget-user -->
+                </div>
+            </div>
+
+            <div class="tab-pane" id="tab_4">
+                <section class="content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">
+                                    <h3 class="box-title">Responsive Hover Table</h3>
+
+                                    <div class="box-tools">
+                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                            <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                                            <div class="input-group-btn">
+                                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body table-responsive no-padding">
+                                    <table class="table table-hover">
+                                        <tbody>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>User</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                                <th>Reason</th>
+                                            </tr>
+                                            <tr>
+                                                <td>183</td>
+                                                <td>John Doe</td>
+                                                <td>11-7-2014</td>
+                                                <td><span class="label label-success">Approved</span></td>
+                                                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>219</td>
+                                                <td>Alexander Pierce</td>
+                                                <td>11-7-2014</td>
+                                                <td><span class="label label-warning">Pending</span></td>
+                                                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>657</td>
+                                                <td>Bob Doe</td>
+                                                <td>11-7-2014</td>
+                                                <td><span class="label label-primary">Approved</span></td>
+                                                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>175</td>
+                                                <td>Mike Doe</td>
+                                                <td>11-7-2014</td>
+                                                <td><span class="label label-danger">Denied</span></td>
+                                                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</section>

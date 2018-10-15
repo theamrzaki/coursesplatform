@@ -1,0 +1,266 @@
+<procedure name='Employees_Insert'>
+
+  <declares>
+    @Email							nvarchar(50)    =  null     ;
+    @User_Name						nvarchar(50)    =  null     ;
+    @Password						nvarchar(50)    =  null     ;
+    @Personal_ID_Arrival_Time		int				= null	;
+    @Serial     	  nvarchar(100)    =  null     ;
+
+    @Name							nvarchar(50)	=  null     ;
+    @PhoneNo						nvarchar(20)	=  null		;
+    @MobileNo						nvarchar(20) 	= null	;
+    @Address						nvarchar(50)	= null         ;
+    @City							nvarchar(20)	= null        ;
+    @Hire_Date						date			=null;
+    @Leave_Days						int				=null;
+
+    @National_ID					nvarchar(20)	=null             ;
+    @National_id_expire_date        date			=null;
+
+    @Job_ID 						int             =null   ;
+    @Company_ID						int             =null   ;
+    @Department_ID 					int             =null   ;
+    @is_hr							bit             =null   ;
+
+
+    @Sex							bit			  =null;
+    @Birth_Date						date		  =null	;
+    @Birth_Location					nvarchar(20)  =null           ;
+    @Actual_Salary   				decimal(18,0) =null		;
+    @Taxtable_Salary				decimal(18,0) =null			 ;
+    @Variable_Salary				decimal(18,0) =null			 ;
+    @Other_Salary					decimal(18,0) =null			 ;
+
+    --@Bonus           				decimal(18,0)		;
+    --@Commission						decimal(18,0)         ;
+
+    @Education						nvarchar(20)   =null      ;
+    @Bachlor_Degree_Date			nvarchar(20)   =null     ;
+    @Courses						nvarchar(50)   =null     ;
+    @Martial_Status					nchar(10)      =null ;
+    @Military_Status				nchar(10)      =null ;
+    @Religion						bit            =null    ;
+
+    @CV								nvarchar(250)  =null      ;
+    @National_ID_Image				nvarchar(250)  =null     ;
+    @Birth_Certificate				nvarchar(250)  =null     ;
+    --@Social_Insurance_Certificate	nvarchar(250);
+
+    @Feesh     nvarchar(250)    =null;
+    @S6        nvarchar(250)    =null;
+    @Ka3b_3aml nvarchar(250)    =null;
+    @Tagneed   nvarchar(250)	=null;
+    @S1        nvarchar(250)	=null;
+
+
+    @casual_leave_days			  int       =null       ;
+    @annual_leave_days			  int       =null       ;
+    @casual_leave_days_additional int       =null   ;
+    @annual_leave_days_additional int       =null   ;
+  </declares>
+
+
+
+  <action name='Add'>
+    Insert into Employees
+    (
+    Email,
+    User_Name,
+    Password,
+    Personal_ID_Arrival_Time,
+    Serial,
+
+    Name						    ,
+    MiddleName				  ,
+    LastName						,
+
+    PhoneNo         			,
+    MobileNo        			,
+    Address				         ,
+    City				         ,
+    Hire_Date       			,
+    Leave_Days ,
+    National_ID		             ,
+    National_id_expire_date   	,
+
+    Job_ID 	                     ,
+    Company_ID_Emp ,
+    Department_ID  	                     ,
+    is_hr			,
+
+    Sex             			,
+    Birth_Date      			,
+    Birth_Location	             ,
+    Actual_Salary   			,
+    Taxtable_Salary				 ,
+    Variable_Salary           	,
+    Other_Salary	            ,
+
+    Education                    ,
+    Bachlor_Degree_Date          ,
+    Courses                      ,
+    Martial_Status               ,
+    Military_Status              ,
+    Religion,
+
+    CV                           ,
+    National_ID_Image            ,
+    Birth_Certificate            ,
+    --Social_Insurance_Certificate ,
+    Feesh    	,
+    S6       	,
+    Ka3b_3aml	,
+    Tagneed  	,
+    S1       	,
+
+    casual_leave_days,
+    annual_leave_days,
+    casual_leave_days_additional,
+    annual_leave_days_additional,
+    Work_Status)
+
+    OUTPUT inserted.Id
+
+    values
+    (
+    @Email						  ,
+    @User_Name						  ,
+    @Password ,
+    @Personal_ID_Arrival_Time,
+    @Serial,
+
+    @Name						  ,
+    @MiddleName       ,
+    @LastName         ,
+    
+    @PhoneNo         			  ,
+    @MobileNo        			  ,
+    @Address				      ,
+    @City				          ,
+    @Hire_Date       			  ,
+    @Leave_Days       			  ,
+
+    @National_ID		          ,
+    @National_id_expire_date   	,
+
+    @Job_ID 	                  ,
+    @Company_ID ,
+    @Department_ID  	          ,
+    @is_hr ,
+
+    @Sex             			  ,
+    @Birth_Date      			  ,
+    @Birth_Location	              ,
+
+    @Actual_Salary   			  ,
+    @Taxtable_Salary			  ,
+    @Variable_Salary           	  ,
+    @Other_Salary	              ,
+
+    @Education                    ,
+    @Bachlor_Degree_Date          ,
+    @Courses                      ,
+    @Martial_Status               ,
+    @Military_Status              ,
+    @Religion,
+
+    @CV                           ,
+    @National_ID_Image            ,
+    @Birth_Certificate            ,
+    --@Social_Insurance_Certificate ,
+    @Feesh    		,
+    @S6       		,
+    @Ka3b_3aml		,
+    @Tagneed  		,
+    @S1       		,
+
+
+    @casual_leave_days,
+    @annual_leave_days,
+    @casual_leave_days_additional,
+    @annual_leave_days_additional,
+    1);
+
+  </action>
+
+  <action name='Import'>
+    Insert into Employees
+    (
+    Name						    ,
+    MiddleName					,
+    LastName						,
+
+    User_Name,
+    Password,
+    Email,
+    Personal_ID_Arrival_Time,
+    Serial,
+
+    National_ID		             ,
+    National_id_expire_date   	,
+    Sex             			,
+    Religion,
+    Martial_Status               ,
+    Military_Status              ,
+
+    MobileNo        			,
+
+    Hire_Date       			,
+    Job_ID 	                     ,
+    Department_ID  	                     ,
+    Company_ID_Emp ,
+
+    casual_leave_days,
+    annual_leave_days,
+    casual_leave_days_additional,
+    annual_leave_days_additional,
+
+    Actual_Salary   			,
+    Taxtable_Salary				 ,
+    Variable_Salary           	,
+    Other_Salary,
+    Work_Status
+
+    )
+
+    OUTPUT inserted.Id
+
+    values
+    (
+    @Name						,
+    @MiddleName					,
+    @LastName						,
+    
+    @User_Name,
+    @Password,
+    @Email,
+    @Personal_ID_Arrival_Time,
+    @Serial,
+    @National_ID		             ,
+    @National_id_expire_date   	,
+    @Sex             			,
+    @Religion,
+    @Martial_Status               ,
+    @Military_Status              ,
+
+    @MobileNo        			,
+
+    @Hire_Date       			,
+    @Job_ID 	                     ,
+    @Department_ID  	                     ,
+    @Company_ID ,
+
+    @casual_leave_days,
+    @annual_leave_days,
+    @casual_leave_days_additional,
+    @annual_leave_days_additional,
+
+    @Actual_Salary   			,
+    @Taxtable_Salary				 ,
+    @Variable_Salary           	,
+    @Other_Salary,
+    1
+    );
+  </action>
+</procedure>

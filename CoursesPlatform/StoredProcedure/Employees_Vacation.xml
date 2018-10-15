@@ -1,0 +1,15 @@
+<procedure name='Employees_Vacation'>
+  <action name='dec_days'    
+>    
+ Update Employees 
+	 set 
+	 Leave_Days = Leave_Days @Days_to_dec
+ where Id=@Id;    
+</action>   
+
+<action name='get_leave_days'    
+>    
+ select Leave_Days from Employees where Id=@Id;    
+</action>  
+
+</procedure>

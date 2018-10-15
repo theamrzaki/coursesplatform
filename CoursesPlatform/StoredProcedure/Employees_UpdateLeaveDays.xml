@@ -1,0 +1,47 @@
+<procedure name='Employees_UpdateLeaveDays'>
+
+  <declares>
+    @Id			int;
+    @casual_leave_days		int = Null;
+    @annual_leave_days		int= Null;
+  </declares>
+  
+  
+  
+  <action name='casual_update'    
+> 
+ Update Employees
+  set casual_leave_days=@casual_leave_days 
+ where Id=@Id;     
+</action>   
+
+<action name='annual_update'    
+>  
+Update Employees
+  set annual_leave_days=@annual_leave_days
+ where Id=@Id;     </action>  
+
+
+
+
+
+
+ 
+<action name='add_1_annual'    
+>  
+Update Employees
+  set annual_leave_days=annual_leave_days+1
+ where Id=@Id;     
+</action>  
+
+<action name='add_1_casual'    
+>  
+Update Employees
+   SET casual_leave_days = casual_leave_days + 1 
+ where Id=@Id;    
+</action>  
+
+
+
+
+</procedure>

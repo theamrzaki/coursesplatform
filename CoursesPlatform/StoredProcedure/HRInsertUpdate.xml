@@ -1,0 +1,9 @@
+<procedure name='HRInsertUpdate'><action name='Insert'    
+>    
+ Insert into HRdb(Name) values(@Name);    
+</action>    
+<action name='Update'    
+>    
+ Update HRdb set Name=@Name where @Id=@Id;    
+</action>      
+</procedure>

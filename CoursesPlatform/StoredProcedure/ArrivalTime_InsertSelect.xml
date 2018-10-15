@@ -1,0 +1,465 @@
+<procedure name='ArrivalTime_InsertSelect'>
+
+  <declares>
+    @Id                INT            = Null;
+    @Personal_ID       INT            = Null;
+    @First_Name        NVARCHAR (50)  = Null;
+    @Last_Name         NVARCHAR (50)  = Null;
+    @Card_Number       INT            = Null;
+    @Device_Name       NVARCHAR (20)  = Null;
+    @Event_Point       NVARCHAR (20)  = Null;
+    @Arrival_Time_Date DATETIME       = Null;
+    @Verify_Type       BIT            = Null;
+    @Check_State       BIT            = Null;
+    @Notes             NVARCHAR (50)  = Null;
+
+    @Comp_ID				integer       = Null;
+    @Dept_ID				integer       = Null;
+    @Emp_Name			nvarchar(50)  = Null;
+    @Arrival_Date_From	DATETIME	  = Null;
+    @Arrival_Date_To	DATETIME	  = Null;
+
+    @TimeComparison		DATETIME	  = Null;
+
+    @Emp_ID       INT            = Null;
+  </declares>
+  
+  -----------------------------------------------
+  <action name="Count_OnlyCheckin">
+    SELECT count(Arrive_IN.id)
+    FROM [HR_DB].[dbo].[Arrive_IN]
+  </action>
+  -----------------------------------------------
+  <action name='Insert'   >    
+ Insert into	
+ ArrivalTime
+ ( 
+	Personal_ID      	,
+	--First_Name       	,
+	--Last_Name        	,
+	--Card_Number      	,
+	--Device_Name      	,
+	--Event_Point      	,
+	Arrival_Time_Date	,
+	--Verify_Type      	,
+	Check_State      	,
+	Notes  
+ ) 
+ values
+ ( 			
+	@Personal_ID      	,
+	--@First_Name       	,
+	--@Last_Name        	,
+	--@Card_Number      	,
+	--@Device_Name      	,
+	--@Event_Point      	,
+	@Arrival_Time_Date	,
+	--@Verify_Type      	,
+	@Check_State      	,
+	@Notes            	
+)
+</action>
+
+  <action name="Add_Checkout">
+   -- DECLARE @Personal_ID int;
+    DECLARE @arrive_datetime datetime;
+    DECLARE @arrive_in_img nvarchar(100);
+
+    --select @Personal_ID = Employees.Personal_ID_Arrival_Time
+    --from Employees
+    --where Employees.id= @EmpID
+
+    SELECT
+    @arrive_datetime = [arrive_datetime]
+    , @arrive_in_img  =[arrive_in_img]
+    from Arrive_IN
+    where Arrive_IN.id = @Id
+
+    delete from Arrive_IN where Arrive_IN.id = @Id
+
+
+    insert into ArrivalTime
+    (Personal_ID      	,Arrival_Time_Date	,Check_State,Image,Notes  )
+    values
+    (@Personal_ID,@arrive_datetime,1,@arrive_in_img,'checkin - with override checkout')
+
+
+    insert into ArrivalTime
+    (Personal_ID      	,Arrival_Time_Date	,Check_State,Image,Notes  )
+    values
+    (@Personal_ID,@Arrival_Time_Date,0,'',@Notes)
+  </action>
+
+  <action name="Add_Checkin">
+   -- DECLARE @Personal_ID int;
+    DECLARE @arrive_datetime datetime;
+    DECLARE @arrive_in_img nvarchar(100);
+
+    --select @Personal_ID = Employees.Personal_ID_Arrival_Time
+    --from Employees
+    --where Employees.id=100
+
+    SELECT
+    @arrive_datetime = [arrive_datetime]
+    from Arrive_OUT
+    where Arrive_OUT.id = @Id
+
+    delete from Arrive_OUT where Arrive_OUT.id = @Id
+
+
+    insert into ArrivalTime
+    (Personal_ID      	,Arrival_Time_Date	,Check_State,Notes  )
+    values
+    (@Personal_ID,@arrive_datetime,0,'checkin - with override checkout')
+
+
+    insert into ArrivalTime
+    (Personal_ID      	,Arrival_Time_Date	,Check_State,Notes  )
+    values
+    (@Personal_ID,@Arrival_Time_Date,1,@Notes)
+  </action>
+  --------------------------------------
+
+  <action name="Add_Checkin_only">
+  INSERT INTO [Arrive_IN]
+  ([Personal_ID]
+  ,[arrive_datetime])
+  VALUES
+  (@Personal_ID
+  ,@arrive_datetime)
+</action>
+
+  <action name="Add_Checkout_only">
+    INSERT INTO [Arrive_OUT]
+    ([Personal_ID]
+    ,[arrive_datetime])
+    VALUES
+    (@Personal_ID
+    ,@arrive_datetime)
+  </action>
+
+
+
+
+  --------------------------------------
+  <action name='Select'    
+>
+  Select ArrivalTime.Id                    as   'ArrivalTime_Id'                  ,
+  ArrivalTime.Personal_ID           as   'ArrivalTime_Personal_ID'         ,
+  ArrivalTime.First_Name            as   'ArrivalTime_First_Name'          ,
+  ArrivalTime.Last_Name             as   'ArrivalTime_Last_Name'           ,
+  ArrivalTime.Card_Number           as   'ArrivalTime_Card_Number'         ,
+  ArrivalTime.Device_Name           as   'ArrivalTime_Device_Name'         ,
+  ArrivalTime.Event_Point           as   'ArrivalTime_Event_Point'         ,
+  ArrivalTime.Arrival_Time_Date     as   'ArrivalTime_Arrival_Time_Date'   ,
+  ArrivalTime.Verify_Type           as   'ArrivalTime_Verify_Type'         ,
+  ArrivalTime.Check_State           as   'ArrivalTime_Check_State'         ,
+  ArrivalTime.Notes                 as   'ArrivalTime_Notes'               ,
+  ArrivalTime.Image                 as   'ArrivalTime_Image'               ,
+
+  Employees.Name					  as 'Employees_Name'					 ,
+  Departments.Name				  as 'Departments_Name'					 ,
+  Companies.Name					  as 'Companies_Name'
+
+  from ArrivalTime
+
+  inner join Employees
+  on Employees.Personal_ID_Arrival_Time = ArrivalTime.Personal_ID
+
+  inner join Departments on Departments.Id = Employees.Department_ID
+  inner join Companies on Companies.Id = Employees.Company_ID_Emp;
+</action>
+
+  <action name='Specific'>
+    Select ArrivalTime.Id                    as   'ArrivalTime_Id'                  ,
+    ArrivalTime.Personal_ID           as   'ArrivalTime_Personal_ID'         ,
+    ArrivalTime.First_Name            as   'ArrivalTime_First_Name'          ,
+    ArrivalTime.Last_Name             as   'ArrivalTime_Last_Name'           ,
+    ArrivalTime.Card_Number           as   'ArrivalTime_Card_Number'         ,
+    ArrivalTime.Device_Name           as   'ArrivalTime_Device_Name'         ,
+    ArrivalTime.Event_Point           as   'ArrivalTime_Event_Point'         ,
+    ArrivalTime.Arrival_Time_Date     as   'ArrivalTime_Arrival_Time_Date'   ,
+    ArrivalTime.Verify_Type           as   'ArrivalTime_Verify_Type'         ,
+    ArrivalTime.Check_State           as   'ArrivalTime_Check_State'         ,
+    ArrivalTime.Notes                 as   'ArrivalTime_Notes'               ,
+    ArrivalTime.Image                 as   'ArrivalTime_Image'               ,
+
+    Employees.Name					  as 'Employees_Name'					 ,
+    Departments.Name				  as 'Departments_Name'					 ,
+    Companies.Name					  as 'Companies_Name'
+
+    from ArrivalTime
+
+    inner join Employees
+    on Employees.Personal_ID_Arrival_Time = ArrivalTime.Personal_ID
+
+    inner join Departments on Departments.Id = Employees.Department_ID
+    inner join Companies on Companies.Id = Employees.Company_ID_Emp
+
+    where ArrivalTime.Id   = @Id
+  </action>
+  
+  <action name='SelectEmpArrival'    
+>
+    Select
+    ArrivalTime.Id                    as   'ArrivalTime_Id'                  ,
+    ArrivalTime.Personal_ID           as   'ArrivalTime_Personal_ID'         ,
+    ArrivalTime.First_Name            as   'ArrivalTime_First_Name'          ,
+    ArrivalTime.Last_Name             as   'ArrivalTime_Last_Name'           ,
+    ArrivalTime.Card_Number           as   'ArrivalTime_Card_Number'         ,
+    ArrivalTime.Device_Name           as   'ArrivalTime_Device_Name'         ,
+    ArrivalTime.Event_Point           as   'ArrivalTime_Event_Point'         ,
+    ArrivalTime.Arrival_Time_Date     as   'ArrivalTime_Arrival_Time_Date'   ,
+    ArrivalTime.Verify_Type           as   'ArrivalTime_Verify_Type'         ,
+    ArrivalTime.Check_State           as   'ArrivalTime_Check_State'         ,
+    ArrivalTime.Notes                 as   'ArrivalTime_Notes'               ,
+    ArrivalTime.Image                 as   'ArrivalTime_Image'               ,
+
+    Employees.Name					  as 'Employees_Name'					 ,
+    Departments.Name				  as 'Departments_Name'					 ,
+    Companies.Name					  as 'Companies_Name'
+
+    from ArrivalTime
+
+    inner join Employees
+    on Employees.Personal_ID_Arrival_Time = ArrivalTime.Personal_ID
+
+    inner join Departments on Departments.Id = Employees.Department_ID
+    inner join Companies on Companies.Id = Employees.Company_ID_Emp
+
+    where Personal_ID = @Personal_ID;
+  </action> 
+
+<action name='SelectCompDept'    
+>
+  Select
+  ArrivalTime.Id                    as   'ArrivalTime_Id'                  ,
+  ArrivalTime.Personal_ID           as   'ArrivalTime_Personal_ID'         ,
+  ArrivalTime.First_Name            as   'ArrivalTime_First_Name'          ,
+  ArrivalTime.Last_Name             as   'ArrivalTime_Last_Name'           ,
+  ArrivalTime.Card_Number           as   'ArrivalTime_Card_Number'         ,
+  ArrivalTime.Device_Name           as   'ArrivalTime_Device_Name'         ,
+  ArrivalTime.Event_Point           as   'ArrivalTime_Event_Point'         ,
+  ArrivalTime.Arrival_Time_Date     as   'ArrivalTime_Arrival_Time_Date'   ,
+  ArrivalTime.Verify_Type           as   'ArrivalTime_Verify_Type'         ,
+  ArrivalTime.Check_State           as   'ArrivalTime_Check_State'         ,
+  ArrivalTime.Notes                 as   'ArrivalTime_Notes'               ,
+  ArrivalTime.Image                 as   'ArrivalTime_Image'               ,
+
+  Employees.Name					  as 'Employees_Name'					 ,
+  Departments.Name				  as 'Departments_Name'					 ,
+  Companies.Name					  as 'Companies_Name'
+
+  from ArrivalTime
+
+  inner join Employees
+  on Employees.Personal_ID_Arrival_Time = ArrivalTime.Personal_ID
+
+  inner join Departments on Departments.Id = Employees.Department_ID
+  inner join Companies on Companies.Id = Employees.Company_ID_Emp
+
+  where
+  Employees.Company_ID_Emp = @Comp_ID
+  and
+  Employees.Department_ID = @Dept_ID;
+</action>
+  
+  --------------------------------------
+
+  
+  <action name="OnlyCheckin">
+    SELECT  [employee_id]
+    ,[Personal_ID]
+    ,[arrive_datetime]
+    ,[time_to_exit]
+    ,[arrive_in_img]
+    ,Arrive_IN.id as 'arrival_id'
+    ,Employees.Name					  as 'Employees_Name'
+    ,Departments.Name				  as 'Departments_Name'
+    ,Companies.Name					  as 'Companies_Name'
+    FROM [HR_DB].[dbo].[Arrive_IN]
+
+    inner join Employees
+    on Employees.Id = employee_id or Employees.Personal_ID_Arrival_Time = Personal_ID
+
+
+    inner join Departments on Departments.Id = Employees.Department_ID
+    inner join Companies on Companies.Id = Employees.Company_ID_Emp;
+  </action>
+
+  <action name="OnlyCheckout">
+    SELECT  [employee_id]
+    ,[Personal_ID]
+    ,[arrive_datetime]
+    ,Arrive_OUT.Id as 'arrival_id'
+    ,Employees.Name					  as 'Employees_Name'
+    ,Departments.Name				  as 'Departments_Name'
+    ,Companies.Name					  as 'Companies_Name'
+    FROM [HR_DB].[dbo].[Arrive_OUT]
+
+    inner join Employees
+    on Employees.Id = employee_id or Employees.Personal_ID_Arrival_Time = Personal_ID
+
+
+    inner join Departments on Departments.Id = Employees.Department_ID
+    inner join Companies on Companies.Id = Employees.Company_ID_Emp;
+  </action>
+  
+  <action name="Unknows">
+  SELECT [id]
+  ,[serial_no]
+  ,[date]
+  ,[time]
+  ,[img_url]
+  ,[access_control_id]
+  FROM [HR_DB].[dbo].[unknowns]
+</action>
+
+  --------------------------------------
+  
+  <action name="Edit">
+  Update ArrivalTime set
+  Arrival_Time_Date  = @Arrival_Time_Date ,
+  Check_State        =   @Check_State     ,
+  Notes              =   @Notes            
+  where Id=@Id;
+</action>
+
+
+
+
+
+
+--------------------------------------
+<action name ='Filter' type='optional'>
+  select
+  ArrivalTime.Id                    as   'ArrivalTime_Id'                  ,
+  ArrivalTime.Personal_ID           as   'ArrivalTime_Personal_ID'         ,
+  Employees.Personal_ID_Arrival_Time    as   'Personal_ID_Arrival_Time'   ,
+  Employees.Company_ID_Emp as 'comp_ID',
+  Employees.Department_ID as 'Dept_ID',
+  ArrivalTime.First_Name            as   'ArrivalTime_First_Name'          ,
+  ArrivalTime.Last_Name             as   'ArrivalTime_Last_Name'           ,
+  ArrivalTime.Card_Number           as   'ArrivalTime_Card_Number'         ,
+  ArrivalTime.Device_Name           as   'ArrivalTime_Device_Name'         ,
+  ArrivalTime.Event_Point           as   'ArrivalTime_Event_Point'         ,
+  ArrivalTime.Arrival_Time_Date     as   'ArrivalTime_Arrival_Time_Date'   ,
+  ArrivalTime.Verify_Type           as   'ArrivalTime_Verify_Type'         ,
+  ArrivalTime.Check_State           as   'ArrivalTime_Check_State'         ,
+  ArrivalTime.Notes                 as   'ArrivalTime_Notes'               ,
+  ArrivalTime.Image                 as   'ArrivalTime_Image'               ,
+
+  Employees.Name					  as 'Employees_Name'					 ,
+  Departments.Name				  as 'Departments_Name'					 ,
+  Companies.Name					  as 'Companies_Name'
+
+  from ArrivalTime
+
+  inner join Employees
+  on Employees.Personal_ID_Arrival_Time = ArrivalTime.Personal_ID
+
+  inner join Departments on Departments.Id = Employees.Department_ID
+  inner join Companies on Companies.Id = Employees.Company_ID_Emp
+
+  where
+
+  (@Emp_Name				 IS NULL OR		( Employees.Name 	 like '%'+@Emp_Name+'%'))
+  AND (@Personal_ID			 IS NULL OR		(Employees.Personal_ID_Arrival_Time =@Personal_ID ) )-- for missions delay calculation
+  AND (@Emp_ID				 IS NULL OR		(Employees.Id =@Emp_ID ) )--for profile
+  AND	(@Comp_ID 				 IS NULL OR		( Employees.Company_ID_Emp=@Comp_ID))
+  AND	(@Dept_ID 				 IS NULL OR		( Employees.Department_ID=@Dept_ID))
+  AND (@Check_State  			 IS NULL OR		( Check_State=@Check_State))
+  AND	(@Arrival_Date_From 	 IS NULL OR		( Arrival_Time_Date	between @Arrival_Date_From and @Arrival_Date_To))
+
+</action>
+--------------------------------------
+
+
+
+
+--https://stackoverflow.com/questions/9105968/sql-datetime-to-get-the-first-value-of-each-day
+-- even if multiple , it gets first
+--ve delay , +ve came before
+<action name = 'DelayIN' type='optional'>
+  SELECT Personal_ID ,
+  CONVERT(VARCHAR(10),[Arrival_Time_Date],111) as [AttendaceDate] ,
+  MIN([Arrival_Time_Date]) as [Date In],
+  DATEDIFF(mi, MIN([Arrival_Time_Date]), Convert(Datetime, CONVERT(VARCHAR(10),[Arrival_Time_Date],111) + ' ' + @TimeComparison)) as [Minutes Late]
+
+  FROM ArrivalTime
+  WHERE
+  -- to get both over time and delay
+  --cast(convert(char(8), [Arrival_Time_Date], 108) as datetime) > cast(@TimeComparison as datetime)
+  --and
+  Personal_ID = @Personal_ID
+  and
+  Check_State = 1
+  AND
+  (@Arrival_Date_From 	 IS NULL OR		( Arrival_Time_Date 	between @Arrival_Date_From and @Arrival_Date_To))
+
+  GROUP BY Personal_ID, CONVERT(VARCHAR(10),[Arrival_Time_Date],111)
+</action>
+
+
+
+
+--https://stackoverflow.com/questions/9105968/sql-datetime-to-get-the-first-value-of-each-day
+--by making it max , it gets the last value for over time
+-- here it also gets the under time of leave
+<action name = 'DelayOUT' type='optional'>
+  SELECT Personal_ID ,
+  CONVERT(VARCHAR(10),[Arrival_Time_Date],111) as [AttendaceDate] ,
+  MAX([Arrival_Time_Date]) as [Date In],
+  DATEDIFF(mi,  Convert(Datetime, CONVERT(VARCHAR(10),[Arrival_Time_Date],111) + ' '+@TimeComparison) ,MAX([Arrival_Time_Date]))  as [Minutes Late]
+
+  FROM ArrivalTime
+  WHERE
+  --cast(convert(char(8), [Arrival_Time_Date], 108) as datetime)-> cast('09:00' as datetime)
+  --and
+  Personal_ID = @Personal_ID
+  and
+  Check_State = 0
+  AND
+  (@Arrival_Date_From 	 IS NULL OR		( convert(varchar(10),Arrival_Time_Date,111) 	between @Arrival_Date_From and @Arrival_Date_To))
+
+  GROUP BY Personal_ID, CONVERT(VARCHAR(10),[Arrival_Time_Date],111)
+</action>
+
+----------------------------------------------------------------------------
+
+
+<action name = 'DelayIN_all' type='optional'>
+  SELECT Personal_ID ,
+  CONVERT(VARCHAR(10),[Arrival_Time_Date],111) as [AttendaceDate] ,
+  MIN([Arrival_Time_Date]) as [Date In],
+  DATEDIFF(mi, MIN([Arrival_Time_Date]), Convert(Datetime, CONVERT(VARCHAR(10),[Arrival_Time_Date],111) + ' ' + @TimeComparison)) as [Minutes Late]
+
+  FROM ArrivalTime
+  WHERE
+  -- to get both over time and delay
+  --cast(convert(char(8), [Arrival_Time_Date], 108) as datetime) > cast(@TimeComparison as datetime)
+  --and
+  Check_State = 1
+  AND
+  (@Arrival_Date_From 	 IS NULL OR		( convert(varchar(10),Arrival_Time_Date,111) 	between @Arrival_Date_From and @Arrival_Date_To))
+
+  GROUP BY Personal_ID, CONVERT(VARCHAR(10),[Arrival_Time_Date],111)
+</action>
+
+<action name = 'DelayOUT_all' type='optioal'>
+	SELECT Personal_ID ,
+	CONVERT(VARCHAR(10),[Arrival_Time_Date],111) as [AttendaceDate] ,
+	MAX([Arrival_Time_Date]) as [Date In],
+	DATEDIFF(mi,  Convert(Datetime, CONVERT(VARCHAR(10),[Arrival_Time_Date],111) + ' '+@TimeComparison) ,MAX([Arrival_Time_Date]))  as [Minutes Late] 
+
+	FROM ArrivalTime 
+	WHERE 
+	--cast(convert(char(8), [Arrival_Time_Date], 108) as datetime)-> cast('09:00' as datetime)
+	--and 
+	Check_State = 0
+	AND	
+	(@Arrival_Date_From 	 IS NULL OR		( convert(varchar(10),Arrival_Time_Date,111) 	between @Arrival_Date_From and @Arrival_Date_To))
+
+	GROUP BY Personal_ID, CONVERT(VARCHAR(10),[Arrival_Time_Date],111)
+</action>
+</procedure>

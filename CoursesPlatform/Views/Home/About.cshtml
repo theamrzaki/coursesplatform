@@ -1,0 +1,297 @@
+﻿@{
+    ViewBag.Title = "About";
+    Layout = "~/Views/Shared/_PlainLayout.cshtml";
+}
+<link rel="stylesheet" href="~/bower_components/select2/dist/css/select2.min.css">
+
+<style>
+    body {
+        background-image: url('../../Content/Images/jonas-jacobsson-411044-unsplash.jpg')!important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
+    }
+</style>
+
+<div class="register-box">
+    <div class="register-logo">
+        <a  style="color:white !important" href="../../index2.html"><b>Courses</b>Platform</a>
+    </div>
+    
+    <div class="register-box-body" >
+        <br />
+        <div class="tab-content">
+            <div class="tab active" id="tab_1">
+                <form action="../../index.html" method="post" style="margin-top:20px">
+                    <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="Name">
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" rows="3" placeholder="About"></textarea>
+                    </div>
+
+                    <br />
+
+                    <div class="form-group has-feedback">
+                        <input type="email" class="form-control" placeholder="Email">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="email" class="form-control" placeholder="Website">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="email" class="form-control" placeholder="Personal PhoneNo.">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>                   
+                </form>
+            </div>
+            <div class="tab" id="tab_2">
+                <form action="../../index.html" method="post" style="margin-top:20px">
+                    <div class="form-group has-feedback">
+                        <input type="email" class="form-control" placeholder="FB page">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="email" class="form-control" placeholder="Twitter Page">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="email" class="form-control" placeholder="LinkedIn">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="tab" id="tab_3">
+                <form action="../../index.html" method="post" style="margin-top:20px">
+                    <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="Name">
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="Address">
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="PhoneNo.">
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="tab" id="tab_4">
+                <form action="../../index.html" method="post" style="margin-top:20px">
+                    <div class="form-group">
+                        <label>Specialization</label>
+                        <select id="specialization_tabs" class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select a State" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                            <option>Alabama</option>
+                            <option>Alaska</option>
+                            <option>California</option>
+                            <option>Delaware</option>
+                            <option>Tennessee</option>
+                            <option>Texas</option>
+                            <option>Washington</option>
+                        </select>
+                        
+                    </div>
+                    
+
+
+                    <div class="form-group">
+                        <label>Tags</label>
+                        <select id="Tags_tabs" class="form-control select2 select2-hidden-accessible" multiple="multiple" data-placeholder="Select a State" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                            <option>Alabama</option>
+                            <option>Alaska</option>
+                            <option>California</option>
+                            <option>Delaware</option>
+                            <option>Tennessee</option>
+                            <option>Texas</option>
+                            <option>Washington</option>
+                        </select>
+
+                    </div>
+                </form>
+            </div>
+            <div class="tab" id="tab_5">
+                <form action="../../index.html" method="post" style="margin-top:20px">
+                    <div class="form-group has-feedback">
+                        <input type="email" class="form-control" placeholder="UserName">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+
+                    <div class="form-group has-feedback">
+                        <input type="password" class="form-control" placeholder="Password">
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="password" class="form-control" placeholder="Retype password">
+                        <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <div class="checkbox icheck">
+                                <div class="icheckbox_square-blue" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                I agree to the <a href="#">terms</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <style>
+                /* Style the form */
+                #regForm {
+                  background-color: #ffffff;
+                  margin: 100px auto;
+                  padding: 40px;
+                  width: 70%;
+                  min-width: 300px;
+                }
+
+                /* Style the input fields */
+                input {
+                  padding: 10px;
+                  width: 100%;
+                  font-size: 17px;
+                  font-family: Raleway;
+                  border: 1px solid #aaaaaa;
+                }
+
+                /* Mark input boxes that gets an error on validation: */
+                input.invalid {
+                  background-color: #ffdddd;
+                }
+
+                /* Hide all steps by default: */
+                .tab {
+                  display: none;
+                }
+
+                /* Make circles that indicate the steps of the form: */
+                .step {
+                  height: 15px;
+                  width: 15px;
+                  margin: 0 2px;
+                  background-color: #bbbbbb;
+                  border: none; 
+                  border-radius: 50%;
+                  display: inline-block;
+                  opacity: 0.5;
+                }
+
+                /* Mark the active step: */
+                .step.active {
+                  opacity: 1;
+                }
+
+                /* Mark the steps that are finished and valid: */
+                .step.finish {
+                  background-color: #4CAF50;
+                }
+            </style>
+            <div style="overflow:auto;">
+                <div style="float:right;">
+                    <button type="button" id="prevBtn" class="btn btn-primary btn-block btn-flat" onclick="nextPrev(-1)">Previous</button>
+                    <button type="button" id="nextBtn" class="btn btn-primary btn-block btn-flat" onclick="nextPrev(1)">Next</button>
+                </div>
+            </div>
+            <!-- Circles which indicates the steps of the form: -->
+            <div style="text-align:center;margin-top:40px;">
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+            </div>
+            <script>
+                var currentTab = 0; // Current tab is set to be the first tab (0)
+                showTab(currentTab); // Display the current tab
+
+                function showTab(n) {
+                    // This function will display the specified tab of the form ...
+                    var x = document.getElementsByClassName("tab");
+                    x[n].style.display = "block";
+                    // ... and fix the Previous/Next buttons:
+                    if (n == 0) {
+                        document.getElementById("prevBtn").style.display = "none";
+                    } else {
+                        document.getElementById("prevBtn").style.display = "inline";
+                    }
+                    if (n == (x.length - 1)) {
+                        document.getElementById("nextBtn").innerHTML = "Submit";
+                    } else {
+                        document.getElementById("nextBtn").innerHTML = "Next";
+                    }
+                    // ... and run a function that displays the correct step indicator:
+                    fixStepIndicator(n)
+                }
+
+                function nextPrev(n) {
+                    // This function will figure out which tab to display
+                    var x = document.getElementsByClassName("tab");
+                    // Exit the function if any field in the current tab is invalid:
+                    if (n == 1 && !validateForm()) return false;
+                    // Hide the current tab:
+                    x[currentTab].style.display = "none";
+                    // Increase or decrease the current tab by 1:
+                    currentTab = currentTab + n;
+                    // if you have reached the end of the form... :
+                    if (currentTab >= x.length) {
+                        //...the form gets submitted:
+                        document.getElementById("regForm").submit();
+                        return false;
+                    }
+                    // Otherwise, display the correct tab:
+                    showTab(currentTab);
+                }
+
+                function validateForm() {
+                    // This function deals with validation of the form fields
+                    var x, y, i, valid = true;
+                    x = document.getElementsByClassName("tab");
+                    y = x[currentTab].getElementsByTagName("input");
+                    // A loop that checks every input field in the current tab:
+                    for (i = 0; i < y.length; i++) {
+                        // If a field is empty...
+                        if (y[i].value == "" && y[i].className != "select2-search__field invalid" && y[i].className != "select2-search__field") {
+                            // add an "invalid" class to the field:
+                            y[i].className += " invalid";
+                            // and set the current valid status to false:
+                            valid = false;
+                        }
+                    }
+                    // If the valid status is true, mark the step as finished and valid:
+                    if (valid) {
+                        document.getElementsByClassName("step")[currentTab].className += " finish";
+                    }
+                    return valid; // return the valid status
+                }
+
+                function fixStepIndicator(n) {
+                    // This function removes the "active" class of all steps...
+                    var i, x = document.getElementsByClassName("step");
+                    for (i = 0; i < x.length; i++) {
+                        x[i].className = x[i].className.replace(" active", "");
+                    }
+                    //... and adds the "active" class to the current step:
+                    x[n].className += " active";
+                }
+            </script>
+        </div>
+
+        <a href="login.html" class="text-center">I already have a membership</a>
+    </div>
+    <!-- /.form-box -->
+</div>
+
+
+@*<div style="text-align:center;margin-bottom:20px">
+    <div>
+        <ul class="nav nav-tabs pull-right" style="display: inline-block;vertical-align: bottom;">
+            <li class="active"><a href="#tab_1" data-toggle="tab">Center</a></li>
+            <li><a href="#tab_2" data-toggle="tab">Branch</a></li>
+            <li><a href="#tab_3" data-toggle="tab">specialization</a></li>
+            <li><a href="#tab_4" data-toggle="tab">Admin</a></li>
+        </ul>
+    </div>
+</div>*@

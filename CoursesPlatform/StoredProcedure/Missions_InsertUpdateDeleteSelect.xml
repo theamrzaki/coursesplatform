@@ -1,0 +1,491 @@
+<procedure name='Missions_InsertUpdateDeleteSelect'>
+
+  <declares>
+    @Id						integer	      = Null;
+    @Emp_Id             	integer	      = Null;
+    @Manager_Id         	integer       = Null;
+    @Assign_Date        	datetime      = Null;
+    @Name               	nvarchar(50)  = Null;
+    @Goal               	nvarchar(300) = Null;
+    @Mission_Date       	datetime      = Null;
+    @Time_From          	time          = Null;
+    @Time_To            	time          = Null;
+    @Completion_Date		datetime      = Null ;
+    @Location           	nvarchar(70)  = Null;
+    @City					integer       = Null       ;
+    @State              	integer       = Null;
+    @Completion_Summary 	nvarchar(300) = Null;
+
+
+    @Comp_ID 				integer       = Null;
+    @Dept_ID				integer       = Null;
+    @Emp_Name				nvarchar(50)  = Null;
+    @Mission_Date_To 	datetime      = Null;
+    @Mission_Date_From 	datetime      = Null;
+    @Completion_Date_From	datetime      = Null;
+    @Completion_Date_To		datetime      = Null;
+
+    @department_ID			integer       = Null;
+
+    @DeadLine_Date				  datetime      = Null;
+    @Require_Checkin			  integer       = Null;
+    @New_Checkin				  datetime      = Null;
+    @Require_Checkout			  integer       = Null;
+    @Allowance_Type				  integer       = Null;
+    @Allowance					  float         = Null;
+    @Recive_Alloance_end_of_month integer       = Null;
+  </declares>
+  
+  
+  <action name='Assign'    
+>    
+ Insert into Missions
+ (
+	Emp_Id              ,
+	Assign_Date         ,
+	Name                ,
+	Goal                ,
+	Mission_Date        ,
+	Time_From           ,
+	Time_To             ,	
+	Location            ,
+	City				,
+
+	DeadLine_Date				  ,
+	Require_Checkin			 	  ,
+	New_Checkin				 	  ,
+	Require_Checkout			  ,
+	Allowance_Type				  ,
+	Allowance					  ,
+	Recive_Alloance_end_of_month  ,
+
+
+	State               ,
+	Mission_Type,
+	FinalReply               
+ ) 
+ output inserted.Id
+ values
+ (
+	@Emp_Id              ,
+	GETDATE()			 ,
+	@Name                ,
+	@Goal                ,
+	@Mission_Date        ,
+	@Time_From           ,
+	@Time_To             ,
+	@Location            ,
+	@City				 ,
+
+	@DeadLine_Date				   ,
+	@Require_Checkin			   ,
+	@New_Checkin				   ,
+	@Require_Checkout			   ,
+	@Allowance_Type				   ,
+	@Allowance					   ,
+	@Recive_Alloance_end_of_month  ,
+
+	1 ,--state=1==>pending completion
+	1 ,--type==> Assigned
+	1--type==> already acceptance (override workflow)
+ );    
+</action>    
+
+<action name='Request'    
+>    
+ Insert into Missions
+ (
+	Emp_Id              ,
+	Request_Date         ,
+	Name                ,
+	Goal                ,
+	Mission_Date        ,
+	Time_From           ,
+	Time_To             ,	
+	Location            ,
+	City				,
+	Require_Checkin				  ,
+	Require_Checkout			  ,
+	Recive_Alloance_end_of_month  ,
+	State               ,
+	Mission_Type,
+	FinalReply 
+ ) 
+ output inserted.Id
+ values
+ (
+	@Emp_Id              ,
+	GETDATE()			 ,
+	@Name                ,
+	@Goal                ,
+	@Mission_Date        ,
+	@Time_From           ,
+	@Time_To             ,
+	@Location            ,
+	@City				 ,
+	0,	--|
+	0,	--|--> still waiting to be accepted by admin
+	0,	--|
+	1 ,--state=1==>pending completion
+	0 ,--type==> Requested
+	-1--type==> Pending acceptance
+ );    
+</action>   
+
+
+<action name='Fill_Allowance_Arrival'
+>    
+ update Missions
+ set
+	DeadLine_Date				  = @DeadLine_Date				   ,
+	Require_Checkin			 	  = @Require_Checkin			   ,
+	New_Checkin				 	  = @New_Checkin				   ,
+	Require_Checkout			  = @Require_Checkout			   ,
+	Allowance_Type				  = @Allowance_Type				   ,
+	Allowance					  = @Allowance					   ,
+	Recive_Alloance_end_of_month  = @Recive_Alloance_end_of_month  
+where
+Id = @Id 
+   
+</action>
+
+
+
+-----------selects-------------------
+<action name='SelectByID'    
+>    
+	select 
+	Missions.Id						 as 'Missions_Id'				   ,
+	Missions.Emp_Id             	 as 'Missions_Emp_Id'			   ,
+	Missions.Manager_Id         	 as 'Missions_Manager_Id'		   ,
+
+	Missions.Assign_Date        	 as 'Missions_Assign_Date'		   ,
+	Missions.Request_Date        	 as 'Missions_Request_Date'		   ,
+
+	Missions.Name               	 as 'Missions_Name'				   ,
+	Missions.Goal               	 as 'Missions_Goal'				   ,
+	Missions.Mission_Date       	 as 'Missions_Mission_Date'		   ,
+	Missions.Time_From          	 as 'Missions_Time_From'		   ,
+	Missions.Time_To            	 as 'Missions_Time_To'			   ,
+	Missions.Completion_Date		 as 'Missions_Completion_Date'	   ,
+	Missions.Location           	 as 'Missions_Location'			   ,
+	Missions.City           		 as 'Missions_City'			   ,
+	Settings.Name					 as 'Missions_CityName'			   ,
+
+	Missions.State              	 as 'Missions_State'			   ,
+
+	Missions.Mission_Type			 as 'Mission_Type'			   ,
+
+	Missions.FinalReply              	 as 'Missions_FinalReply'	   ,
+
+	Missions.Completion_Summary 	 as 'Missions_Completion_Summary'  ,
+	Employees.Name					 as 'Employees_Name'  ,
+	Departments.Name				 as 'Departments_Name'  ,
+	Companies.Name					 as 'Companies_Name'  ,
+
+	DeadLine_Date				  ,
+	Require_Checkin			 	  ,
+	New_Checkin				 	  ,
+	Require_Checkout			  ,
+	Allowance_Type				  ,
+	Allowance					  ,
+	Recive_Alloance_end_of_month  
+
+	from Missions
+
+	inner join Employees 
+	on Employees.Id = Missions.Emp_ID   
+
+	inner join Departments on Departments.Id = Employees.Department_ID
+	inner join Companies on Companies.Id = Employees.Company_ID_Emp
+	inner join Settings on Settings.Id = Missions.City
+
+	where Missions.Id = @Id
+</action>   
+
+<action name='SelectByEmp'    
+>    
+	select Missions.Id						 as 'Missions_Id'				   ,
+	Missions.Emp_Id             	 as 'Missions_Emp_Id'			   ,
+	Missions.Manager_Id         	 as 'Missions_Manager_Id'		   ,
+
+	Missions.Assign_Date        	 as 'Missions_Assign_Date'		   ,
+	Missions.Request_Date        	 as 'Missions_Request_Date'		   ,
+
+	Missions.Name               	 as 'Missions_Name'				   ,
+	Missions.Goal               	 as 'Missions_Goal'				   ,
+	Missions.Mission_Date       	 as 'Missions_Mission_Date'		   ,
+	Missions.Time_From          	 as 'Missions_Time_From'		   ,
+	Missions.Time_To            	 as 'Missions_Time_To'			   ,
+	Missions.Completion_Date		 as 'Missions_Completion_Date'	   ,
+	Missions.Location           	 as 'Missions_Location'			   ,
+	Missions.City           		 as 'Missions_City'			   ,
+	Settings.Name					 as 'Missions_CityName'			   ,
+
+	Missions.State              	 as 'Missions_State'			   ,
+
+		Missions.FinalReply              	 as 'Missions_FinalReply'	   ,
+	
+	Missions.Mission_Type			 as 'Mission_Type'			   ,
+
+	Missions.Completion_Summary 	 as 'Missions_Completion_Summary'  ,
+	Employees.Name					 as 'Employees_Name'  ,
+	Departments.Name				 as 'Departments_Name'  ,
+	Companies.Name					 as 'Companies_Name'  ,
+
+	DeadLine_Date				  ,
+	Require_Checkin			 	  ,
+	New_Checkin				 	  ,
+	Require_Checkout			  ,
+	Allowance_Type				  ,
+	Allowance					  ,
+	Recive_Alloance_end_of_month  
+
+	from Missions
+
+	inner join Employees 
+	on Employees.Id = Missions.Emp_ID   
+
+	inner join Departments on Departments.Id = Employees.Department_ID
+	inner join Companies on Companies.Id = Employees.Company_ID_Emp
+	inner join Settings on Settings.Id = Missions.City
+
+	where Missions.Emp_Id =@Emp_Id
+</action> 
+
+-- not used
+<action name='SelectByManger'    
+>    
+	select
+	Missions.Id						 as 'Missions_Id'				   ,
+	Missions.Emp_Id             	 as 'Missions_Emp_Id'			   ,
+	Missions.Manager_Id         	 as 'Missions_Manager_Id'		   ,
+
+	Missions.Assign_Date        	 as 'Missions_Assign_Date'		   ,
+	Missions.Request_Date        	 as 'Missions_Request_Date'		   ,
+
+	Missions.Name               	 as 'Missions_Name'				   ,
+	Missions.Goal               	 as 'Missions_Goal'				   ,
+	Missions.Mission_Date       	 as 'Missions_Mission_Date'		   ,
+	Missions.Time_From          	 as 'Missions_Time_From'		   ,
+	Missions.Time_To            	 as 'Missions_Time_To'			   ,
+	Missions.Completion_Date		 as 'Missions_Completion_Date'	   ,
+	Missions.Location           	 as 'Missions_Location'			   ,
+	Missions.City           		 as 'Missions_City'			   ,
+	Settings.Name					 as 'Missions_CityName'			   ,
+
+	Missions.State              	 as 'Missions_State'			   ,
+
+		Missions.FinalReply              	 as 'Missions_FinalReply'	   ,
+
+	Missions.Mission_Type			 as 'Mission_Type'			   ,
+
+	Missions.Completion_Summary 	 as 'Missions_Completion_Summary'  ,
+	Employees.Name					 as 'Employees_Name'  ,
+	Departments.Name				 as 'Departments_Name'  ,
+	Companies.Name					 as 'Companies_Name'  ,
+
+	DeadLine_Date				  ,
+	Require_Checkin			 	  ,
+	New_Checkin				 	  ,
+	Require_Checkout			  ,
+	Allowance_Type				  ,
+	Allowance					  ,
+	Recive_Alloance_end_of_month  
+
+	from Missions
+
+	inner join Employees 
+	on Employees.Id = Missions.Emp_ID   
+
+	inner join Departments on Departments.Id = Employees.Department_ID
+	inner join Companies on Companies.Id = Employees.Company_ID_Emp
+	inner join Settings on Settings.Id = Missions.City
+
+	where Missions.Manager_Id =@Manager_Id
+</action> 
+
+<action name='SelectByDept'    
+>    
+	select
+	Missions.Id						 as 'Missions_Id'				   ,
+	Missions.Emp_Id             	 as 'Missions_Emp_Id'			   ,
+	Missions.Manager_Id         	 as 'Missions_Manager_Id'		   ,
+
+	Missions.Assign_Date        	 as 'Missions_Assign_Date'		   ,
+	Missions.Request_Date        	 as 'Missions_Request_Date'		   ,
+
+	Missions.Name               	 as 'Missions_Name'				   ,
+	Missions.Goal               	 as 'Missions_Goal'				   ,
+	Missions.Mission_Date       	 as 'Missions_Mission_Date'		   ,
+	Missions.Time_From          	 as 'Missions_Time_From'		   ,
+	Missions.Time_To            	 as 'Missions_Time_To'			   ,
+	Missions.Completion_Date		 as 'Missions_Completion_Date'	   ,
+	Missions.Location           	 as 'Missions_Location'			   ,
+	Missions.City           		 as 'Missions_City'			   ,
+	Settings.Name					 as 'Missions_CityName'			   ,
+
+	Missions.State              	 as 'Missions_State'			   ,
+
+		Missions.FinalReply              	 as 'Missions_FinalReply'	   ,
+
+	Missions.Mission_Type			 as 'Mission_Type'			   ,
+
+	Missions.Completion_Summary 	 as 'Missions_Completion_Summary'  ,
+	Employees.Name					 as 'Employees_Name'  ,
+	Departments.Name				 as 'Departments_Name'  ,
+	Companies.Name					 as 'Companies_Name'  ,
+
+	DeadLine_Date				  ,
+	Require_Checkin			 	  ,
+	New_Checkin				 	  ,
+	Require_Checkout			  ,
+	Allowance_Type				  ,
+	Allowance					  ,
+	Recive_Alloance_end_of_month  
+
+	from Missions
+
+	inner join Employees 
+	on Employees.Id = Missions.Emp_ID   
+
+	inner join Departments on Departments.Id = @department_ID
+	inner join Companies on Companies.Id = Employees.Company_ID_Emp
+	inner join Settings on Settings.Id = Missions.City
+</action> 
+
+<action name='SelectAll'    
+>    
+	select 
+	Missions.Id						 as 'Missions_Id'				   ,
+	Missions.Emp_Id             	 as 'Missions_Emp_Id'			   ,
+	Missions.Manager_Id         	 as 'Missions_Manager_Id'		   ,
+
+	Missions.Assign_Date        	 as 'Missions_Assign_Date'		   ,
+	Missions.Request_Date        	 as 'Missions_Request_Date'		   ,
+
+	Missions.Name               	 as 'Missions_Name'				   ,
+	Missions.Goal               	 as 'Missions_Goal'				   ,
+	Missions.Mission_Date       	 as 'Missions_Mission_Date'		   ,
+	Missions.Time_From          	 as 'Missions_Time_From'		   ,
+	Missions.Time_To            	 as 'Missions_Time_To'			   ,
+	Missions.Completion_Date		 as 'Missions_Completion_Date'	   ,
+	Missions.Location           	 as 'Missions_Location'			   ,
+	Missions.City           		 as 'Missions_City'			   ,
+	Settings.Name					 as 'Missions_CityName'			   ,
+
+	Missions.State              	 as 'Missions_State'			   ,
+
+		Missions.FinalReply              	 as 'Missions_FinalReply'	   ,
+
+	Missions.Mission_Type			 as 'Mission_Type'			   ,
+
+	Missions.Completion_Summary 	 as 'Missions_Completion_Summary'  ,
+	Employees.Name					 as 'Employees_Name'  ,
+	Departments.Name				 as 'Departments_Name'  ,
+	Companies.Name					 as 'Companies_Name'  ,
+
+	DeadLine_Date				  ,
+	Require_Checkin			 	  ,
+	New_Checkin				 	  ,
+	Require_Checkout			  ,
+	Allowance_Type				  ,
+	Allowance					  ,
+	Recive_Alloance_end_of_month  
+
+	from Missions
+
+	inner join Employees 
+	on Employees.Id = Missions.Emp_ID   
+
+	inner join Departments on Departments.Id = Employees.Department_ID
+	inner join Companies on Companies.Id = Employees.Company_ID_Emp
+	inner join Settings on Settings.Id = Missions.City
+</action> 
+--------------------------------------
+
+
+<action name='SetComplete'    
+>    
+ Update Missions 
+ set 
+	 State=2 ,--state=2==>done, 
+	 Completion_Date=GETDATE(),
+	 Completion_Summary = @Completion_Summary
+ where Id=@Id;    
+</action>   
+
+<action name='FinalReply'    
+>    
+ Update Missions 
+ set 
+	 FinalReply=@State ,
+	 Assign_Date=GETDATE()
+ where Id=@Id;    
+</action>
+
+
+--------------------------------------
+<action name ='Filter' type='optional'>   
+	select 	
+	Missions.Id						 as 'Missions_Id'				   ,
+	Missions.Emp_Id             	 as 'Missions_Emp_Id'			   ,
+	Missions.Manager_Id         	 as 'Missions_Manager_Id'		   ,
+	Missions.Assign_Date        	 as 'Missions_Assign_Date'		   ,
+	Missions.Name               	 as 'Missions_Name'				   ,
+	Missions.Goal               	 as 'Missions_Goal'				   ,
+	Missions.Mission_Date       	 as 'Missions_Mission_Date'		   ,
+	Missions.Time_From          	 as 'Missions_Time_From'		   ,
+	Missions.Time_To            	 as 'Missions_Time_To'			   ,
+	Missions.Completion_Date		 as 'Missions_Completion_Date'	   ,
+	Missions.Location           	 as 'Missions_Location'			   ,
+	Missions.City           		 as 'Missions_City'			   ,
+	Settings.Name					 as 'Missions_CityName'			   ,
+
+	Missions.State              	 as 'Missions_State'			   ,
+	
+	Missions.Mission_Type			 as 'Mission_Type'			   ,
+
+	Missions.FinalReply              	 as 'Missions_FinalReply'			   ,
+
+	Missions.Completion_Summary 	 as 'Missions_Completion_Summary'  ,
+	Employees.Name					 as 'Employees_Name'  ,
+	Departments.Name				 as 'Departments_Name'  ,
+	Companies.Name					 as 'Companies_Name'  ,
+
+	Missions.Assign_Date        	 as 'Missions_Assign_Date'		   ,
+	Missions.Request_Date        	 as 'Missions_Request_Date'		   ,
+	DeadLine_Date				  ,
+	Require_Checkin			 	  ,
+	New_Checkin				 	  ,
+	Require_Checkout			  ,
+	Allowance_Type				  ,
+	Allowance					  ,
+	Recive_Alloance_end_of_month  
+
+	from Missions
+
+	inner join Employees 
+	on Employees.Id = Missions.Emp_ID   
+
+	inner join Departments on Departments.Id = Employees.Department_ID
+	inner join Companies on Companies.Id = Employees.Company_ID_Emp
+	inner join Settings on Settings.Id = Missions.City
+
+	where 
+	          
+	(@Name 					 IS NULL OR		( Missions.Name 	 like '%'+@Name+'%' 	    ))
+And (@Emp_Name				 IS NULL OR		( Employees.Name 	 like '%'+@Emp_Name+'%' 	    ))
+And (@Emp_Id				 IS NULL OR		( Employees.Id 		= @Emp_Id	    ))--only used in Profile
+AND	(@Comp_ID  				 IS NULL OR		( Companies.Id      = @Comp_ID  	    ))	
+AND	(@Dept_ID  				 IS NULL OR		( Departments.Id    = @Dept_ID  	    ))
+AND (@State  				 IS NULL OR		( State				= @State  	    ))	
+AND	(@Mission_Date_From 	 IS NULL OR		(Mission_Date 	between @Mission_Date_From and @Mission_Date_To))
+AND	(@Completion_Date_From 	 IS NULL OR		(Completion_Date 	between @Completion_Date_From and @Completion_Date_To))
+
+</action>
+ 
+--------------------------------------
+
+
+</procedure>

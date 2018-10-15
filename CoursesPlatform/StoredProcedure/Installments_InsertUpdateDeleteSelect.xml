@@ -1,0 +1,414 @@
+﻿<procedure name='Installments_InsertUpdateDeleteSelect'>
+
+
+  <declares>
+    @Id				        integer		 	        = NULL;
+    @Emp_id			      integer		 	      = NULL;
+    @Name			        nvarchar(50) 	      = NULL;
+    @Description	    nvarchar(100) 	= NULL;
+    @Type			        integer		 	        = NULL;
+    @State			      integer		 	      = NULL;
+    @Value			      float		 	      = NULL;
+    @Num_Months		    integer		 	    = NULL;
+    @Assign_Date	    date		 	      = NULL;
+    @Begin_Date		    date		 	      = NULL;
+    @Begin_Date_from  date		 	      = NULL;
+    @Begin_Date_to    date		 	      = NULL;
+    
+    @Company_Name     integer		 	    = NULL;
+    @Department_Name  integer		 	    = NULL;
+
+    @Installment_Assign_From date		 	      = NULL;
+    @Installment_Assign_To   date		 	      = NULL;
+
+    @Installment_Begin_From  date		 	      = NULL;
+    @Installment_Begin_To    date		 	      = NULL;
+
+
+    @month integer		 	    = NULL;
+    @Emps integer		 	    = NULL;
+    @Comps integer		 	    = NULL;
+    @Depts integer		 	    = NULL;
+
+  </declares>
+  
+  
+  ---------------------------------------------------
+  --List
+  <action name='ListTypes'>
+    SELECT [Id]
+    ,[Name]
+    ,[Description]
+    ,[Max_Fixed]
+    ,[Duration_Value_Months]
+    ,[Specific_General]
+    ,[Limit_Or_Not]
+    ,[Version]
+    FROM [dbo].[Installments_Types]
+    where [Version] = @VersionID
+  </action>
+
+  <action name='ListLimits'>
+    SELECT [Id]
+    ,[User_Type]
+    ,[Open_Closed]
+    ,[Bulk_Percentage]
+    ,[Value]
+    ,[Version]
+    FROM [dbo].[Installments_Limits]
+    where [Version] = @VersionID
+  </action>
+
+  ----no need to dynamically add Limits , But i have written it nonetheles
+  <action name='add_Installments_Limits'>
+    INSERT INTO [Installments_Limits]
+    ([User_Type]
+    ,[Open_Closed]
+    ,[Bulk_Percentage]
+    ,[Value]
+    ,[Version])
+    VALUES
+    (@User_Type
+    ,@Open_Closed
+    ,@Bulk_Percentage
+    ,@Value
+    ,@Version)
+  </action>
+
+  <action name='add_Installments_Types'>
+    INSERT INTO [Installments_Types]
+    ([Name]
+    ,[Description]
+    ,[Max_Fixed]
+    ,[Duration_Value_Months]
+    ,[Specific_General]
+    ,[Limit_Or_Not]
+    ,[Version])
+    VALUES
+    (@Name
+    ,@Description
+    ,@Max_Fixed
+    ,@Duration_Value_Months
+    ,@Specific_General
+    ,@Limit_Or_Not
+    ,@Version)
+  </action>
+  
+  --Select
+  <action name='Select_Installment_Type'>
+    Select * from [Installments_Types]
+    WHERE [Id]  = @Id
+  </action>
+  
+  <action name='SelectTypes_Version'>
+    select Id, Name from Installments_Types
+    where Version = @Version and Specific_General = @Type
+  </action>
+
+  <action name='SelectTypes_Version_Both'>
+    select Id, Name from Installments_Types
+    where Version = @Version
+  </action>
+  
+  <action name='Select_Installment_Limit'>
+    Select * from [Installments_Limits]
+    WHERE [Id]  = @Id
+  </action>
+
+  <action name='Select_Installment_Limit_Name'>
+      select * from Installments_Limits
+      where User_Type = @User_Type and Version = @Version
+  </action>
+
+    
+    
+  --edit
+  <action name='Edit_Installment_Type'>
+    UPDATE [Installments_Types]
+    SET 
+      [Name] = @Name
+    ,[Description] = @Description
+    ,[Max_Fixed] = @Max_Fixed
+    ,[Duration_Value_Months] = @Duration_Value_Months
+    ,[Specific_General] = @Specific_General
+    ,[Limit_Or_Not] = @Limit_Or_Not
+    ,[Version] = @Version
+    WHERE [Id]  = @Id
+  </action>
+
+  <action name='Edit_Installment_Limit'>
+    UPDATE [Installments_Limits]
+    SET [User_Type] = @User_Type
+    ,[Open_Closed] = @Open_Closed
+    ,[Bulk_Percentage] = @Bulk_Percentage
+    ,[Value] = @Value
+    ,[Version] = @Version
+    WHERE [Id] = @Id
+  </action>
+
+
+  --Delete
+  <action name='DeleteType'>
+    DELETE FROM [Installments_Types]
+    WHERE [Id] = @Id
+  </action>
+  
+  -------------------------------------------
+
+
+
+  ---------------------------------------------------------
+  <action name='Insert'>
+    Insert into Installments
+    (Name   ,Description   ,Emp_id   ,Begin_Date   ,Assign_Date  ,Num_Months   ,State  ,Type   ,Value)
+    OUTPUT inserted.Id
+    values
+    (@Name  ,@Description ,@Emp_id  ,@Begin_Date  ,@Assign_Date ,@Num_Months  ,@State ,@Type  ,@Value)
+  </action>
+  
+  <action name='InsertMonth'>
+    Insert into Installments_Months
+    (Installments_ID  , Emp_ID  , Date  , Month_Value)
+    values
+    (@Installments_ID ,@Emp_ID  ,@Date  ,@Month_Value)
+  </action>
+  ---------------------------------------------------------
+
+
+
+  ---------------------------------------------------
+  <action name='ListAll'>
+    select
+    [Installments].[Id]         					,
+    Employees.Name as 'EmpName',
+    Employees.Actual_Salary,
+    Jobs.Name as 'Job',
+    Companies.Name as 'Company',
+    Departments.Name as 'Department',
+    [Installments].[Emp_id]     					,
+    [Installments].[Name]       					,
+    [Installments].[Description]					,
+    [Installments].[Type]       					,
+    Installments_Types.Name as 'Type_Name'      	,
+    [Installments].[State]      					,
+    [Installments].[Value]      					,
+    [Installments].[Num_Months] 					,
+    [Installments].[Assign_Date]					,
+    [Installments].[Begin_Date]
+    from [Installments]
+    inner join Employees on Employees.Id = [Installments].[Emp_id]
+    LEFT  join Departments on Employees.Department_ID = Departments.Id
+    LEFT  join Companies on Employees.Company_ID_Emp = Companies.Id
+    inner join Jobs on Employees.Job_ID = Jobs.Id
+    inner join Installments_Types on Installments.Type = Installments_Types.Id
+
+  </action>
+
+  <action name='ListAll_Months_Emp'>
+    select
+    [Installments_Months].[Id]           as 'Installments_Months_ID',
+    [Installments_Months].[Date]         as 'Installments_Date',
+    [Installments_Months].[Month_Value]  as 'Installments_Month_Value' ,
+    Installments.Name                    as 'Installments_Name',
+    Installments.Value                   as 'Installments_Value',
+    Installments.Num_Months              as 'Installments_Num_Months',
+    Installments.Emp_id                  as 'Installments_Emp_id'
+
+    from Installments_Months
+    inner join Installments on Installments.Id = Installments_Months.Installments_ID
+    where
+    convert(varchar(10),Installments_Months.Date,111) 	between @Begin_Date_from and @Begin_Date_to
+    and
+    Installments.Emp_id =@Emp_id
+
+  </action>
+  
+  <action name='ListAll_Months'>
+    select
+    [Installments_Months].[Id]            			,
+    [Installments_Months].[Date]          			,
+    [Installments_Months].[Month_Value]
+
+    from Installments_Months
+    where [Installments_ID] = @Installments_ID
+  </action>
+
+  <action name='Emp_Filter' type='optional'>
+    select
+    [Installments_Months].[Id]            			,
+    [Installments_Months].[Date]          			,
+    [Installments_Months].[Emp_ID]          			,
+    [Installments_Months].[Month_Value]         ,
+    Employees.Name as 'Emp_Name',
+    Employees.Actual_Salary,
+    Departments.Name as 'Dept_Name',
+    Companies.Name as 'Comp_Name',
+    Jobs.Name as 'Jobs_Name',
+
+    Installments.Value,
+    Installments.Num_Months,
+    Installments.Type,
+    Installments_Types.Name as 'Type_Name'
+
+    from Installments_Months
+
+    inner join Installments on Installments.Id = Installments_Months.Installments_ID
+    inner join Employees on Employees.Id = [Installments_Months].[Emp_ID]
+    Left join Departments on Departments.Id = Employees.Department_ID
+    Left join Companies on Companies.Id = Employees.Company_ID_Emp
+    Left join Jobs on Jobs.Id = Employees.Job_ID
+    inner join Installments_Types on Installments.Type = Installments_Types.Id
+    
+    where
+    [Installments_Months].[Id]  !=0
+    AND	(@Begin_Date_from  IS NULL OR		( convert(varchar(10),Installments_Months.Date,111) 	between @Begin_Date_from and @Begin_Date_to))
+    AND	(@Emps 					   IS NULL OR		( [Installments_Months].[Emp_ID] = @Emps	    ))
+    AND	(@Comps 					 IS NULL OR		( Companies.Id= @Comps	    ))
+    AND	(@Depts 					 IS NULL OR		( Departments.Id  = @Depts	    ))
+    order by Installments.Emp_id
+  </action>
+  -----------------------------------------------------
+
+
+
+  ---------------------------------------------------------
+  <action name='Select'>
+    select
+    [Installments].[Id]         					,
+    Employees.Name as 'EmpName',
+    Employees.Actual_Salary,
+    Jobs.Name as 'Job',
+    Companies.Name as 'Company',
+    Departments.Name as 'Department',
+    [Installments].[Emp_id]     					,
+    [Installments].[Name]       					,
+    [Installments].[Description]					,
+    [Installments].[Type]       					,
+    Installments_Types.Name as 'Type_Name'      	,
+    [Installments].[State]      					,
+    [Installments].[Value]      					,
+    [Installments].[Num_Months] 					,
+    [Installments].[Assign_Date]					,
+    [Installments].[Begin_Date]
+    from [Installments]
+    inner join Employees on Employees.Id = [Installments].[Emp_id]
+    LEFT  join Departments on Employees.Department_ID = Departments.Id
+    LEFT  join Companies on Employees.Company_ID_Emp = Companies.Id
+    inner join Jobs on Employees.Job_ID = Jobs.Id
+    inner join Installments_Types on Installments.Type = Installments_Types.Id
+    where [Installments].[Id] = @Id
+  </action>
+
+  <action name="SelectEmp">
+    select
+    [Installments].[Id]         					,
+    Employees.Name as 'EmpName',
+    Employees.Actual_Salary,
+    Jobs.Name as 'Job',
+    Companies.Name as 'Company',
+    Departments.Name as 'Department',
+    [Installments].[Emp_id]     					,
+    [Installments].[Name]       					,
+    [Installments].[Description]					,
+    [Installments].[Type]       					,
+    Installments_Types.Name as 'Type_Name'      	,
+    [Installments].[State]      					,
+    [Installments].[Value]      					,
+    [Installments].[Num_Months] 					,
+    [Installments].[Assign_Date]					,
+    [Installments].[Begin_Date]
+    from [Installments]
+    inner join Employees on Employees.Id = [Installments].[Emp_id]
+    LEFT  join Departments on Employees.Department_ID = Departments.Id
+    LEFT  join Companies on Employees.Company_ID_Emp = Companies.Id
+    inner join Jobs on Employees.Job_ID = Jobs.Id
+    inner join Installments_Types on Installments.Type = Installments_Types.Id
+    where [Installments].[Emp_id] = @Emp_id
+  </action>
+
+  <action name="SelectDept">
+    select
+    [Installments].[Id]         					,
+    Employees.Name as 'EmpName',
+    Employees.Actual_Salary,
+    Jobs.Name as 'Job',
+    Companies.Name as 'Company',
+    Departments.Name as 'Department',
+    [Installments].[Emp_id]     					,
+    [Installments].[Name]       					,
+    [Installments].[Description]					,
+    [Installments].[Type]       					,
+    Installments_Types.Name as 'Type_Name'      	,
+    [Installments].[State]      					,
+    [Installments].[Value]      					,
+    [Installments].[Num_Months] 					,
+    [Installments].[Assign_Date]					,
+    [Installments].[Begin_Date]
+    from [Installments]
+    inner join Employees on Employees.Id = [Installments].[Emp_id]
+    LEFT  join Departments on Employees.Department_ID = Departments.Id
+    LEFT  join Companies on Employees.Company_ID_Emp = Companies.Id
+    inner join Jobs on Employees.Job_ID = Jobs.Id
+    inner join Installments_Types on Installments.Type = Installments_Types.Id
+    where Departments.Id = @Department_Name
+  </action>
+  ---------------------------------------------------------
+
+
+  <action name="Filter" type="optional">
+    select
+    [Installments].[Id]         					,
+    Employees.Name as 'EmpName',
+    Employees.Actual_Salary,
+    Jobs.Name as 'Job',
+    Companies.Name as 'Company',
+    Departments.Name as 'Department',
+    [Installments].[Emp_id]     					,
+    [Installments].[Name]       					,
+    [Installments].[Description]					,
+    [Installments].[Type]       					,
+    Installments_Types.Name as 'Type_Name'      	,
+    [Installments].[State]      					,
+    [Installments].[Value]      					,
+    [Installments].[Num_Months] 					,
+    [Installments].[Assign_Date]					,
+    [Installments].[Begin_Date]
+    from [Installments]
+    inner join Employees on Employees.Id = [Installments].[Emp_id]
+    LEFT  join Departments on Employees.Department_ID = Departments.Id
+    LEFT  join Companies on Employees.Company_ID_Emp = Companies.Id
+    inner join Jobs on Employees.Job_ID = Jobs.Id
+    inner join Installments_Types on Installments.Type = Installments_Types.Id
+    
+    where
+    (@Emp_id             IS NULL OR		( Installments.Emp_id 	= @Emp_ID 	  	    ) )
+    AND (@Name               IS NULL OR		( Installments.Name 	 like '%'+@Name+'%' 	    ) )
+    AND (@Type               IS NULL OR		( Installments.Type 	 = @Type 	    ) )
+    AND (@State              IS NULL OR		( Installments.State 	 = @State 	    ) )
+    AND (@Value              IS NULL OR		( Installments.Value 	 = @Value 	    ) )
+    AND (@Num_Months         IS NULL OR		( Installments.Num_Months 	  = @Num_Months  	    ) )
+
+    and(@Begin_Date_from IS NULL OR (convert(varchar(10),Begin_Date,111) 	between @Begin_Date_from and @Begin_Date_to))
+
+    AND (@Department_Name    IS NULL OR		( Departments.Id = @Department_Name	    ) )
+    AND (@Company_Name       IS NULL OR		( Companies.Id 	 = @Company_Name 	    ) )
+  </action>
+
+
+  <action name='FinalReply'>
+    Update Installments
+    set
+    State=@State
+    where Id=@Id;
+  </action>
+
+  <action name="Loans_specifcMonth">
+    select sum(Month_Value)
+    from Installments_Months
+    where
+    Installments_Months.Emp_ID = @Emp_ID
+    and
+    convert(varchar(10),Installments_Months.Date,111) 	between @Begin_Date_from and @Begin_Date_to
+  </action>
+  
+</procedure>

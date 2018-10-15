@@ -1,0 +1,417 @@
+<procedure name='Employees_Select'>
+
+
+  <action name='Count'>
+    select count(Id)  from Employees where Work_Status = 1
+  </action>
+
+  <action name='CountDept'>
+    select count(Id)  from Employees where Work_Status = 1 and Department_ID = @Department_ID
+  </action>
+
+  <action name='CountMonthLimit'>
+    select count(Id)  from Employees where
+    DATEDIFF(Month,Hire_Date,GETDATE())&lt;=@MonthLimit
+    </action>
+
+  <action name='CountNatIDLimit'>
+    select count(Id)  from Employees where
+    DATEDIFF(DAY,[National_id_expire_date],GETDATE())&gt;0
+  </action>
+  
+  
+
+  <action name='ListEveryone'    
+  
+>
+ Select 
+  Employees.Id as 'EmpId',
+ Employees.Name		 as 'EmpName'				,
+ User_Name,
+ Email,
+PhoneNo         			,	
+MobileNo        			,	
+Address				         ,
+City				         ,
+Hire_Date       			,	
+Leave_Days       			,
+
+National_ID		             ,
+
+Job_ID 	                ,
+Jobs.Name as 'Job_Name' , 
+
+Sex             			,	
+Birth_Date      			,	
+Birth_Location	             ,
+Actual_Salary   			,	
+Taxtable_Salary				 ,
+Bonus           			,	
+Commission	                 ,
+Education                    ,
+Bachlor_Degree_Date          ,
+Courses                      ,
+Martial_Status               ,
+Military_Status              ,
+CV                           ,
+National_ID_Image            ,
+Birth_Certificate            ,
+Social_Insurance_Certificate ,
+Personal_ID_Arrival_Time,
+Serial,
+
+Clearance_form 				   ,
+Feesh 						   ,
+Ka3b_3aml 					   ,
+S1 							   ,
+S1_2 						   ,
+S6 							   ,
+Social_Insurance_Certificate   ,
+Tagneed 					   
+
+ 
+ from Employees
+ 
+ inner join Jobs on Jobs.Id = Job_ID
+
+</action>
+
+
+
+
+<action name='All'    
+  
+>    
+ Select 
+  Employees.Id as 'EmpId',
+ Employees.Name		 as 'EmpName'				,
+ Employees.MiddleName		 	as 'EmpMiddleName'				,
+Employees.LastName		 		as 'EmpLastName'				,
+User_Name,
+PhoneNo         			,	
+MobileNo        			,	
+Address				         ,
+City				         ,
+Hire_Date       			,	
+Leave_Days       			,
+
+National_ID		             ,
+
+Job_ID 	                ,
+Jobs.Name as 'Job_Name' , 
+Departments.Name as 'Department_Name' ,
+Departments.Id as 'Department_Id',
+Companies.Name as 'Companies_Name',
+Companies.Id as 'Companies_Id',
+
+Sex             			,	
+Birth_Date      			,	
+Birth_Location	             ,
+Actual_Salary   			,	
+Taxtable_Salary				 ,
+Bonus           			,	
+Commission	                 ,
+Education                    ,
+Bachlor_Degree_Date          ,
+Courses                      ,
+Martial_Status               ,
+Military_Status              ,
+CV                           ,
+National_ID_Image            ,
+Birth_Certificate            ,
+Social_Insurance_Certificate ,
+Personal_ID_Arrival_Time,
+
+casual_leave_days,
+annual_leave_days,
+casual_leave_days_additional,
+annual_leave_days_additional
+
+
+ 
+ from Employees
+ 
+ inner join Jobs on Jobs.Id = Job_ID
+ inner join Departments on Departments.Id = Employees.Department_ID
+ inner join Companies on Companies.Id = Employees.Company_ID_Emp    
+
+ where Work_Status = 1
+</action> 
+
+<action name='Specific'    
+ 
+>    
+ Select 
+  Employees.Id as 'EmpId',
+ Employees.Name		 as 'EmpName'				,
+  Employees.MiddleName		 as 'EmpMiddleName'				,
+  Employees.LastName		 as 'EmpLastName'				,
+
+ User_Name,
+Email ,
+PhoneNo         			,	
+MobileNo        			,	
+Address				         ,
+
+City				         ,
+Hire_Date       			,	
+Leave_Days       			,
+
+National_ID		             ,
+National_id_expire_date,
+
+Job_ID 	                     ,
+
+Jobs.Name as 'Job_Name' , 
+Departments.Name as 'Department_Name' ,
+Employees.Department_ID as 'Department_ID' ,
+Companies.Name as 'Companies_Name',
+Company_ID_Emp as 'Company_ID_Emp',
+
+
+Sex             			,	
+Religion,
+
+Birth_Date      			,	
+Birth_Location	             ,
+Actual_Salary   			,	
+Taxtable_Salary				 ,
+Variable_Salary,
+Other_Salary,
+
+Education                    ,
+Bachlor_Degree_Date          ,
+Courses                      ,
+Martial_Status               ,
+Military_Status              ,
+CV                           ,
+National_ID_Image            ,
+Birth_Certificate            ,
+Feesh,
+S6		   ,
+Ka3b_3aml  ,
+Image	   ,
+Tagneed	   ,
+S1		   ,
+Personal_ID_Arrival_Time,
+
+casual_leave_days,
+annual_leave_days,
+casual_leave_days_additional,
+annual_leave_days_additional
+
+
+ 
+ from Employees
+ 
+ inner join Jobs on Jobs.Id = Job_ID
+ inner join Departments on Departments.Id = Employees.Department_ID
+  inner join Companies on Companies.Id = Employees.Company_ID_Emp
+
+ where Employees.Id =@Id and  Work_Status = 1;   
+ </action>
+
+  <action name='By_Serial'
+ 
+>
+    Select
+    Employees.Id as 'EmpId',
+    Employees.Name		 as 'EmpName'				,
+    Employees.MiddleName		 	as 'EmpMiddleName'				,
+    Employees.LastName		 		as 'EmpLastName'				,
+    User_Name,
+    Email ,
+    PhoneNo         			,
+    MobileNo        			,
+    Address				         ,
+
+    City				         ,
+    Hire_Date       			,
+    Leave_Days       			,
+
+    National_ID		             ,
+    National_id_expire_date,
+
+    Job_ID 	                     ,
+
+    Jobs.Name as 'Job_Name' ,
+    Departments.Name as 'Department_Name' ,
+    Employees.Department_ID as 'Department_ID' ,
+    Companies.Name as 'Companies_Name',
+    Company_ID_Emp as 'Company_ID_Emp',
+
+
+    Sex             			,
+    Religion,
+
+    Birth_Date      			,
+    Birth_Location	             ,
+    Actual_Salary   			,
+    Taxtable_Salary				 ,
+    Variable_Salary,
+    Other_Salary,
+
+    Education                    ,
+    Bachlor_Degree_Date          ,
+    Courses                      ,
+    Martial_Status               ,
+    Military_Status              ,
+    CV                           ,
+    National_ID_Image            ,
+    Birth_Certificate            ,
+    Feesh,
+    S6		   ,
+    Ka3b_3aml  ,
+    Image	   ,
+    Tagneed	   ,
+    S1		   ,
+    Personal_ID_Arrival_Time,
+
+    casual_leave_days,
+    annual_leave_days,
+    casual_leave_days_additional,
+    annual_leave_days_additional
+
+
+
+    from Employees
+
+    inner join Jobs on Jobs.Id = Job_ID
+    inner join Departments on Departments.Id = Employees.Department_ID
+    inner join Companies on Companies.Id = Employees.Company_ID_Emp
+
+    where Employees.Serial =@Serial and  Work_Status = 1;
+  </action>
+ 
+ 
+ 
+ <action name='SpecificNoDepartment'    
+>    
+ Select 
+  Employees.Id as 'EmpId',
+ Employees.Name		 as 'EmpName'				,
+PhoneNo         			,	
+MobileNo        			,	
+Address				         ,
+City				         ,
+Hire_Date       			,	
+Leave_Days       			,
+
+National_ID		             ,
+Job_ID 	                     ,
+
+Jobs.Name as 'Job_Name' , 
+
+
+Sex             			,	
+Birth_Date      			,	
+Birth_Location	             ,
+Actual_Salary   			,	
+Taxtable_Salary				 ,
+Bonus           			,	
+Commission	                 ,
+Education                    ,
+Bachlor_Degree_Date          ,
+Courses                      ,
+Martial_Status               ,
+Military_Status              ,
+CV                           ,
+National_ID_Image            ,
+Birth_Certificate            ,
+Social_Insurance_Certificate  ,
+Personal_ID_Arrival_Time ,
+
+casual_leave_days,
+annual_leave_days
+
+
+ 
+ from Employees
+ 
+ inner join Jobs on Jobs.Id = Job_ID
+
+ where Employees.Id =@Id  and  Work_Status = 1;             
+</action> 
+
+
+<action name='AllLeft'    
+  
+>    
+ Select 
+
+ Employees.Id as 'EmpId',
+ Employees.Name		 as 'EmpName'				,
+ Employees.MiddleName		 	as 'EmpMiddleName'				,
+ Employees.LastName		 		as 'EmpLastName'				,
+ User_Name,
+Email ,
+PhoneNo         			,	
+MobileNo        			,	
+Address				         ,
+
+City				         ,
+Hire_Date       			,	
+Leave_Days       			,
+
+National_ID		             ,
+National_id_expire_date,
+
+Job_ID 	                     ,
+
+Jobs.Name as 'Job_Name' , 
+Departments.Name as 'Department_Name' ,
+Employees.Department_ID as 'Department_ID' ,
+Companies.Name as 'Companies_Name',
+Company_ID_Emp as 'Company_ID_Emp',
+
+
+Sex             			,	
+Religion,
+
+Birth_Date      			,	
+Birth_Location	             ,
+Actual_Salary   			,	
+Taxtable_Salary				 ,
+Variable_Salary,
+Other_Salary,
+
+Education                    ,
+Bachlor_Degree_Date          ,
+Courses                      ,
+Martial_Status               ,
+Military_Status              ,
+CV                           ,
+National_ID_Image            ,
+Birth_Certificate            ,
+Feesh,
+S6		   ,
+Ka3b_3aml  ,
+Image	   ,
+Tagneed	   ,
+S1		   ,
+Personal_ID_Arrival_Time,
+
+casual_leave_days,
+annual_leave_days,
+casual_leave_days_additional,
+annual_leave_days_additional,
+
+Leave_Cause ,
+Leave_Cause_Type ,
+Eligable_To_work_Again ,
+S1_2 ,
+Clearance_form ,
+Not_Working_Date 
+
+
+ 
+ from Employees
+ 
+ inner join Jobs on Jobs.Id = Job_ID
+ inner join Departments on Departments.Id = Employees.Department_ID
+ inner join Companies on Companies.Id = Employees.Company_ID_Emp    
+
+ where Work_Status = 0
+</action> 
+
+</procedure>

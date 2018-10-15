@@ -1,0 +1,128 @@
+<procedure name='Requests_InsertUpdateDeleteSelect'>
+
+  <declares>
+    @Id integer = Null;
+
+    @Request_Id integer = Null;
+    @Request_Type integer = Null;
+    @WorkFlow_Id integer = Null;
+
+    @Emp_Id integer = Null;
+    @State integer = Null;
+    @Step_Num integer = Null;
+    @Done integer = Null;
+    @Comment nvarchar(50) = Null;
+  </declares>
+
+
+  <action name='Check_if_found_in_workflow'>
+     select  WorkFlow_Steps.Step  
+     from WorkFlow_Steps where 
+     WorkFlow_Steps.Workflow_Foreign_key =@WorkFlow_Id and
+     WorkFlow_Steps.Emp_index =  @Emp_Id;
+  </action>
+  
+
+  
+  <action name='Get_Emp_At_Step'>
+     DECLARE @max_id_var int; 
+ DECLARE @WorkFlow_Id_var int;
+ DECLARE @Step_Num_var int;
+
+-- select last record for this request
+ Select @max_id_var = Max(Id) from Requests where Request_Id = @Request_Id and Request_Type = @Request_Type;
+
+-- get record of @max_id to get WorkFlow_Id 
+ select @WorkFlow_Id_var = WorkFlow_Id  from Requests where Id = @max_id_var;
+
+-- get next step
+ select WorkFlow_Steps.Emp_index from WorkFlow_Steps where 
+ WorkFlow_Steps.Workflow_Foreign_key = @WorkFlow_Id_var and
+ WorkFlow_Steps.Step =  @Step;
+  </action>
+    
+  
+  <action name='Get_Emp_Next_Step'    
+>    
+ DECLARE @max_id_var int; 
+ DECLARE @WorkFlow_Id_var int;
+ DECLARE @Step_Num_var int;
+
+-- select last record for this request
+ Select @max_id_var = Max(Id) from Requests where Request_Id = @Request_Id and Request_Type = @Request_Type;
+
+-- get record of @max_id to get WorkFlow_Id , Step_Num
+ select @WorkFlow_Id_var = WorkFlow_Id , @Step_Num_var = Step_Num from Requests where Id = @max_id_var;
+
+-- get next step
+ select WorkFlow_Steps.Emp_index from WorkFlow_Steps where 
+ WorkFlow_Steps.Workflow_Foreign_key = @WorkFlow_Id_var and
+ WorkFlow_Steps.Step =  @Step_Num_var+1;
+
+</action>    
+
+
+
+
+<action name='Get_Last_record'    
+>
+  DECLARE @max_id_var int;--not sure
+  -- select last record for this request
+  Select @max_id_var = Max(Id) from Requests where Request_Id = @Request_Id  and Request_Type = @Request_Type;
+
+  -- get record of @max_id
+  select * from Requests where Id = @max_id_var;
+</action>  
+
+
+<action name='Get_Request_Steps'    
+>    
+ select * from Requests where Request_Id = @Request_Id and Request_Type = @Request_Type;
+</action>  
+
+
+
+
+<action name='Update'    
+>    
+ Update Requests 
+ set 
+
+ Emp_Id			= @Emp_Id , 
+ State			= @State ,
+ Step_Num		= @Step_Num ,
+ Done			= @Done ,
+ Comment		= @Comment
+
+ where Id=@Id;    
+</action>  
+
+
+
+<action name='Insert'    
+>    
+ Insert into 
+ Requests  (Request_Id	,Request_Type	,WorkFlow_Id	,Emp_Id		,State	,Step_Num	, Done , Comment) 
+ values    (@Request_Id	,@Request_Type	,@WorkFlow_Id	,@Emp_Id	,@State	,@Step_Num , @Done	,@Comment);  
+</action>  
+
+
+<action name='GetPending'    
+> 
+	select Request_Id from Requests 
+	where 
+	Request_Type = @Request_Type and
+	State =1 and--pending
+	Emp_Id = @Emp_Id
+</action>
+
+<action name='GetPendingCount'    
+> 
+	select count(id) from Requests 
+	where 
+	Request_Type = @Request_Type and
+	State =1 and--pending
+	Emp_Id = @Emp_Id
+</action>
+
+</procedure>

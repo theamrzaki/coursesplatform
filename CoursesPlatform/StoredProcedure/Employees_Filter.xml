@@ -1,0 +1,104 @@
+<procedure name='Employees_Filter'>
+
+  <declares>
+    @Name nvarchar(50) = null;
+
+    @MobileNo nvarchar(20) = null;
+    @National_ID nvarchar(20) = null;
+
+    @Job_Name nvarchar(50) = null;
+    @Department_Name  nvarchar(50) = null;
+    @Company_Name  nvarchar(50) = null;
+
+    @Martial_Status nchar(10) = null;
+    @Military_Status nchar(10) = null;
+
+    @Actual_Salary_From decimal(18,0) = null;
+    @Actual_Salary_To decimal(18,0) = null;
+
+    @Hire_Date_From date = null;
+    @Hire_Date_To date = null;
+
+    @Personal_ID_Arrival_Time int = null;
+    
+     @User_Name nvarchar(50) = null;
+  </declares>
+  <action name='Employees_Filter' type='optional'>
+    SELECT
+    Employees.Id as 'EmpId',
+    Employees.Name		 as 'EmpName'				,
+    Employees.MiddleName		 	as 'EmpMiddleName'				,
+    Employees.LastName		 		as 'EmpLastName'				,
+
+    PhoneNo         			,
+    MobileNo        			,
+    Address				         ,
+    City				         ,
+    Hire_Date       			,
+    Leave_Days       			,
+    National_ID		             ,
+    Job_ID 	                     ,
+    Personal_ID_Arrival_Time,
+
+    Sex             			,
+    Birth_Date      			,
+    Birth_Location	             ,
+
+    Actual_Salary   			,
+    Taxtable_Salary				 ,
+    Variable_Salary,
+    Other_Salary,
+
+    Bonus           			,
+    Commission	                 ,
+    Education                    ,
+    Bachlor_Degree_Date          ,
+    Courses                      ,
+    Martial_Status               ,
+    Military_Status              ,
+    CV                           ,
+    National_ID_Image            ,
+    Birth_Certificate            ,
+    Social_Insurance_Certificate ,
+
+
+    annual_leave_days,
+    casual_leave_days,
+
+    Employees.Company_ID_Emp,
+    Employees.Department_ID,
+
+    Jobs.Name as 'Job_Name' ,
+    Departments.Name as 'Department_Name' ,
+    Companies.Name as 'Company_Name'
+
+
+    FROM Employees
+
+
+    inner join Jobs on Jobs.Id = Job_ID
+    inner join Departments on Departments.Id = Employees.Department_ID
+    inner join Companies on Companies.Id = Employees.Company_ID_Emp
+
+    WHERE
+    Work_Status = 1
+    AND	(@Name 					 IS NULL OR		( Employees.Name 	 like '%'+@Name+'%' 	    ))
+    AND	(@User_Name 		 IS NULL OR		( Employees.User_Name 	 = @User_Name     ))
+    AND	(@MobileNo 				 IS NULL OR		( MobileNo 			 = @MobileNo 			    ))
+    AND	(@Personal_ID_Arrival_Time 	IS NULL OR		( Personal_ID_Arrival_Time 			 = @Personal_ID_Arrival_Time 			    ))
+
+    AND	(@National_ID 			 IS NULL OR		( National_ID 		 = @National_ID 		    ))
+    AND	(@Job_Name 				 IS NULL OR		( Jobs.Id 		     = @Job_Name 			    ))	--here they are ids not names
+    AND	(@Department_Name  		 IS NULL OR		( Departments.Id     = @Department_Name  	    ))	--here they are ids not names
+    AND	(@Company_Name  		 IS NULL OR		( Companies.Id      = @Company_Name  	    ))	--here they are ids not names
+    AND	(@Martial_Status 		 IS NULL OR		( Martial_Status 	 = @Martial_Status 	    	))
+    AND	(@Military_Status 		 IS NULL OR		( Military_Status 	 = @Military_Status 	    ))
+    AND	(@Actual_Salary_From 	 IS NULL OR		( Actual_Salary between @Actual_Salary_From and @Actual_Salary_To      ))
+    AND	(@Hire_Date_From 		 IS NULL OR		( Hire_Date 	between @Hire_Date_From and @Hire_Date_To   	    	))
+    --2011/02/25
+
+
+
+    --https://stackoverflow.com/questions/3415582/how-can-i-use-optional-parameters-in-a-t-sql-stored-procedure
+  </action>
+</procedure>

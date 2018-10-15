@@ -1,0 +1,58 @@
+<procedure name='VacationTypes_InsertUpdateDeleteSelect'>
+
+  <declares>
+    @Id integer = NULL;
+    @Type bit = NULL;
+    @Default_Leave_Days integer = NULL;
+    @Notice bit = NULL;
+    @Max_Delay_Period INT = NULL;
+    @Require_Acceptance bit = NULL;
+    @Version_ID INT = NULL;
+
+    @Deduct_From_WeekEnds INT = NULL;
+  </declares>
+  
+  
+  <action name='Insert'    
+>    
+ Insert into 
+ VacationTypes
+ (Type ,  Notice ,  Max_Delay_Period ,Require_Acceptance ,Version_ID) 
+ values
+ (@Type ,  @Notice ,  @Max_Delay_Period ,@Require_Acceptance ,@Version_ID);    
+</action>  
+ 
+<action name='Get_By_Id'    
+>    
+	select * from VacationTypes where Id =@Id
+</action> 
+
+<action name='Get_By_Version'    
+>    
+	select * from VacationTypes where Version_ID =@Version_ID
+</action>   
+  
+<action name='Get_By_Version_And_Type'    
+>    
+	select * from VacationTypes 
+	where
+	Version_ID =@Version_ID
+	and
+	Type = @Type
+</action>    
+
+<action name='Update'    
+>    
+ Update VacationTypes set 
+ Default_Leave_Days		= @Default_Leave_Days,
+ Notice					=@Notice,  
+ Max_Delay_Period		=@Max_Delay_Period,  
+ Require_Acceptance		=@Require_Acceptance,
+ Deduct_From_WeekEnds =@Deduct_From_WeekEnds
+ where Id=@Id ;    
+</action>  
+ 
+
+
+
+</procedure>

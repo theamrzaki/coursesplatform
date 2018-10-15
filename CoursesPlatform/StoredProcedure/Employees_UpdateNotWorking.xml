@@ -1,0 +1,27 @@
+<procedure name='Employees_UpdateNotWorking'>
+
+  <declares>
+    @Id integer = null;
+    @Leave_Cause            nvarchar(250)  = nul;
+    @Leave_Cause_Type       integer		  = null ;
+    @Eligable_To_work_Again integer		  = null ;
+    @S1_2                   nvarchar(250) = null;
+    @Clearance_form         nvarchar(250) = null;
+  </declares>
+  
+  
+  <action name='NotWorking'  
+>    
+
+ Update Employees set 	
+ Leave_Cause           =@Leave_Cause           	   ,
+ Leave_Cause_Type      =@Leave_Cause_Type      	   ,
+ Eligable_To_work_Again=@Eligable_To_work_Again	   ,
+ S1_2                  =@S1_2                  	   ,
+ Clearance_form        =@Clearance_form      ,
+ Not_Working_Date = GETDATE(),	   
+ Work_Status = 0
+ where Id=@Id;    
+
+</action>   
+</procedure>

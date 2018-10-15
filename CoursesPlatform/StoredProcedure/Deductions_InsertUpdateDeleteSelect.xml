@@ -1,0 +1,78 @@
+<procedure name='Deductions_InsertUpdateDeleteSelect'>
+
+  <declares>
+    @Id    integer = Null;
+    @Emp_ID integer = Null;
+    @Amount_Of_Deduction_Days nvarchar(50) = Null;
+    @Reason nvarchar(50) = Null;
+    @Reason_ID  integer = Null;
+
+    @From DATETIME	  = Null;
+    @To DATETIME	  = Null;
+    @Specific_Date DATETIME	  = Null;
+
+    @Canceled_Cause nvarchar(50) = null;
+    @Canceled_ID integer = null;
+    @Canceled_Type integer = null;
+
+    --@Date_Of_Vacation DATETIME = null;
+    @Vac_ID integer = null;
+    @Vac_ID integer = null;
+  </declares>
+  
+  <action name='SelectAll'    
+>    
+ select * from Deductions where    
+ Reason_ID=@Reason_ID and
+ convert(varchar(10),Date_Of_Deduction,111) 	between @From and @To
+</action> 
+
+  <action name='Select'>
+    select * from Deductions where
+    Emp_ID = @Emp_ID and
+    Reason_ID=@Reason_ID and
+    convert(varchar(10),Date_Of_Vacation,111) 	between @From and @To
+  </action>
+
+  <action name='SelectByVac'>
+    select * from Deductions where
+    Vac_ID = @Vac_ID
+  </action>
+  
+
+
+  <action name='CancelDateExceed'    
+>    
+update Deductions set
+Canceled= 1,
+Canceled_Cause = @Canceled_Cause, 
+Canceled_On = GETDATE(),
+Canceled_Type = @Canceled_Type,
+Canceled_ID = @Canceled_ID
+where
+Emp_ID = @Emp_ID 
+ and
+ (Reason='Exceed Annual leave days' 
+	or Reason='Exceed Casual leave days') 
+and
+ convert(varchar(10),Date_Of_Vacation,111) = @Specific_Date
+</action>
+
+
+  <action name='dec_deductions'>
+    update Deductions set
+    Amount_Of_Deduction_Days =Amount_Of_Deduction_Days -1
+    where
+    Id = @Id
+  </action>
+  
+  
+
+
+  <action name='Insert'>
+    Insert into
+    Deductions(Emp_ID,Date_Of_Deduction,Reason,Reason_ID,Amount_Of_Deduction_Days,Vac_ID,Date_Of_Vacation)
+    values(@Emp_ID,GETDATE(),@Reason,@Reason_ID,@Amount_Of_Deduction_Days,@Vac_ID,@Date_Of_Vacation);
+  </action>    
+
+</procedure>

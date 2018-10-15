@@ -1,0 +1,85 @@
+<procedure name='WorkFlow_InsertUpdateDeleteSelect'>
+
+  <declares>
+    @Id integer = Null;
+
+    @Name nvarchar(30) = Null;
+    @Description nvarchar(100) = Null;
+    @Company_Id integer = Null;
+
+    @WorkFlow_Group nvarchar(30) = Null;
+    @Step integer = Null;
+    @Emp_index integer = Null;
+
+    @Workflow_Foreign_key integer = Null;
+  </declares>
+  
+  <action name='Insert_WorkFlow'    
+>    
+ Insert into WorkFlow
+ (Name,Description ,Company_Id )
+ OUTPUT inserted.Id
+  values
+ (@Name,@Description,@Company_Id);    
+</action>  
+  
+
+<action name='Insert_Step'    
+>    
+ Insert into WorkFlow_Steps
+ (WorkFlow_Group	,	Step ,	Emp_index ,	Workflow_Foreign_key  )
+  values
+ (@WorkFlow_Group,@Step,@Emp_index,@Workflow_Foreign_key);    
+</action>  
+ 
+ 
+<action name='Select_All_WorkFlows'    
+>    
+	select * from WorkFlow
+</action>   
+
+<action name='Select_by_Comp'    
+>    
+	select * from WorkFlow where Company_Id = @Company_Id
+</action>
+
+
+  <action name='select_workflow_by_request'>
+    select top 1 Requests.WorkFlow_Id from Requests
+    where Requests.Request_Id = @Request_ID
+    and Requests.Request_Type = @Request_Type
+  </action>
+  
+
+  <action name='Select_Steps'    
+>    
+	select 
+	WorkFlow.Id as 'WorkFlow_Id',
+	WorkFlow.Name as 'WorkFlow_Name',
+	WorkFlow.Description as 'WorkFlow_Description',
+
+	WorkFlow_Steps.Step as 'WorkFlow_Step_Number',
+	WorkFlow_Steps.WorkFlow_Group as 'WorkFlow_Step_Group',
+	WorkFlow_Steps.Emp_index as 'WorkFlow_Step_Emp_index',
+
+	Employees.Name as 'Emp_Name'
+
+	from WorkFlow_Steps
+	inner join WorkFlow on  WorkFlow.Id = Workflow_Foreign_key
+	inner join Employees on  Employees.Id = WorkFlow_Steps.Emp_index 
+
+	where 
+	Company_Id = @Company_Id
+</action>  
+ 
+ <action name='Select_by_workFlow_Id'    
+>    
+	select * from WorkFlow_Steps where Workflow_Foreign_key = @Workflow_Foreign_key
+</action>  
+
+<action name='Select_workFlow'    
+>    
+	select * from WorkFlow where Id = @Id
+</action> 
+ 
+</procedure>

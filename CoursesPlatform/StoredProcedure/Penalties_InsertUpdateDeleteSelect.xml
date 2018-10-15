@@ -1,0 +1,87 @@
+<procedure name='Penalties_InsertUpdateDeleteSelect'>
+
+  <declares>
+    @Id integer = NULL;
+    @Check_In_Out bit = NULL;
+    @DeadLine float = NULL;
+    @Amount float = NULL;
+    @VersionID integer = NULL;
+  </declares>
+  
+  <action name='Insert'    
+>    
+ Insert into 
+ Penalties
+ (Check_In_Out  ,  DeadLine  ,  Amount , Version) 
+ values
+ (@Check_In_Out ,  @DeadLine ,  @Amount ,@VersionID);    
+</action>  
+ 
+  
+<action name='Update'    
+>    
+ Update Penalties set 
+ Check_In_Out = @Check_In_Out , 
+ DeadLine	  = @DeadLine , 
+ Amount		  = @Amount
+ where Id=@Id ;    
+</action>  
+ 
+
+<action name='Delete'    
+>    
+ Delete Penalties where Id=@Id;      
+</action>    
+
+<action name='List'    
+>    
+	select * from Penalties where Version =@VersionID
+</action>   
+
+<action name='SelectByID'    
+>    
+	select 
+	Penalties.Id as 'Id',
+	Penalties.Check_In_Out as 'Check_In_Out',
+	Penalties.DeadLine as 'DeadLine',
+	Penalties.Amount as 'Amount',
+	Penalties.Version as 'Version',
+	SettingsVersion.Name as 'VersionName'
+
+	from Penalties
+	inner join SettingsVersion on Penalties.Version = SettingsVersion.Id
+	where Penalties.Id = @Id 
+</action>    
+
+<action name='SelectCheckIn'    
+>    
+	select * from Penalties
+	where Check_In_out = 1 and Version =@VersionID
+	order by DeadLine desc
+</action>    
+
+
+<action name='SelectCheckOut'    
+>    
+	select * from Penalties
+	where Check_In_out = 0 and Version =@VersionID
+	order by DeadLine desc
+</action> 
+
+
+<action name='GetAmount'    
+>    
+	select Amount from Penalties where 
+	DeadLine = @DeadLine 
+	and 
+	Check_In_Out = 1
+	and 
+	Version =@VersionID
+</action>  
+
+
+
+
+
+
+</procedure>

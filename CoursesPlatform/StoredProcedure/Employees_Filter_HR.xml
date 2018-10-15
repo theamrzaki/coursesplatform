@@ -1,0 +1,78 @@
+<procedure name='Employees_Filter_HR'>
+  <declares>
+    @Name nvarchar(50) = null;
+
+    @MobileNo nvarchar(20) = null;
+    @National_ID nvarchar(20) = null;
+
+    @Job_Name nvarchar(50) = null;
+
+    @Martial_Status nchar(10) = null;
+    @Military_Status nchar(10) = null;
+
+    @Actual_Salary_From decimal(18,0) = null;
+    @Actual_Salary_To decimal(18,0) = null;
+
+    @Hire_Date_From date = null;
+    @Hire_Date_To date = null;
+  </declares>
+  
+  
+  <action name='Employees_Filter_HR' type='optional'>
+  
+
+  SELECT
+  Employees.Id as 'EmpId',
+  Employees.Name		 as 'EmpName'				,
+  PhoneNo         			,
+  MobileNo        			,
+  Address				         ,
+  City				         ,
+  Hire_Date       			,
+  National_ID		             ,
+  Job_ID 	                     ,
+
+  Sex             			,
+  Birth_Date      			,
+  Birth_Location	             ,
+
+  Actual_Salary   			,
+  Taxtable_Salary				 ,
+  Variable_Salary,
+  Other_Salary,
+
+  Bonus           			,
+  Commission	                 ,
+  Education                    ,
+  Bachlor_Degree_Date          ,
+  Courses                      ,
+  Martial_Status               ,
+  Military_Status              ,
+  CV                           ,
+  National_ID_Image            ,
+  Birth_Certificate            ,
+  Social_Insurance_Certificate ,
+  Jobs.Name as 'Job_Name'
+
+
+  FROM Employees
+
+
+  inner join Jobs on Jobs.Id = Job_ID
+  WHERE
+  Work_Status = 1
+  AND	(@Name 					 IS NULL OR		( Employees.Name 	 like '%'+@Name+'%' 	    ))
+  AND	(@MobileNo 				 IS NULL OR		( MobileNo 			 = @MobileNo 			    ))
+  AND	(@National_ID 			 IS NULL OR		( National_ID 		 = @National_ID 		    ))
+  AND	(@Job_Name 				 IS NULL OR		( Jobs.Id 		     = @Job_Name 			    ))	--here they are ids not names
+  AND	(@Martial_Status 		 IS NULL OR		( Martial_Status 	 = @Martial_Status 	    	))
+  AND	(@Military_Status 		 IS NULL OR		( Military_Status 	 = @Military_Status 	    ))
+  AND	(@Actual_Salary_From 	 IS NULL OR		( Actual_Salary between @Actual_Salary_From and @Actual_Salary_To      ))
+  AND	(@Hire_Date_From 		 IS NULL OR		( convert(varchar(10),Hire_Date,111) 	between @Hire_Date_From and @Hire_Date_To   	    	))
+  --2011/02/25
+ 
+
+
+  --https://stackoverflow.com/questions/3415582/how-can-i-use-optional-parameters-in-a-t-sql-stored-procedure
+</action>
+</procedure>

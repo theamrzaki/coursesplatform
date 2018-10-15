@@ -1,0 +1,54 @@
+<procedure name='Jobs_InsertUpdateDeleteSelect'>
+
+  <declares>
+    @Id integer = null;
+    @Name nvarchar(50) = null;
+    @Department_ID nvarchar(50) = null;
+    @return_insentive_type integer = null;
+    @return_insentive_value float = null;
+    @on_which_salary integer = null;
+  </declares>
+
+  <action name='Count'>
+    select count(Id)  from Jobs
+  </action>
+  
+  <action name='Insert'>    
+ Insert into Jobs
+ (Name,Department_ID,return_insentive_type,return_insentive_value,on_which_salary) 
+ values
+ (@Name,@Department_ID,@return_insentive_type,@return_insentive_value,@on_which_salary);    
+</action>    
+
+<action name='Update'    
+>    
+ Update Jobs set 
+ Name					=@Name					 ,
+ return_insentive_type	=@return_insentive_type	 ,
+ return_insentive_value	=@return_insentive_value ,
+ on_which_salary		=@on_which_salary		 	
+ where Id=@Id;    
+</action>  
+
+<action name='Delete'    
+>    
+ Delete Jobs where Id=@Id;      
+</action>    
+<action name='Select'    
+>    
+	select * from Jobs
+--Select Jobs.Id,Jobs.Name,Jobs.Department_ID , Departments.Name from Jobs inner join Departments on Jobs.Department_ID = Departments.Id;         
+</action>    
+
+<action name='SelectByName'    
+>    
+	select * from Jobs where Jobs.Name = @Name
+--Select Jobs.Id,Jobs.Name,Jobs.Department_ID , Departments.Name from Jobs inner join Departments on Jobs.Department_ID = Departments.Id;         
+</action>   
+
+
+<action name='SelectById'    
+>    
+	select * from Jobs where Jobs.Id = @Id
+</action>    
+</procedure>

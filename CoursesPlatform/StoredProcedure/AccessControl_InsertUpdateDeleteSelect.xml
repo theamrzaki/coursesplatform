@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<procedure name='AccessControl_InsertUpdateDeleteSelect'>
+
+  <action name="List">
+    SELECT [id]
+    ,[name]
+    ,[ip]
+    ,[username]
+    ,[password]
+    FROM [access_controls]
+  </action>
+
+  <action name="Select">
+    SELECT [id]
+    ,[name]
+    ,[ip]
+    ,[username]
+    ,[password]
+    FROM [access_controls]
+    where id = @id
+  </action>
+
+  <action name="Add">
+    INSERT INTO [access_controls]
+    ([name]
+    ,[ip]
+    ,[username]
+    ,[password])
+    VALUES
+    (@name
+    ,@ip
+    ,@username
+    ,@password)
+  </action>
+
+  <action name="Edit">
+    UPDATE [access_controls]
+    SET [name] = @name
+    ,[ip] = @ip
+    ,[username] = @username
+    ,[password] = @password
+    WHERE id=@id
+  </action>
+
+</procedure>

@@ -1,0 +1,96 @@
+<procedure name='Permissions_InsertUpdateDeleteSelect'>
+
+  <declares>
+    @Id  integer= NULL;
+    @Emp_ID integer= NULL;
+    @Page_ID integer= NULL;
+    @Page_Name nvarchar(50)= NULL;
+    @Group_Name nvarchar(20)= NULL;
+  </declares>
+  
+  
+  <action name='Get_PageID'    
+>    
+	select Id from Pages where Page_Name = @Page_Name
+</action>   
+
+
+<action name='Get_Remaining_Pages'    
+>    
+	select * from Pages where Id not in
+	(select Page_ID from Permissions 
+	where
+	Emp_ID = @Emp_ID)
+</action>  
+
+ 
+<action name='Add_Role'    
+>    
+ Insert into Permissions(Emp_ID,Page_ID) values(@Emp_ID,@Page_ID);    
+</action>    
+ 
+
+
+<action name='See_If_Can_Access'    
+>    
+	select * from Permissions 
+	where 
+		Emp_ID = @Emp_ID 
+		and 
+		Page_ID = @Page_ID
+</action> 
+
+
+<action name='delete_existing_roles'    
+>    
+	DELETE FROM Permissions
+	WHERE Emp_ID = @Emp_ID;
+</action> 
+
+<action name='Remove_Role'    
+>    
+	DELETE FROM Permissions
+	WHERE Id = @Id
+</action> 
+
+
+
+<action name='Get_Page_By_Id'    
+>    
+	select * from Pages 
+	where 
+		Id = @Page_ID
+</action> 
+
+
+<action name='Get_Permissions_Of_Emp'    
+>    
+	select * from Permissions 
+	where 
+		Emp_ID = @Emp_ID 
+</action> 
+
+
+<action name='Get_Roles_Of_Emp'    
+>    
+	select * from Permissions 
+	where 
+		Emp_ID = @Emp_ID 
+</action> 
+
+
+
+<action name='Get_All_Pages'    
+>    
+	select * from Pages 
+</action> 
+
+
+<action name='Get_Pages_By_Group'    
+>    
+	select * from Pages 
+	where Group_Name = @Group_Name
+</action> 
+
+
+</procedure>

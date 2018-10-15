@@ -1,0 +1,322 @@
+<procedure name='Settings_InsertUpdateDeleteSelect'>
+
+
+  <declares>
+    @Id				integer		 = NULL	;
+    @Setting_Group  nvarchar(20) = NULL;
+    @Name         	nvarchar(20) = NULL;
+    @Description	nvarchar(200) = NULL;
+    @Value			nvarchar(20) = NULL;
+
+    @VersionID		integer = NULL;
+    @VersionName	nvarchar(50) = NULL;
+
+    @Group nvarchar(50) = NULL;
+  </declares>
+  
+  
+  
+  <action name='UpdateValue'    
+>    
+ Update Settings set Value=@Value where Name=@Name and Version =@VersionID;    
+</action>
+    
+<action name='UpdateValue_by_id'    
+>    
+ Update Settings set Value=@Value where Id = @Id	;    
+</action>
+
+
+<action name='SelectGroup'    
+>    
+	select * from Settings where Setting_Group = @Setting_Group and Version =@VersionID
+</action>    
+
+<action name='SelectByName'    
+>    
+	select * from Settings where Name = @Name  and Version =@VersionID
+</action>    
+
+<action name='SelectByID'    
+>    
+	select 
+	Settings.Id as 'Id' ,
+	Settings.Setting_Group as 'Setting_Group' ,
+	Settings.Name as 'Name' ,
+	Settings.Value as 'Value' ,
+	Settings.Type as 'Type' ,
+	Settings.Version as 'Version' ,
+	SettingsVersion.Name as 'VersionName' 
+
+	from Settings 
+	inner join SettingsVersion on Settings.Version = SettingsVersion.Id
+
+	where Settings.Id = @Id
+</action>    
+
+--------------------------Versions------------------------------------------
+<action name='AddVersion'    
+>   
+	Insert into SettingsVersion(Name,Description, SettingGroup) 
+	output inserted.Id
+	values(@VersionName,@Description , @Group);  
+</action>
+
+  <action name='EditVersion'>
+    UPDATE [SettingsVersion]
+    SET    [Name] = @Name
+          ,[Description] = @Description
+    WHERE [SettingsVersion].Id = @Id
+  </action>
+
+  <action name='getVersion_BY_ID'>
+    select * from SettingsVersion
+    where Id = @Id
+  </action>
+  
+  <action name='getVersions'    
+>   
+	select * from SettingsVersion
+	where SettingGroup = @Group
+</action>  
+
+<action name='getAllVersions'    
+>   
+	select * from SettingsVersion
+</action> 
+
+
+<action name='getVersions_Name'    
+>   
+	select * from SettingsVersion 
+	where id=@VersionID
+</action>  
+
+--------------City (add, get all )-------------
+<action name='Add_City'    
+>   
+	INSERT INTO [Settings] 
+	([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version]) 
+	VALUES 
+	(N'Mission'	, @Name		, @Value, N'double', 'City', @VersionID)		 ;
+</action>  
+
+<action name='Get_Cities'    
+>   
+	select * from Settings
+	where 
+	[Setting_Group] = 'Mission'
+	and
+	[Value_Options] = 'City'
+	and
+	[Version] = @VersionID
+</action>  
+
+<action name='Get_Allowance_By_Name'    
+>   
+	select * from Settings
+	where 
+	[Setting_Group] = 'Mission'
+	and
+	[Value_Options] = 'City'
+	and
+	[Version] = @VersionID
+	and
+	[Name] =@Name
+</action>  
+--------------------------------------------------
+
+--not used
+<action name='Default_Version_Settings'   >   
+	INSERT INTO [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version]) VALUES (N'Arrival_Time'	, N'Check in'			, N'09:00'		, N'time'		, NULL, @VersionID)		 ;
+	INSERT INTO [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version]) VALUES (N'Arrival_Time'	, N'Check out'			, N'17:00'		, N'time'		, NULL, @VersionID)		 ;
+	INSERT INTO [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version]) VALUES (N'Vacation'		, N'LeaveDays'			, N'21'			, N'int'		, NULL, @VersionID)		 ;
+	INSERT INTO [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version]) VALUES (N'Vacation'		, N'HR accept pending'	, NULL			, N'bool'		, NULL, @VersionID)		 ;
+	INSERT INTO [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version]) VALUES (N'Mission'		, N'Bonus'				, N'0.07'		, N'double'		, NULL, @VersionID)		 ;
+	INSERT INTO [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version]) VALUES (N'Wages'		, N'Month Start Day'	, N'22'			, N'int'		, NULL, @VersionID)			 ;
+	INSERT INTO [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version]) VALUES (N'Wages'		, N'Year Start Month'	, N'5'			, N'month'		, NULL, @VersionID)			 ;
+
+	INSERT INTO [Penalties] ([Check_In_Out], [DeadLine], [Amount], [Version]) VALUES ( 1, 15, 0.25,@VersionID)		 ;
+	INSERT INTO [Penalties] ([Check_In_Out], [DeadLine], [Amount], [Version]) VALUES ( 1, 30, 0.5,@VersionID)		 ;
+	INSERT INTO [Penalties] ([Check_In_Out], [DeadLine], [Amount], [Version]) VALUES ( 1, 60, 1,@VersionID)			 ;
+	INSERT INTO [Penalties] ([Check_In_Out], [DeadLine], [Amount], [Version]) VALUES ( 0, 60, 1.30,@VersionID)		 ;
+	INSERT INTO [Penalties] ([Check_In_Out], [DeadLine], [Amount], [Version]) VALUES ( 0, 30, 0.6,@VersionID)		 ;
+	INSERT INTO [Penalties] ([Check_In_Out], [DeadLine], [Amount], [Version]) VALUES ( 0, 15, 0.42,@VersionID)		 ;
+
+
+	--type,0 => casual
+	--Default_Leave_Days ==> 6
+	--Notice,1 => max delay 
+	-- no Max_Delay_Period  , no Require_Acceptance
+	-- no deduction from weekends
+	Insert into  VacationTypes (Type ,  Notice ,Default_Leave_Days,  Max_Delay_Period ,Require_Acceptance,Deduct_From_WeekEnds ,Version_ID)  values (0 ,  1 ,  6	, 0 , 0,0 ,@VersionID);  
+
+
+	--type,1 => annual
+	--Default_Leave_Days ==> 15
+	--Notice,0 => prior 
+	-- 7 Max_Delay_Period  , yes Require_Acceptance
+	-- no deduction from weekends
+	Insert into  VacationTypes (Type ,  Notice,Default_Leave_Days ,  Max_Delay_Period ,Require_Acceptance,Deduct_From_WeekEnds ,Version_ID)  values (1 ,  0 ,15,  7 ,1 ,0,@VersionID);
+</action>  
+
+----------------------- Defaults--------------------
+<action name='Default_Arrival_Time'    
+>   
+	INSERT INTO [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version]) VALUES (N'Arrival_Time'	, N'Check in'			, N'09:00'		, N'time'		, NULL, @VersionID)		 ;
+	INSERT INTO [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version]) VALUES (N'Arrival_Time'	, N'Check out'			, N'17:00'		, N'time'		, NULL, @VersionID)		 ;
+	
+	INSERT INTO [Penalties] ([Check_In_Out], [DeadLine], [Amount], [Version]) VALUES ( 1, 15, 0,@VersionID)		 ;
+	INSERT INTO [Penalties] ([Check_In_Out], [DeadLine], [Amount], [Version]) VALUES ( 1, 30, 0,@VersionID)		 ;
+	INSERT INTO [Penalties] ([Check_In_Out], [DeadLine], [Amount], [Version]) VALUES ( 1, 60, 0,@VersionID)		;
+</action>  
+
+<action name='Default_Vacation'    
+>   
+	INSERT INTO [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version]) VALUES (N'Vacation'		, N'LeaveDays'			, N'21'			, N'int'		, NULL, @VersionID)		 ;
+	INSERT INTO [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version]) VALUES (N'Vacation'		, N'HR accept pending'	, NULL			, N'bool'		, NULL, @VersionID)		 ;
+
+	--type,0 => casual
+	--Default_Leave_Days ==> 6
+	--Notice,1 => max delay 
+	-- no Max_Delay_Period  , no Require_Acceptance
+	-- no deduction from weekends
+	Insert into  VacationTypes (Type ,  Notice ,Default_Leave_Days,  Max_Delay_Period ,Require_Acceptance,Deduct_From_WeekEnds ,Version_ID)  values (0 ,  1 ,  6	, 0 , 0,0 ,@VersionID);  
+
+
+	--type,1 => annual
+	--Default_Leave_Days ==> 15
+	--Notice,0 => prior 
+	-- 7 Max_Delay_Period  , yes Require_Acceptance
+	-- no deduction from weekends
+	Insert into  VacationTypes (Type ,  Notice,Default_Leave_Days ,  Max_Delay_Period ,Require_Acceptance,Deduct_From_WeekEnds ,Version_ID)  values (1 ,  0 ,15,  7 ,1 ,0,@VersionID);
+
+</action> 
+
+<action name='Default_Mission'    
+> 
+	INSERT INTO [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version]) VALUES (N'Mission'		, N'Override_Vacation'				, N'on'		, N'bool'		, NULL, @VersionID)		 ;
+
+	--not used  
+	--INSERT INTO [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version]) VALUES (N'Mission'		, N'Bonus'				, N'0.07'		, N'double'		, NULL, @VersionID)		 ;
+
+	----used
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'القاهرة'				, N'164'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'الجيزة'					, N'235'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'الشرقية'				, N'362'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'الدقهلية'				, N'164'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'البحيرة'				, N'164'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'المنيا'					, N'164'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'القليوبية'				, N'164'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'الإسكندرية'				, N'164'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'الغربية'				, N'164'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'سوهاج'					, N'164'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'أسيوط'					, N'164'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'المنوفية'				, N'164'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'كفر الشيخ'				, N'164'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'الفيوم'					, N'164'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'قنا'					, N'412'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'بني سويف'				, N'457'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'أسوان'					, N'321'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'دمياط'					, N'124'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'الإسماعيلية'				, N'254'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'الأقصر'					, N'572'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'بورسعيد'				, N'247'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'السويس'					, N'124'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'مطروح'					, N'164'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'شمال سيناء'				, N'800'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'البحر الأحمر'			, N'362'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'الوادي الجديد'			, N'807'		, N'double'		, NULL, @VersionID)		 ;
+	--insert  [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version])  VALUES (N'Mission'		, N'جنوب سيناء'				, N'600'		, N'double'		, NULL, @VersionID)		 ;
+
+
+
+
+</action>  
+
+<action name='Default_Wages'    
+>   
+	INSERT INTO [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version]) VALUES (N'Wages'		, N'Month Start Day'	, N'22'			, N'int'		, NULL, @VersionID)			 ;
+	INSERT INTO [Settings] ([Setting_Group], [Name], [Value], [Type], [Value_Options], [Version]) VALUES (N'Wages'		, N'Year Start Month'	, N'5'			, N'month'		, NULL, @VersionID)			 ;
+</action>
+
+<action name='Default_Installments'>
+  --------------------------------[Installments_Limits]-----------------------------------
+  INSERT INTO [Installments_Limits]
+  ([User_Type],[Open_Closed],[Bulk_Percentage],[Value],[Version])
+  VALUES
+  (0 --Employee
+  ,0 --open
+  ,0 --Bulk
+  ,0 --value
+  , @VersionID)
+
+
+  INSERT INTO [Installments_Limits]
+  ([User_Type],[Open_Closed],[Bulk_Percentage],[Value],[Version])
+  VALUES
+  (1 --Manager
+  ,0 --open
+  ,0 --Bulk
+  ,0 --value
+  , @VersionID)
+
+  --------------------------------[Installments_Types]-----------------------------------
+
+  --INSERT INTO [Installments_Types]
+  --([Name]
+  --,[Description]
+  --,[Max_Fixed]
+  --,[Duration_Value_Months]
+  --,[Specific_General]
+  --,[Limit_Or_Not]
+  --,[Version])
+  --VALUES
+  --('Loan'						--Name
+  --,'Defaulf Loan Settings'		--Description
+  --, 0							--Max
+  --, 6							--6 Months
+  --, 0							--Specific
+  --, 1							--Limit
+  --, @VersionID)
+  --
+  --
+  --INSERT INTO [Installments_Types]
+  --([Name]
+  --,[Description]
+  --,[Max_Fixed]
+  --,[Duration_Value_Months]
+  --,[Specific_General]
+  --,[Limit_Or_Not]
+  --,[Version])
+  --VALUES
+  --('Medical Insurance'						--Name
+  --,'Defaulf Medical Insurance Settings'		--Description
+  --, 0							--Max
+  --, 6							--6 Months
+  --, 0							--Specific
+  --, 1							--Limit
+  --, @VersionID)
+  --
+  --
+  --INSERT INTO [Installments_Types]
+  --([Name]
+  --,[Description]
+  --,[Max_Fixed]
+  --,[Duration_Value_Months]
+  --,[Specific_General]
+  --,[Limit_Or_Not]
+  --,[Version])
+  --VALUES
+  --('Car Maintenance'						--Name
+  --,'Defaulf Car Maintenance Settings'		--Description
+  --, 0							--Max
+  --, 6							--6 Months
+  --, 0							--Specific
+  --, 1							--Limit
+  --, @VersionID)
+
+</action>
+  
+  
+</procedure>

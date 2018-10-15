@@ -1,0 +1,13 @@
+<procedure name='HRInsertUpdateDelete'><action name='Insert'    
+>    
+ Insert into HRdb(Name) values(@Name);    
+</action>    
+<action name='Update'    
+>    
+ Update HRdb set Name=@Name where Id=@Id;    
+</action>   
+<action name='Delete'    
+>    
+ Delete HRdb where Id=@Id;      
+</action>     
+</procedure>
