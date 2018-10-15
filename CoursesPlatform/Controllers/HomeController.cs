@@ -8,6 +8,19 @@ namespace CoursesPlatform.Controllers
 {
     public class HomeController : Controller
     {
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult step()
+        {
+            return Json("chamara", JsonRequestBehavior.AllowGet);
+        }
+
+
+
         public ActionResult Index()
         {
             return View();
