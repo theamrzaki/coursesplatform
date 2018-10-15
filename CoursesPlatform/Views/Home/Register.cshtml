@@ -28,7 +28,7 @@
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control" id="about" name="about" rows="3" placeholder="About"></textarea>
+                        <input type="text" id="about" name="about" class="form-control" placeholder="about">
                     </div>
 
                     <br />
@@ -230,9 +230,13 @@
                     fixStepIndicator(n)
                 }
                 var inputs = {};
-                var step = 1;
+
+                var step_num;
                 function nextPrev(n) {
 
+                    if (typeof step_num == 'undefined') {
+                        step_num = 1
+                    }
                     // This function will figure out which tab to display
                     var x = document.getElementsByClassName("tab");
                     // Exit the function if any field in the current tab is invalid:
@@ -245,7 +249,7 @@
                         type: "POST",
                         url: '@Url.Action("step")',
                         data: {
-                            'step_number': step,
+                            'step_number': this.step_num,
                             'content': dataToSend
                         },
                         dataType: 'json',
@@ -269,7 +273,7 @@
                         }
                     });
 
-                    step += 1
+                    this.step_num += 1
                 }
                 
                 function validateForm() {

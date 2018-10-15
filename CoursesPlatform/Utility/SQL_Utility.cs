@@ -36,7 +36,7 @@ namespace HRsystem.Utility
 
             string sqlStatement = string.Empty;
             
-            string resourceName = "HRsystem.StoredProcedure" + "." + Procedure+".xml";
+            string resourceName = "CoursesPlatform.StoredProcedure" + "." + Procedure+".xml";
             
             using (Stream stm = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
             {
