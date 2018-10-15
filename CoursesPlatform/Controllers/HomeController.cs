@@ -14,7 +14,7 @@ namespace CoursesPlatform.Controllers
         }
 
         [HttpGet]
-        public ActionResult step()
+        public ActionResult step(object data0)
         {
             return Json("chamara", JsonRequestBehavior.AllowGet);
         }

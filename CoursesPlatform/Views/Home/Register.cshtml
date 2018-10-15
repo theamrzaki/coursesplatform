@@ -232,10 +232,13 @@
                     var x = document.getElementsByClassName("tab");
                     // Exit the function if any field in the current tab is invalid:
                     if (n == 1 && !validateForm()) return false;
+
+                    var data0 = { numberId: "1", companyId: "531" };
+                    
                     $.ajax({
                         type: 'GET',
                         url: '/Home/step',
-                        data: '{ }',
+                        data: data0,
                         contentType: 'application/json; charset=utf-8',
                         dataType: 'json',
                         success: function (msg) {
