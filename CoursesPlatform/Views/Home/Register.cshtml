@@ -24,25 +24,25 @@
             <div class="tab active" id="tab_1">
                 <form action="../../index.html" method="post" style="margin-top:20px">
                     <div class="form-group has-feedback">
-                        <input type="text" class="form-control" placeholder="Name">
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Name">
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control" rows="3" placeholder="About"></textarea>
+                        <textarea class="form-control" id="about" name="about" rows="3" placeholder="About"></textarea>
                     </div>
 
                     <br />
 
                     <div class="form-group has-feedback">
-                        <input type="email" class="form-control" placeholder="Email">
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Email">
                         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
-                        <input type="email" class="form-control" placeholder="Website">
+                        <input type="email" id="website" name="website" class="form-control" placeholder="Website">
                         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
-                        <input type="email" class="form-control" placeholder="Personal PhoneNo.">
+                        <input type="email"  id="phoneno" name="phoneno" class="form-control" placeholder="Personal PhoneNo.">
                         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     </div>                   
                 </form>
@@ -225,21 +225,24 @@
                     // ... and run a function that displays the correct step indicator:
                     fixStepIndicator(n)
                 }
-
+                var inputs = {};
                 function nextPrev(n) {
-                    
+
                     // This function will figure out which tab to display
                     var x = document.getElementsByClassName("tab");
                     // Exit the function if any field in the current tab is invalid:
                     if (n == 1 && !validateForm()) return false;
 
-                    var data0 = { numberId: "1", companyId: "531" };
-                    
+                    var dataToSend = [];
+                    dataToSend = JSON.stringify(inputs);
+
                     $.ajax({
-                        type: 'GET',
-                        url: '/Home/step',
-                        data: data0,
-                        contentType: 'application/json; charset=utf-8',
+                        type: "POST",
+                        url: '@Url.Action("step")',
+                        data: {
+                            'step_number': n,
+                            'content': dataToSend
+                        },
                         dataType: 'json',
                         success: function (msg) {
                            // return false;
@@ -260,10 +263,10 @@
 
                         }
                     });
-                  
-                  
-                }
 
+
+                }
+                
                 function validateForm() {
                     // This function deals with validation of the form fields
                     var x, y, i, valid = true;
@@ -278,6 +281,7 @@
                             // and set the current valid status to false:
                             valid = false;
                         }
+                        inputs[y[i].id] = y[i].value
                     }
                     // If the valid status is true, mark the step as finished and valid:
                     if (valid) {

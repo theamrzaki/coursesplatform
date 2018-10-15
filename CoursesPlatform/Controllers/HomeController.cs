@@ -1,6 +1,11 @@
-﻿using System;
+﻿using CoursesPlatform.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Json;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -12,10 +17,20 @@ namespace CoursesPlatform.Controllers
         {
             return View();
         }
-
-        [HttpGet]
-        public ActionResult step(object data0)
+        
+        public JsonResult step(string step_number, string content)
         {
+            if (step_number == "1")
+            {
+                using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(content)))
+                {
+                    // Deserialization from JSON  
+                    DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(Center));
+                    Center center = (Center)deserializer.ReadObject(ms);
+                }
+            }
+           
+
             return Json("chamara", JsonRequestBehavior.AllowGet);
         }
 
