@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using static CoursesPlatform.Models.Enums;
 
 namespace CoursesPlatform.Crud
 {
@@ -28,15 +29,49 @@ namespace CoursesPlatform.Crud
                 com.Parameters.AddWithValue("@Action", "Insert");
 
                 SQL_Utility.Stored_Procedure(ref com);
-                id = com.ExecuteNonQuery();
-
+                SqlDataReader rdr = com.ExecuteReader();
+                if (rdr.Read())
+                {
+                    id = Convert.ToInt64(rdr[0]);
+                }
             }
             return id;
         }
         #endregion
 
 
+        public static User Login(User user)
+        {
+            using (SqlConnection con = new SqlConnection(Database.connection_string))
+            {
+                con.Open();
+                SqlCommand com = new SqlCommand("User", con);
+                com.CommandType = CommandType.StoredProcedure;
+                com.Parameters.AddWithValue("@username", user.user_name);
+                com.Parameters.AddWithValue("@password", MD5_create("Mostafa_We" + user.password + "Alaa_Amr_we_zaki_we_Mina"));
+                com.Parameters.AddWithValue("@Action", "Login");
 
+                SQL_Utility.Stored_Procedure(ref com);
+                SqlDataReader rdr = com.ExecuteReader();
+                if (rdr.Read())
+                {
+                  return  parse_user(rdr);
+                }
+            }
+            return null;
+        }
+
+        #region Helpers
+        private static User parse_user(SqlDataReader rdr)
+        {
+            User usr = new User();
+            usr.id = Convert.ToInt64(rdr["id"]);
+            usr.user_name = Convert.ToString(rdr["username"]);
+            usr.type = Convert.ToInt32(rdr["type"]);
+            usr.center_id = Convert.ToInt32(rdr["center_id"]);
+
+            return usr;
+        }
 
         public static string MD5_create(string input)
         {
@@ -52,6 +87,7 @@ namespace CoursesPlatform.Crud
                     hashedInputStringBuilder.Append(b.ToString("X2"));
                 return hashedInputStringBuilder.ToString();
             }
-        }
+        } 
+        #endregion
     }
 }

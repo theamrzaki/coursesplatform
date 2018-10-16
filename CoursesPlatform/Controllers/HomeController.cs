@@ -16,11 +16,12 @@ namespace CoursesPlatform.Controllers
 {
     public class HomeController : Controller
     {
+        #region Register
         public ActionResult Register()
         {
             return View();
         }
-        
+
         public JsonResult step(string step_number, string content)
         {
             // center deatils
@@ -78,17 +79,17 @@ namespace CoursesPlatform.Controllers
                     DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(SpecializationTags));
                     SpecializationTags Spec_Tags = (SpecializationTags)deserializer.ReadObject(ms);
                     long id = Convert.ToInt64(Session["register_course_id"]);
-                    
+
                     foreach (var s in Spec_Tags.Specializations)
                     {
-                        SpecializationCenter_crud.add(id , s);
+                        SpecializationCenter_crud.add(id, s);
                     }
 
                     foreach (var t in Spec_Tags.Tags)
                     {
                         CenterTag_crud.add(id, t);
                     }
-                    
+
                     Center_crud.updateStep(id, RegistirationsSteps.Step4);
                 }
             }
@@ -103,15 +104,38 @@ namespace CoursesPlatform.Controllers
                     Models.User user = (Models.User)deserializer.ReadObject(ms);
                     user.center_id = Convert.ToInt64(Session["register_course_id"]);
                     user.type = (int)Enums.UsersTypes.CenterAdmin;
-                    User_crud.add(user);
+                    user.id = User_crud.add(user);
+
+                    Session["Logged_in_user"] = user;
 
                     Center_crud.updateStep(user.center_id, RegistirationsSteps.Completed);
                 }
             }
             return Json("chamara", JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
+        #region Login
+        public ActionResult Login()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        public ActionResult Login(User u)
+        {
+            User loggedin_user = User_crud.Login(u);
+            if (loggedin_user != null)
+            {
+                Session["Logged_in_user"] = loggedin_user;
+                return View();
+            }
+            else
+            {
+                return View();
+            }
+        }
+        #endregion
 
         public ActionResult Index()
         {

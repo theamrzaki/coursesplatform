@@ -8,5 +8,18 @@
     (@center_id,@username,@password,@type);
   </action>
 
-
+  <action name='Login'>
+    SELECT
+    [id]
+    ,[username]
+    ,[password]
+    ,[type]
+    ,[center_id]
+    FROM [coursesplatformd].[dbo].[User]
+    where 
+      username = @username  
+        and 
+      password = @password
+  </action>
+  
 </procedure>
