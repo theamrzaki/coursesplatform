@@ -5,15 +5,10 @@ using System.Web;
 
 namespace CoursesPlatform.Models
 {
-    public class Branch
+    public class CenterTag
     {
         public long id { get; set; }
         public long center_id { get; set; }
         public string name { get; set; }
-        public string address { get; set; }
-        public string phoneno { get; set; }
-
-        public double lat { get; set; }
-        public double lng { get; set; }
     }
 }

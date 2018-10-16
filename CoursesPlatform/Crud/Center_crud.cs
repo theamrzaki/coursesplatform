@@ -14,9 +14,9 @@ namespace CoursesPlatform.Crud
     public class Center_crud
     {
         #region Add
-        public static long Add(Center center)
+        public static long add(Center center)
         {
-            long i = 0;
+            long id = 0;
             using (SqlConnection con = new SqlConnection(Database.connection_string))
             {
                 con.Open();
@@ -29,13 +29,54 @@ namespace CoursesPlatform.Crud
                 com.Parameters.AddWithValue("@Action", "InsertPrimary");
 
                 SQL_Utility.Stored_Procedure(ref com);
-                SqlDataReader rdr = com.ExecuteReader();
-                while (rdr.Read())
-                {
-                    i = Convert.ToInt64(rdr[0]);
-                }
+                id = com.ExecuteNonQuery();
+              
             }
-            return i;
+            return id;
+        }
+        #endregion
+
+        #region UpdateSocialMedia
+        public static void updateSocialMedia(Center center)
+        {
+            using (SqlConnection con = new SqlConnection(Database.connection_string))
+            {
+                con.Open();
+                SqlCommand com = new SqlCommand("Center", con);
+                com.CommandType = CommandType.StoredProcedure;
+                com.Parameters.AddWithValue("@fb_page", center.fb_page);
+                com.Parameters.AddWithValue("@instagram_page", center.instagram_page);
+                com.Parameters.AddWithValue("@twitter_page", center.twitter_page);
+                com.Parameters.AddWithValue("@linked_in_page", center.linked_in_page);
+                com.Parameters.AddWithValue("@id", center.id);
+                com.Parameters.AddWithValue("@Action", "UpdateSocialMedia");
+
+                SQL_Utility.Stored_Procedure(ref com);
+                com.ExecuteNonQuery();
+                
+            }
+            
+        }
+        #endregion
+
+        #region UpdateStep
+        public static void updateStep(long id , int step)
+        {
+            using (SqlConnection con = new SqlConnection(Database.connection_string))
+            {
+                con.Open();
+                SqlCommand com = new SqlCommand("Center", con);
+                com.CommandType = CommandType.StoredProcedure;
+                com.Parameters.AddWithValue("@id", id);
+                com.Parameters.AddWithValue("@step", step);
+            
+                com.Parameters.AddWithValue("@Action", "UpdateStep");
+
+                SQL_Utility.Stored_Procedure(ref com);
+                com.ExecuteNonQuery();
+
+            }
+
         }
         #endregion
     }

@@ -28,7 +28,7 @@ namespace CoursesPlatform.Controllers
                     // Deserialization from JSON  
                     DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(Center));
                     Center center = (Center)deserializer.ReadObject(ms);
-                    long id = Center_crud.Add(center);
+                    long id = Center_crud.add(center);
                     Session["register_course_id"] = id;
                 }
             }

@@ -27,6 +27,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -124,14 +125,23 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Crud\Branch_crud.cs" />
+    <Compile Include="Crud\CenterTag_crud.cs" />
     <Compile Include="Crud\Center_crud.cs" />
+    <Compile Include="Crud\PhoneNumber_crud.cs" />
+    <Compile Include="Crud\SpecializationCenter_crud.cs" />
+    <Compile Include="Crud\User_crud.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Branch.cs" />
     <Compile Include="Models\Center.cs" />
+    <Compile Include="Models\CenterTag.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\Helpers\Database.cs" />
+    <Compile Include="Models\PhoneNumber.cs" />
+    <Compile Include="Models\SpecializationCenter.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\Language_Utility.cs" />
     <Compile Include="Utility\Logs_Utility.cs" />
@@ -7196,7 +7206,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>60820</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

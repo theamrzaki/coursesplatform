@@ -7,6 +7,7 @@ namespace CoursesPlatform.Models
 {
     public class Center
     {
+        public long id { get; set; }
         public string name { get; set; }
         public string about { get; set; }
         public string email { get; set; }
@@ -18,5 +19,6 @@ namespace CoursesPlatform.Models
         public string linked_in_page { get; set; }
         public string instagram_page { get; set; }
 
+        
     }
 }
