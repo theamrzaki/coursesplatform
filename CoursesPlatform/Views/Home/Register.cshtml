@@ -88,13 +88,12 @@
                     <div class="form-group">
                         <label>Specialization</label>
                         <select id="specialization_tabs" class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select a State" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                            <option>Alabama</option>
-                            <option>Alaska</option>
-                            <option>California</option>
-                            <option>Delaware</option>
-                            <option>Tennessee</option>
-                            <option>Texas</option>
-                            <option>Washington</option>
+                            <option value="1" >Alaska</option>
+                            <option value="2" >California</option>
+                            <option value="3" >Delaware</option>
+                            <option value="4" >Tennessee</option>
+                            <option value="5" >Texas</option>
+                            <option value="6" >Washington</option>
                         </select>
                         
                     </div>
@@ -291,7 +290,18 @@
                             // and set the current valid status to false:
                             valid = false;
                         }
-                        inputs[y[i].id] = y[i].value
+
+                        //to add values
+                        if (y[i].className == "select2-search__field invalid" || y[i].className == "select2-search__field")
+                        {
+                            inputs["Specializations"] = $("#specialization_tabs").val()
+                            inputs["Tags"] = $("#Tags_tabs").val()
+                        }
+                        else
+                        {
+                            inputs[y[i].id] = y[i].value
+                        }
+                        
                     }
                     // If the valid status is true, mark the step as finished and valid:
                     if (valid) {

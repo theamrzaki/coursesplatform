@@ -139,6 +139,7 @@
     <Compile Include="Models\CenterTag.cs" />
     <Compile Include="Models\Helpers\Enums.cs" />
     <Compile Include="Models\Helpers\Database.cs" />
+    <Compile Include="Models\Helpers\SpecializationTags.cs" />
     <Compile Include="Models\PhoneNumber.cs" />
     <Compile Include="Models\SpecializationCenter.cs" />
     <Compile Include="Models\User.cs" />

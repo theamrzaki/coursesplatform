@@ -1,5 +1,6 @@
 ﻿using CoursesPlatform.Crud;
 using CoursesPlatform.Models;
+using CoursesPlatform.Models.Helpers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -65,6 +66,28 @@ namespace CoursesPlatform.Controllers
                 }
             }
 
+            else if (step_number == "4")
+            {
+                using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(content)))
+                {
+                    // Deserialization from JSON  
+                    DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(SpecializationTags));
+                    SpecializationTags Spec_Tags = (SpecializationTags)deserializer.ReadObject(ms);
+                    long id = Convert.ToInt64(Session["register_course_id"]);
+                    
+                    foreach (var s in Spec_Tags.Specializations)
+                    {
+                        SpecializationCenter_crud.add(id , s);
+                    }
+
+                    foreach (var t in Spec_Tags.Tags)
+                    {
+                        CenterTag_crud.add(id, t);
+                    }
+                    
+                    Center_crud.updateStep(id, RegistirationsSteps.Step4);
+                }
+            }
             return Json("chamara", JsonRequestBehavior.AllowGet);
         }
 
