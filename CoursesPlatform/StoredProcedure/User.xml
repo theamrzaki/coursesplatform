@@ -1,11 +1,11 @@
 <procedure name='User'>
 
   <action name='Insert'>
-    Insert into User
-    (username , password , type )
+    Insert into [coursesplatformd].[dbo].[User]
+    (center_id , username , password , type )
     output inserted.Id
     values
-    (@username,@password,@type);
+    (@center_id,@username,@password,@type);
   </action>
 
 

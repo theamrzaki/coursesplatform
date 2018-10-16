@@ -23,6 +23,7 @@ namespace CoursesPlatform.Controllers
         
         public JsonResult step(string step_number, string content)
         {
+            // center deatils
             if (step_number == "1")
             {
                 using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(content)))
@@ -37,6 +38,7 @@ namespace CoursesPlatform.Controllers
                 }
             }
 
+            //center socail media
             else if (step_number == "2")
             {
                 using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(content)))
@@ -52,6 +54,7 @@ namespace CoursesPlatform.Controllers
                 }
             }
 
+            // branch details
             else if (step_number == "3")
             {
                 using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(content)))
@@ -66,6 +69,7 @@ namespace CoursesPlatform.Controllers
                 }
             }
 
+            // specs & tags
             else if (step_number == "4")
             {
                 using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(content)))
@@ -86,6 +90,22 @@ namespace CoursesPlatform.Controllers
                     }
                     
                     Center_crud.updateStep(id, RegistirationsSteps.Step4);
+                }
+            }
+
+            // user details
+            else if (step_number == "5")
+            {
+                using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(content)))
+                {
+                    // Deserialization from JSON  
+                    DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(Models.User));
+                    Models.User user = (Models.User)deserializer.ReadObject(ms);
+                    user.center_id = Convert.ToInt64(Session["register_course_id"]);
+                    user.type = (int)Enums.UsersTypes.CenterAdmin;
+                    User_crud.add(user);
+
+                    Center_crud.updateStep(user.center_id, RegistirationsSteps.Completed);
                 }
             }
             return Json("chamara", JsonRequestBehavior.AllowGet);

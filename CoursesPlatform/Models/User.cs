@@ -8,8 +8,12 @@ namespace CoursesPlatform.Models
     public class User
     {
         public long id { get; set; }
+        public long center_id { get; set; }
+
         public string user_name { get; set; }
         public string password { get; set; }
+        public string retype_password { get; set; }
+
         public int type { get; set; }
     }
 }
