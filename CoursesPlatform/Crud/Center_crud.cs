@@ -17,6 +17,7 @@ namespace CoursesPlatform.Crud
         #region Add
         public static long add(Center center)
         {
+            long id = 0;
             using (SqlConnection con = new SqlConnection(Database.connection_string))
             {
                 con.Open();
@@ -33,10 +34,11 @@ namespace CoursesPlatform.Crud
                 SqlDataReader rdr = com.ExecuteReader();
                 if (rdr.Read())
                 {
-                    return Convert.ToInt64(rdr[0]);
-                }              
+                    id = Convert.ToInt64(rdr[0]);
+                }
+                PhoneNumber_crud.add(PhonesTableType.Center,id,center.phoneno,PhonesTypes.Mobile);     
             }
-            return 0;
+            return id;
         }
         #endregion
 

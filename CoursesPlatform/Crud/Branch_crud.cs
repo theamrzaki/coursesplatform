@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using static CoursesPlatform.Models.Enums;
 
 namespace CoursesPlatform.Crud
 {
@@ -29,7 +30,13 @@ namespace CoursesPlatform.Crud
                 com.Parameters.AddWithValue("@Action", "Insert");
 
                 SQL_Utility.Stored_Procedure(ref com);
-                id = com.ExecuteNonQuery();
+
+                SqlDataReader rdr = com.ExecuteReader();
+                if (rdr.Read())
+                {
+                    id = Convert.ToInt64(rdr[0]);
+                }
+                PhoneNumber_crud.add(PhonesTableType.Branch, id, branch.phoneno, PhonesTypes.Mobile);
 
             }
             return id;

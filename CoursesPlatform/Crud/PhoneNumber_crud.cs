@@ -6,13 +6,14 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using static CoursesPlatform.Models.Enums;
 
 namespace CoursesPlatform.Crud
 {
     public class PhoneNumber_crud
     {
         #region Add
-        public static long add(int table_type, int fk_id,string phone_number,int phone_type)
+        public static long add(PhonesTableType table_type, long fk_id,string phone_number, PhonesTypes phone_type)
         {
             long id = 0;
             using (SqlConnection con = new SqlConnection(Database.connection_string))
