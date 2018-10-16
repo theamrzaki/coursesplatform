@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace HRsystem.Models
+namespace CoursesPlatform.Models
 {
     public class Enums
     {

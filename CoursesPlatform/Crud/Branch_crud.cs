@@ -14,7 +14,7 @@ namespace CoursesPlatform.Crud
     {
        
         #region Add
-        public static long add(Branch branch,long center_id)
+        public static long add(Branch branch)
         {
             long id = 0;
             using (SqlConnection con = new SqlConnection(Database.connection_string))
@@ -22,7 +22,7 @@ namespace CoursesPlatform.Crud
                 con.Open();
                 SqlCommand com = new SqlCommand("Branch", con);
                 com.CommandType = CommandType.StoredProcedure;
-                com.Parameters.AddWithValue("@center_id", center_id);
+                com.Parameters.AddWithValue("@center_id", branch.center_id);
                 com.Parameters.AddWithValue("@name", branch.name );
                 com.Parameters.AddWithValue("@address", branch.address);
 

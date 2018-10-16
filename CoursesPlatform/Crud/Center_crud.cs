@@ -8,6 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using static CoursesPlatform.Models.Enums;
 
 namespace CoursesPlatform.Crud
 {
@@ -16,7 +17,6 @@ namespace CoursesPlatform.Crud
         #region Add
         public static long add(Center center)
         {
-            long id = 0;
             using (SqlConnection con = new SqlConnection(Database.connection_string))
             {
                 con.Open();
@@ -29,14 +29,18 @@ namespace CoursesPlatform.Crud
                 com.Parameters.AddWithValue("@Action", "InsertPrimary");
 
                 SQL_Utility.Stored_Procedure(ref com);
-                id = com.ExecuteNonQuery();
-              
+
+                SqlDataReader rdr = com.ExecuteReader();
+                if (rdr.Read())
+                {
+                    return Convert.ToInt64(rdr[0]);
+                }              
             }
-            return id;
+            return 0;
         }
         #endregion
 
-        #region UpdateSocialMedia
+        #region Update
         public static void updateSocialMedia(Center center)
         {
             using (SqlConnection con = new SqlConnection(Database.connection_string))
@@ -53,14 +57,12 @@ namespace CoursesPlatform.Crud
 
                 SQL_Utility.Stored_Procedure(ref com);
                 com.ExecuteNonQuery();
-                
-            }
-            
-        }
-        #endregion
 
-        #region UpdateStep
-        public static void updateStep(long id , int step)
+            }
+
+        }
+
+        public static void updateStep(long id, RegistirationsSteps step)
         {
             using (SqlConnection con = new SqlConnection(Database.connection_string))
             {
@@ -68,8 +70,8 @@ namespace CoursesPlatform.Crud
                 SqlCommand com = new SqlCommand("Center", con);
                 com.CommandType = CommandType.StoredProcedure;
                 com.Parameters.AddWithValue("@id", id);
-                com.Parameters.AddWithValue("@step", step);
-            
+                com.Parameters.AddWithValue("@step", (int)step);
+
                 com.Parameters.AddWithValue("@Action", "UpdateStep");
 
                 SQL_Utility.Stored_Procedure(ref com);

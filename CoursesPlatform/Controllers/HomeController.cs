@@ -9,6 +9,7 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using static CoursesPlatform.Models.Enums;
 
 namespace CoursesPlatform.Controllers
 {
@@ -30,6 +31,8 @@ namespace CoursesPlatform.Controllers
                     Center center = (Center)deserializer.ReadObject(ms);
                     long id = Center_crud.add(center);
                     Session["register_course_id"] = id;
+
+                    Center_crud.updateStep(id, RegistirationsSteps.Step1);
                 }
             }
 
@@ -40,6 +43,11 @@ namespace CoursesPlatform.Controllers
                     // Deserialization from JSON  
                     DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(Center));
                     Center center = (Center)deserializer.ReadObject(ms);
+                    center.id = Convert.ToInt64(Session["register_course_id"]);
+
+                    Center_crud.updateSocialMedia(center);
+                    Center_crud.updateStep(center.id, RegistirationsSteps.Step2);
+
                 }
             }
 
@@ -49,7 +57,11 @@ namespace CoursesPlatform.Controllers
                 {
                     // Deserialization from JSON  
                     DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(Branch));
-                    Branch center = (Branch)deserializer.ReadObject(ms);
+                    Branch branch = (Branch)deserializer.ReadObject(ms);
+                    branch.center_id = Convert.ToInt64(Session["register_course_id"]);
+                    Branch_crud.add(branch);
+
+                    Center_crud.updateStep(branch.center_id, RegistirationsSteps.Step3);
                 }
             }
 
