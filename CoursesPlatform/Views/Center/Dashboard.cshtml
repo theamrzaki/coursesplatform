@@ -25,13 +25,13 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text">Sales</span>
-                    <span class="info-box-number">3,410</span>
+                    <span class="info-box-number">0</span>
 
                     <div class="progress">
-                        <div class="progress-bar" style="width: 70%"></div>
+                        <div class="progress-bar" style="width: 0%"></div>
                     </div>
                     <span class="progress-description">
-                        70% Increase in 30 Days
+                        @*70% Increase in 30 Days*@
                     </span>
                 </div>
                 <!-- /.info-box-content -->
@@ -48,10 +48,10 @@
                     <span class="info-box-number">53</span>
 
                     <div class="progress">
-                        <div class="progress-bar" style="width: 70%"></div>
+                        <div class="progress-bar" style="width: 0%"></div>
                     </div>
                     <span class="progress-description">
-                        70% Increase in 30 Days
+                        @*70% Increase in 30 Days*@
                     </span>
                 </div>
                 <!-- /.info-box-content -->
@@ -65,13 +65,13 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text">Instructor</span>
-                    <span class="info-box-number">20</span>
+                    <span class="info-box-number">0</span>
 
                     <div class="progress">
-                        <div class="progress-bar" style="width: 70%"></div>
+                        <div class="progress-bar" style="width: 0%"></div>
                     </div>
                     <span class="progress-description">
-                        70% Increase in 30 Days
+                        @*70% Increase in 30 Days*@
                     </span>
                 </div>
                 <!-- /.info-box-content -->
@@ -85,13 +85,13 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text">Users</span>
-                    <span class="info-box-number">410</span>
+                    <span class="info-box-number">0</span>
 
                     <div class="progress">
-                        <div class="progress-bar" style="width: 70%"></div>
+                        <div class="progress-bar" style="width: 0%"></div>
                     </div>
                     <span class="progress-description">
-                        70% Increase in 30 Days
+                        @*70% Increase in 30 Days*@
                     </span>
                 </div>
                 <!-- /.info-box-content -->
@@ -107,11 +107,17 @@
     <h2 class="page-header">Branches</h2>
 
     <div class="row">
+        <style>
+            .info-box
+            {
+                cursor:pointer
+            }
+        </style>
         @foreach (var Branch in ((CoursesPlatform.Models.Center)ViewBag.Center).Branches)
         {
             <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon @Branch.color">@(Branch.name.Split(' ').Select(y => y[0]).ToList())</span>
+                <div class="info-box" onclick="location.href = '/Branch/Dashboard/@Branch.id'">
+                    <span class="info-box-icon @Branch.color">@Branch.abbrev</span>
 
                     <div class="info-box-content" style="padding:0 !important">
                         <div class="inner">
@@ -137,7 +143,23 @@
                 <!-- /.info-box -->
             </div>
         }
-        
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="info-box" onclick="location.href = '/Branch/AddBranch'">
+                <div class="info-box-content" style="padding:0 !important">
+                    <div class="inner">
+                        <div class="row">
+                            <div class="col-md-12" style="text-align:center">
+                                <h2>+ Add Branch</h2>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
     </div>
 
    

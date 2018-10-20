@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoursesPlatform.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,16 +9,21 @@ namespace CoursesPlatform.Controllers
 {
     public class BranchController : Controller
     {
-        public ActionResult Dashboard()
+        public ActionResult Dashboard(long id)
         {
-            if (Session["Logged_in_user"] != null)
-            {
+            //Branch br = new Branch
+            //{
+                
+            //};
+            
+            //if (Session["Logged_in_user"] != null)
+            //{
                 return View();
-            }
-            else
-            {
-                return RedirectToAction("Login","Home");
-            }
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Login","Home");
+            //}
         }
     }
 }

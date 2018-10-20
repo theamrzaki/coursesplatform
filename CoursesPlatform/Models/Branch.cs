@@ -10,6 +10,7 @@ namespace CoursesPlatform.Models
         public long id { get; set; }
         public long center_id { get; set; }
         public string name { get; set; }
+        public string abbrev { get; set; }
         public string address { get; set; }
         public string phoneno { get; set; }
 
