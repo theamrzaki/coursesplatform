@@ -20,7 +20,17 @@ namespace CoursesPlatform.Models
         public string linked_in_page { get; set; }
         public string instagram_page { get; set; }
 
-        public List<Branch> Branches { get; set; }
+        public DateTime date { get; set; }
+        public DateTime edit_date { get; set; }
+        public bool is_blocked { get; set; }
+        public int step { get; set; }
+
+        public List<Branch> branches { get; set; }
+
+        public Center()
+        {
+            branches = new List<Branch>();
+        }
 
     }
 }

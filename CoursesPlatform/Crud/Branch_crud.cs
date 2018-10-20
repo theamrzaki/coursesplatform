@@ -65,6 +65,85 @@ namespace CoursesPlatform.Crud
         }
         #endregion
 
+        #region getBranchesByCenterID
+        public static List<Branch> getBranchesByCenterID(long centerID)
+        {
+            using (SqlConnection con = new SqlConnection(Database.connection_string))
+            {
+                con.Open();
+                SqlCommand com = new SqlCommand("Branch", con);
+                com.CommandType = CommandType.StoredProcedure;
+                com.Parameters.AddWithValue("@center_id", centerID);
+
+                com.Parameters.AddWithValue("@Action", "GetBranchByCenterID");
+
+                SQL_Utility.Stored_Procedure(ref com);
+                SqlDataReader rdr = com.ExecuteReader();
+
+                return parse_Branches(rdr);
+
+            }
+
+        }
+
+        #endregion
+
+        #region Helper
+        private static List<Branch> parse_Branches(SqlDataReader rdr)
+        {
+            List<Branch> branches = new List<Branch>();
+
+            while (rdr.Read())
+            {
+                Branch branch = new Branch();
+                branch.id = Convert.ToInt64(rdr["id"]);
+                branch.name = rdr["name"].ToString();
+                branch.center_id = Convert.ToInt64(rdr["center_id"]);
+                try
+                {
+                    branch.lat = Convert.ToDouble("lat");
+                }
+                catch (Exception)
+                {
+                    branch.lat = 0;
+                }
+
+                try
+                {
+                    branch.lng = Convert.ToDouble("lng");
+                }
+                catch (Exception)
+                {
+                    branch.lng = 0;
+                }
+                branch.address = rdr["address"].ToString();
+                try
+                {
+                    branch.date = Convert.ToDateTime("date") ;
+                }
+                catch (Exception)
+                {
+
+                }
+
+                try
+                {
+                    branch.edit_date = Convert.ToDateTime("edit_date");
+                }
+                catch (Exception)
+                {
+
+                }
+
+                int is_blocked = Convert.ToInt32(rdr["is_blocked"]);
+                branch.is_blocked = (is_blocked == 1) ? true : false;
+
+                branches.Add(branch);
+            }
+            return branches;
+        }
+        #endregion
+
 
     }
 }

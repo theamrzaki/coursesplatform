@@ -26,7 +26,12 @@ namespace CoursesPlatform.Crud
                 com.Parameters.AddWithValue("@Action", "Insert");
 
                 SQL_Utility.Stored_Procedure(ref com);
-                id = com.ExecuteNonQuery();
+
+                SqlDataReader rdr = com.ExecuteReader();
+                if (rdr.Read())
+                {
+                    id = Convert.ToInt64(rdr[0]);
+                }
 
             }
             return id;

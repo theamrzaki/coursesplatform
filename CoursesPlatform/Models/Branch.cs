@@ -17,6 +17,10 @@ namespace CoursesPlatform.Models
         public double lat { get; set; }
         public double lng { get; set; }
 
+        public DateTime date { get; set; }
+        public DateTime edit_date { get; set; }
+        public bool is_blocked { get; set; }
+
         public int courses { get; set; }
         public int users { get; set; }
 
