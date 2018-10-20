@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoursesPlatform.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,6 +20,7 @@ namespace CoursesPlatform.Models
         public string linked_in_page { get; set; }
         public string instagram_page { get; set; }
 
-        
+        public List<Branch> Branches { get; set; }
+
     }
 }

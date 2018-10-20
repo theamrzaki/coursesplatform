@@ -107,133 +107,37 @@
     <h2 class="page-header">Branches</h2>
 
     <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="info-box" >
-                <span class="info-box-icon bg-aqua">SH</span>
+        @foreach (var Branch in ((CoursesPlatform.Models.Center)ViewBag.Center).Branches)
+        {
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon @Branch.color">@(Branch.name.Split(' ').Select(y => y[0]).ToList())</span>
 
-                <div class="info-box-content" style="padding:0 !important">
-                    <div class="inner">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <h2>Sheraton</h2>
+                    <div class="info-box-content" style="padding:0 !important">
+                        <div class="inner">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h2>@Branch.name</h2>
+                                </div>
+                                <div class="col-md-2" style="padding: 20px;">
+                                    <span class="info-box-text">Courses</span>
+                                    <span class="info-box-number">@Branch.courses</span>
+                                </div>
+                                <div class="col-md-2" style="padding: 20px;">
+                                    <span class="info-box-text">Users</span>
+                                    <span class="info-box-number">@Branch.users</span>
+                                </div>
                             </div>
-                            <div class="col-md-2" style="padding: 20px;">
-                                <span class="info-box-text">Courses</span>
-                                <span class="info-box-number">30</span>
-                            </div>
-                            <div class="col-md-2" style="padding: 20px;">
-                                <span class="info-box-text">Instructors</span>
-                                <span class="info-box-number">20</span>
-                            </div>
-                            <div class="col-md-2" style="padding: 20px;">
-                                <span class="info-box-text">Users</span>
-                                <span class="info-box-number">136</span>
-                            </div>
+
                         </div>
 
                     </div>
-                    
+                    <!-- /.info-box-content -->
                 </div>
-                <!-- /.info-box-content -->
+                <!-- /.info-box -->
             </div>
-            <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="info-box">
-                <span class="info-box-icon bg-green">NZ</span>
-                <div class="info-box-content" style="padding:0 !important">
-                    <div class="inner">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <h2>Nozha</h2>
-                            </div>
-                            <div class="col-md-2" style="padding: 20px;">
-                                <span class="info-box-text">Courses</span>
-                                <span class="info-box-number">30</span>
-                            </div>
-                            <div class="col-md-2" style="padding: 20px;">
-                                <span class="info-box-text">Instructors</span>
-                                <span class="info-box-number">20</span>
-                            </div>
-                            <div class="col-md-2" style="padding: 20px;">
-                                <span class="info-box-text">Users</span>
-                                <span class="info-box-number">136</span>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-                <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="info-box">
-                <span class="info-box-icon bg-yellow">MG</span>
-
-                <div class="info-box-content" style="padding:0 !important">
-                    <div class="inner">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <h2>MasrElGdeda</h2>
-                            </div>
-                            <div class="col-md-2" style="padding: 20px;">
-                                <span class="info-box-text">Courses</span>
-                                <span class="info-box-number">30</span>
-                            </div>
-                            <div class="col-md-2" style="padding: 20px;">
-                                <span class="info-box-text">Instructors</span>
-                                <span class="info-box-number">20</span>
-                            </div>
-                            <div class="col-md-2" style="padding: 20px;">
-                                <span class="info-box-text">Users</span>
-                                <span class="info-box-number">136</span>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-                <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="info-box">
-                <span class="info-box-icon bg-red">MD</span>
-
-                <div class="info-box-content" style="padding:0 !important">
-                    <div class="inner">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <h2>Maddi</h2>
-                            </div>
-                            <div class="col-md-2" style="padding: 20px;">
-                                <span class="info-box-text">Courses</span>
-                                <span class="info-box-number">30</span>
-                            </div>
-                            <div class="col-md-2" style="padding: 20px;">
-                                <span class="info-box-text">Instructors</span>
-                                <span class="info-box-number">20</span>
-                            </div>
-                            <div class="col-md-2" style="padding: 20px;">
-                                <span class="info-box-text">Users</span>
-                                <span class="info-box-number">136</span>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-                <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
+        }
+        
     </div>
 
    

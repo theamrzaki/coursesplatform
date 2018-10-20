@@ -128,7 +128,7 @@ namespace CoursesPlatform.Controllers
             if (loggedin_user != null)
             {
                 Session["Logged_in_user"] = loggedin_user;
-                return View();
+                return RedirectToAction("Dashboard", "Center");
             }
             else
             {
@@ -137,11 +137,7 @@ namespace CoursesPlatform.Controllers
         }
         #endregion
 
-        public ActionResult Index()
-        {
-            return View();
-        }
-
+      
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

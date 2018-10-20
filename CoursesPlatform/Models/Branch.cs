@@ -15,5 +15,12 @@ namespace CoursesPlatform.Models
 
         public double lat { get; set; }
         public double lng { get; set; }
+
+        public int courses { get; set; }
+        public int users { get; set; }
+
+
+        public string color { get; set; }
+
     }
 }
