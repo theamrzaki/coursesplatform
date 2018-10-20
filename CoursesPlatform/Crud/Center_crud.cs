@@ -83,5 +83,75 @@ namespace CoursesPlatform.Crud
 
         }
         #endregion
+
+        #region GetByCenterID
+
+        public static Center getCenterByID(long centerID)
+        {
+            using (SqlConnection con = new SqlConnection(Database.connection_string))
+            {
+                con.Open();
+                SqlCommand com = new SqlCommand("Center", con);
+                com.CommandType = CommandType.StoredProcedure;
+                com.Parameters.AddWithValue("@id", centerID);
+                com.Parameters.AddWithValue("@Action", "GetCenterByID");
+
+                SQL_Utility.Stored_Procedure(ref com);
+
+                SqlDataReader rdr = com.ExecuteReader();
+                Center center = new Center();
+                if (rdr.Read())
+                {
+                    center = parse_center(rdr);
+
+                }
+
+                center.branches = Branch_crud.getBranchesByCenterID(centerID);
+
+                return center;
+            }
+
+        }
+
+        #endregion
+
+        #region Helper
+        private static Center parse_center(SqlDataReader rdr)
+        {
+            Center center = new Center();
+            center.id = Convert.ToInt64(rdr["id"]);
+            center.name = rdr["name"].ToString();
+            center.about = rdr["about"].ToString();
+            center.email = rdr["email"].ToString();
+            center.website = rdr["website"].ToString();
+            center.fb_page = rdr["fb_page"].ToString();
+            center.instagram_page = rdr["instagram_page"].ToString();
+            center.twitter_page = rdr["twitter_page"].ToString();
+            center.linked_in_page = rdr["linked_in_page"].ToString();
+
+            try
+            {
+                center.date = Convert.ToDateTime(rdr["date"]);
+            }catch(Exception ex)
+            {
+                center.date = DateTime.Now;
+            }
+
+            try
+            {
+                center.edit_date = Convert.ToDateTime(rdr["edit_date"]);
+            }
+            catch (Exception ex)
+            {
+                center.edit_date = DateTime.Now;
+            }
+
+            int is_blocked = Convert.ToInt32(rdr["is_blocked"]);
+            center.is_blocked = (is_blocked == 1 ) ? true : false;
+
+            center.step = Convert.ToInt32(rdr["step"]);
+            return center;
+        }
+        #endregion
     }
 }

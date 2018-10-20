@@ -39,7 +39,7 @@ namespace CoursesPlatform.Crud
         }
         #endregion
 
-
+        #region Login
         public static User Login(User user)
         {
             using (SqlConnection con = new SqlConnection(Database.connection_string))
@@ -60,15 +60,16 @@ namespace CoursesPlatform.Crud
             }
             return null;
         }
+        #endregion
 
         #region Helpers
         private static User parse_user(SqlDataReader rdr)
         {
             User usr = new User();
             usr.id = Convert.ToInt64(rdr["id"]);
-            usr.user_name = Convert.ToString(rdr["username"]);
+            usr.user_name = rdr["username"].ToString();
             usr.type = Convert.ToInt32(rdr["type"]);
-            usr.center_id = Convert.ToInt32(rdr["center_id"]);
+            usr.center_id = Convert.ToInt64(rdr["center_id"]);
 
             return usr;
         }
