@@ -1,0 +1,250 @@
+﻿@model CoursesPlatform.Models.Course
+
+@{
+    ViewBag.Title = "Add";
+}
+<link href="~/bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+<link href="~/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Add a new Course</h3>
+                        <p class="box-info">Add a new Course in your Branch </p>
+                    </div>
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.capacity, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.capacity, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.capacity, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <hr />
+
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Specialization</label>
+                            <div class="col-md-8">
+                                <select id="specialization_tabs" class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select a State" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                    <option value="1">Alaska</option>
+                                    <option value="2">California</option>
+                                    <option value="3">Delaware</option>
+                                    <option value="4">Tennessee</option>
+                                    <option value="5">Texas</option>
+                                    <option value="6">Washington</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.no_of_hours_per_day, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">CourseType</label>
+                            <div class="col-md-8">
+                                <select class="form-control" name="day">
+                                    <option>Sunday       </option>
+                                    <option>Monday       </option>
+                                    <option>Tuesday      </option>
+                                    <option>Wednesday    </option>
+                                    <option>Thursday     </option>
+                                    <option>Friday       </option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.no_of_hours_per_day, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.start_date, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-8">
+                                <input type="text" name="start_date" class="form-control pull-right datepicker_form" >
+                                @Html.ValidationMessageFor(model => model.start_date, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.end_date, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-8">
+                                <input type="text" name="end_date" class="form-control pull-right datepicker_form">
+                                @Html.ValidationMessageFor(model => model.end_date, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.expiration_register_date, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-8">
+                                <input type="text" name="expiration_register_date" class="form-control pull-right datepicker_form">
+                                @Html.ValidationMessageFor(model => model.expiration_register_date, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <hr />
+                        
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.course_duration_in_hours, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.course_duration_in_hours, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.course_duration_in_hours, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.no_of_days_per_week, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.no_of_days_per_week, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.no_of_days_per_week, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.no_of_hours_per_day, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.no_of_hours_per_day, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.no_of_hours_per_day, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <hr />
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.old_price, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.old_price, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.old_price, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.new_price, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.new_price, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.new_price, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="col-md-12 col-sm-12 col-xs-12" >
+                            <div class="info-box bg-aqua">
+                                <span class="info-box-icon"><i class="far fa-calendar-alt"></i></span>
+                                <div class="info-box-content" >
+                                    <div class="col-md-4">
+                                        <label class="control-label col-md-2">Day</label>
+                                        <div class="col-md-8">
+                                            <select class="form-control" name="day">
+                                                <option>Sunday       </option>
+                                                <option>Monday       </option>
+                                                <option>Tuesday      </option>
+                                                <option>Wednesday    </option>
+                                                <option>Thursday     </option>
+                                                <option>Friday       </option>
+                                            </select>
+                                            @Html.ValidationMessageFor(model => model.no_of_hours_per_day, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class = "control-label col-md-2">From</label>
+                                        <div class="col-md-8">
+                                            <input type="time" name="From" class="form-control">
+                                            @Html.ValidationMessageFor(model => model.no_of_hours_per_day, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="control-label col-md-2">To</label>
+                                        <div class="col-md-8">
+                                            <input type="time" name="To" class="form-control">
+                                            @Html.ValidationMessageFor(model => model.no_of_hours_per_day, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="info-box bg-aqua">
+                                <span class="info-box-icon"><i class="far fa-calendar-alt"></i></span>
+                                <div class="info-box-content">
+                                    <div class="col-md-4">
+                                        <label class="control-label col-md-2">Day</label>
+                                        <div class="col-md-8">
+                                            <select class="form-control" name="day">
+                                                <option>Sunday       </option>
+                                                <option>Monday       </option>
+                                                <option>Tuesday      </option>
+                                                <option>Wednesday    </option>
+                                                <option>Thursday     </option>
+                                                <option>Friday       </option>
+                                            </select>
+                                            @Html.ValidationMessageFor(model => model.no_of_hours_per_day, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="control-label col-md-2">From</label>
+                                        <div class="col-md-8">
+                                            <input type="time" name="from" class="form-control">
+                                            @Html.ValidationMessageFor(model => model.no_of_hours_per_day, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="control-label col-md-2">To</label>
+                                        <div class="col-md-8">
+                                            <input type="time" name="To" class="form-control">
+                                            @Html.ValidationMessageFor(model => model.no_of_hours_per_day, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="info-box-more" style="padding:30px">
+                                    <a href="/Center/Dashboard" style="margin:8px" class="btn btn-sm btn-default btn-flat pull-right">Add</a>
+                                    <a href="/Center/Dashboard" style="margin:8px" class="btn btn-sm btn-danger btn-flat pull-right">Cancel</a>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="info-box" style="width:100%;text-align:center">
+                                <a href="/Center/Dashboard" class="btn btn-sm btn-info btn-flat">Add Day</a>
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+
+                        <div class="box-footer clearfix">
+                            <a href="/Center/Dashboard" class="btn btn-sm btn-default btn-flat pull-left">Return to Dahsboard</a>
+
+                            <input type="submit" value="Add" class="btn btn-sm btn-info btn-flat pull-right" />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>  
+
+}
+
+<script src="~/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>

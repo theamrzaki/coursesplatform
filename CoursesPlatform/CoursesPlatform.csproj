@@ -126,6 +126,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BranchController.cs" />
     <Compile Include="Controllers\CenterController.cs" />
+    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Crud\Branch_crud.cs" />
     <Compile Include="Crud\CenterTag_crud.cs" />
@@ -7167,7 +7168,7 @@
     <EmbeddedResource Include="StoredProcedure\PhoneNumber.xml" />
     <EmbeddedResource Include="StoredProcedure\SpecializationCenter.xml" />
     <EmbeddedResource Include="StoredProcedure\User.xml" />
-    <Content Include="StoredProcedure\Course.xml" />
+    <EmbeddedResource Include="StoredProcedure\Course.xml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -7185,6 +7186,7 @@
     <Content Include="Views\Shared\_PlainLayout.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Branch\Add.cshtml" />
+    <Content Include="Views\Course\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

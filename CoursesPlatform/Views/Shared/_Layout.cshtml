@@ -37,6 +37,9 @@
     <![endif]-->
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    
+    <link rel="stylesheet" href="~/bower_components/select2/dist/css/select2.min.css">
+
     <title>@ViewBag.Title</title>
 </head>
 <body  class="fixed hold-transition skin-blue-light sidebar-mini">
@@ -740,5 +743,26 @@
     <script src="~/dist/js/pages/dashboard.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="~/dist/js/demo.js"></script>
+
+
+    <!-- Select2 -->
+    <script src="~/bower_components/select2/dist/js/select2.full.min.js"></script>
+    <script src="~/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+    <script>
+    //Date picker
+    $('.datepicker_form').datepicker({
+        autoclose: true
+    })
+
+    $('.timepicker').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'h:mm A' })
+    </script>
+
+    <script>
+        $(function () {
+            //Initialize Select2 Elements
+            $('#specialization_tabs').select2();
+        })
+    </script>
+
 </body>
 </html>
