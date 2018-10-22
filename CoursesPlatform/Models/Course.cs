@@ -28,5 +28,14 @@ namespace CoursesPlatform.Models
         public DateTime         edit_date                      { get; set; }
         public center_or_instructor_enum center_or_instructor  { get; set; }
         public int              is_visible                     { get; set; }
+
+        public List<CourseDays> courseDays { get; set; }
+        public List<Specialization> specializations { get; set; }
+
+        public Course()
+        {
+            courseDays = new List<CourseDays>();
+            specializations = new List<Specialization>();
+        }
     }
 }

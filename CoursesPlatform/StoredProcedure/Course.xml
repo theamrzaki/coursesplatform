@@ -1,6 +1,6 @@
 ﻿<procedure name='Course'>
 
-  <action name='Insert'>
+  <action name='InsertCourse'>
     INSERT INTO [dbo].[Course]
     ([instructor_id]
     ,[branch_id]
@@ -17,11 +17,9 @@
     ,[course_duration_in_hours]
     ,[no_of_days_per_week]
     ,[no_of_hours_per_day]
-    ,[date_created]
-    ,[edit_date]
     ,[center_or_instructor]
     ,[is_visible])
-    output inserted.Id
+    output inserted.id
     VALUES
     (@instructor_id
     ,@branch_id
@@ -38,10 +36,24 @@
     ,@course_duration_in_hours
     ,@no_of_days_per_week
     ,@no_of_hours_per_day
-    ,@date_created
-    ,@edit_date
     ,@center_or_instructor
     ,@is_visible)
   </action>
   
+  <action name='InsertCourseDay'>
+     INSERT INTO [CourseDays]
+      (course_id,day , from_time , to_time )
+      output inserted.id
+      values
+      (@course_id,@day ,@from_time , @to_time);
+  </action>
+  
+  <action name='InsertSpecializationCourse'>
+     INSERT INTO [SpecializationCourse]
+      (course_id,specialization_id)
+      output inserted.id
+      values
+      (@course_id,@specialization_id);
+  </action>
+
 </procedure>
