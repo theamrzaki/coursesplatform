@@ -7,6 +7,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Web;
 using static CoursesPlatform.Models.Enums;
 
@@ -152,6 +153,7 @@ namespace CoursesPlatform.Crud
             center.step = Convert.ToInt32(rdr["step"]);
             return center;
         }
+
         #endregion
     }
 }

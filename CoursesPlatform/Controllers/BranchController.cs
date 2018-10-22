@@ -1,4 +1,5 @@
-﻿using CoursesPlatform.Models;
+﻿using CoursesPlatform.Crud;
+using CoursesPlatform.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,21 +10,26 @@ namespace CoursesPlatform.Controllers
 {
     public class BranchController : Controller
     {
+        #region Add
+        public ActionResult Add()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Add(Branch b)
+        {
+            b.center_id = ((User)Session["Logged_in_user"]).center_id;
+            Branch_crud.add(b);
+            return RedirectToAction("Dashboard","Center");
+        } 
+        #endregion
+
         public ActionResult Dashboard(long id)
         {
-            //Branch br = new Branch
-            //{
-                
-            //};
-            
-            //if (Session["Logged_in_user"] != null)
-            //{
-                return View();
-            //}
-            //else
-            //{
-            //    return RedirectToAction("Login","Home");
-            //}
+            Branch b=  Branch_crud.getBranchesByID(id);
+            ViewBag.Branch = b;
+            return View();
         }
     }
 }

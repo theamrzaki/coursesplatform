@@ -20,4 +20,9 @@
     where center_id=@center_id;
   </action>
 
+  <action name='GetBranchByID'>
+    select *  from Branch
+    where id=@id;
+  </action>
+  
 </procedure>

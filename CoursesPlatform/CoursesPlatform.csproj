@@ -7173,10 +7173,11 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
-    <Content Include="Views\Branch\DashBoard.cshtml" />
+    <Content Include="Views\Branch\Dashboard.cshtml" />
     <Content Include="Views\Center\Dashboard.cshtml" />
     <Content Include="Views\Shared\_PlainLayout.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Branch\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
