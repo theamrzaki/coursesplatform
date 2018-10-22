@@ -116,6 +116,8 @@ namespace CoursesPlatform.Crud
 
         #endregion
 
+
+
         #region Helper
         private static Center parse_center(SqlDataReader rdr)
         {
@@ -153,7 +155,7 @@ namespace CoursesPlatform.Crud
             center.step = Convert.ToInt32(rdr["step"]);
             return center;
         }
-
+        
         #endregion
     }
 }

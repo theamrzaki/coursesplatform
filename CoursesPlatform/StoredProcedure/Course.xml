@@ -55,5 +55,21 @@
       values
       (@course_id,@specialization_id);
   </action>
+  
+  <action name='GetCourseByID'>
+      select *  from [Course]   
+      where id=@id;
+  </action>
+  
+  <action name='GetCourseDays'>
+    select * from [CourseDays]
+    where course_id = @course_id;
+  </action>
+  
+  <action name='GetSpecializationForCourse'>
+    select [Specialization].[id] , [Specialization].[name] from [SpecializationCourse] , [Specialization]
+    where [SpecializationCourse].[course_id] = @course_id 
+    AND [SpecializationCourse].[specialization_id] = [Specialization].[id]
+  </action>
 
 </procedure>
