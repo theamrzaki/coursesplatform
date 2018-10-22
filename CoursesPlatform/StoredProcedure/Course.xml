@@ -1,0 +1,47 @@
+﻿<procedure name='Course'>
+
+  <action name='Insert'>
+    INSERT INTO [dbo].[Course]
+    ([instructor_id]
+    ,[branch_id]
+    ,[course_type_id]
+    ,[name]
+    ,[description]
+    ,[start_date]
+    ,[end_date]
+    ,[capacity]
+    ,[capacity_is_visible]
+    ,[old_price]
+    ,[new_price]
+    ,[expiration_register_date]
+    ,[course_duration_in_hours]
+    ,[no_of_days_per_week]
+    ,[no_of_hours_per_day]
+    ,[date_created]
+    ,[edit_date]
+    ,[center_or_instructor]
+    ,[is_visible])
+    output inserted.Id
+    VALUES
+    (@instructor_id
+    ,@branch_id
+    ,@course_type_id
+    ,@name
+    ,@description
+    ,@start_date
+    ,@end_date
+    ,@capacity
+    ,@capacity_is_visible
+    ,@old_price
+    ,@new_price
+    ,@expiration_register_date
+    ,@course_duration_in_hours
+    ,@no_of_days_per_week
+    ,@no_of_hours_per_day
+    ,@date_created
+    ,@edit_date
+    ,@center_or_instructor
+    ,@is_visible)
+  </action>
+  
+</procedure>

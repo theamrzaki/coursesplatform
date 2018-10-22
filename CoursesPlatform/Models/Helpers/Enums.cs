@@ -35,6 +35,30 @@ namespace CoursesPlatform.Models
             Step4 = 3,
             Completed = 4
         }
+        
+        public enum center_or_instructor_enum
+        {
+            instructor = 0,
+            center = 1
+        }
+
+        public enum is_visible_enum
+        {
+            not_visible = 0,
+            visible = 1
+        }
+
+        public enum days_of_week_enum
+        {
+            Sunday          = 1,
+            Monday          = 2,
+            Tuesday         = 3,
+            Wednesday       = 4,
+            Thursday        = 5,
+            Friday          = 6,
+            Saturday        = 7
+        }
+
         #endregion
 
         #region Installment
