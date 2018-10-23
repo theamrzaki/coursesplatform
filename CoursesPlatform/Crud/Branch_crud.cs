@@ -101,10 +101,18 @@ namespace CoursesPlatform.Crud
                 SQL_Utility.Stored_Procedure(ref com);
                 SqlDataReader rdr = com.ExecuteReader();
 
-                return parse_Branche_complete(rdr);
+                Branch branch = null;
+                if(rdr.Read())
+                {
+                    branch = parse_Branche_complete(rdr);
+                }
+                return branch;
             }
         }
         #endregion
+
+       
+
 
         #region Helper
         private static Branch parse_Branche_complete(SqlDataReader rdr)
@@ -245,6 +253,49 @@ namespace CoursesPlatform.Crud
             }
             return output.ToString();
         }
+
+        #region Get Course Center Name And Branch Name
+        public static void getCourseCenteNamerAndBranchName(Course course)
+        {
+            using (SqlConnection con = new SqlConnection(Database.connection_string))
+            {
+                con.Open();
+                SqlCommand com = new SqlCommand("Branch", con);
+                com.CommandType = CommandType.StoredProcedure;
+                com.Parameters.AddWithValue("@branch_id", course.branch_id);
+
+                com.Parameters.AddWithValue("@Action", "GetBranchNameAndCenterNameByID");
+
+                SQL_Utility.Stored_Procedure(ref com);
+
+                SqlDataReader rdr = com.ExecuteReader();
+
+                if (rdr.Read())
+                {
+                    try
+                    {
+                        course.centerName = Convert.ToString(rdr["center_name"]);
+                    }
+                    catch(Exception)
+                    {
+                        course.centerName = "";
+                    }
+
+                    try
+                    {
+                        course.branchName = Convert.ToString(rdr["branch_name"]);
+                    }
+                    catch (Exception)
+                    {
+                        course.branchName = "";
+                    }
+                   
+                }
+            }
+
+        }
+        #endregion
+
         #endregion
 
 

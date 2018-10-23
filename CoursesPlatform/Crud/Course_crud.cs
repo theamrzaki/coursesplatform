@@ -112,51 +112,9 @@ namespace CoursesPlatform.Crud
         }
         #endregion
 
-        #region Get Course Days
-        public static List<CourseDays> getCourseDaysByCourseID(long course_id)
-        {
-            using (SqlConnection con = new SqlConnection(Database.connection_string))
-            {
-                con.Open();
-                SqlCommand com = new SqlCommand("Course", con);
-                com.CommandType = CommandType.StoredProcedure;
-                com.Parameters.AddWithValue("@course_id", course_id);
 
-                com.Parameters.AddWithValue("@Action", "GetCourseDays");
 
-                SQL_Utility.Stored_Procedure(ref com);
-
-                SqlDataReader rdr = com.ExecuteReader();
-
-                return parse_courseDays(rdr);
-            }
-            
-        }
-        #endregion
-
-        #region Get Course Specialization
-        public static List<Specialization> getCourseSpecialization(long course_id)
-        {
-            using (SqlConnection con = new SqlConnection(Database.connection_string))
-            {
-                con.Open();
-                SqlCommand com = new SqlCommand("Course", con);
-                com.CommandType = CommandType.StoredProcedure;
-                com.Parameters.AddWithValue("@course_id", course_id);
-
-                com.Parameters.AddWithValue("@Action", "GetSpecializationForCourse");
-
-                SQL_Utility.Stored_Procedure(ref com);
-
-                SqlDataReader rdr = com.ExecuteReader();
-
-                return parse_specialization(rdr);
-            }
-
-        }
-        #endregion
-
-        #region Get Course Days
+        #region Get Course Data
         public static Course getCourseByID(long id)
         {
             using (SqlConnection con = new SqlConnection(Database.connection_string))
@@ -176,8 +134,9 @@ namespace CoursesPlatform.Crud
                 if(rdr.Read())
                 {
                     course = parse_course(rdr);
+                    Branch_crud.getCourseCenteNamerAndBranchName(course);
                 }
-
+                
                 return course;
             }
 
@@ -186,10 +145,56 @@ namespace CoursesPlatform.Crud
 
 
         #region Helper
+
+        #region Get Course Days
+        private static List<CourseDays> getCourseDaysByCourseID(long course_id)
+        {
+            using (SqlConnection con = new SqlConnection(Database.connection_string))
+            {
+                con.Open();
+                SqlCommand com = new SqlCommand("Course", con);
+                com.CommandType = CommandType.StoredProcedure;
+                com.Parameters.AddWithValue("@course_id", course_id);
+
+                com.Parameters.AddWithValue("@Action", "GetCourseDays");
+
+                SQL_Utility.Stored_Procedure(ref com);
+
+                SqlDataReader rdr = com.ExecuteReader();
+
+                return parse_courseDays(rdr);
+            }
+
+        }
+        #endregion
+
+        #region Get Course Specialization
+        private static List<Specialization> getCourseSpecialization(long course_id)
+        {
+            using (SqlConnection con = new SqlConnection(Database.connection_string))
+            {
+                con.Open();
+                SqlCommand com = new SqlCommand("Course", con);
+                com.CommandType = CommandType.StoredProcedure;
+                com.Parameters.AddWithValue("@course_id", course_id);
+
+                com.Parameters.AddWithValue("@Action", "GetSpecializationForCourse");
+
+                SQL_Utility.Stored_Procedure(ref com);
+
+                SqlDataReader rdr = com.ExecuteReader();
+
+                return Specialization_CRUD.parse_specializations(rdr);
+            }
+
+        }
+        #endregion
+
+
         private static Course parse_course(SqlDataReader rdr)
         {
             Course course = new Course();
-            course.id = Convert.ToInt64(rdr["id"]);
+            course.id = Convert.ToInt64(rdr["course_id"]);
             try
             {
                 course.instructor_id = Convert.ToInt64(rdr["instructor_id"]);
@@ -217,8 +222,16 @@ namespace CoursesPlatform.Crud
             }
 
 
-            course.name = rdr["name"].ToString();
-            course.description = rdr["description"].ToString();
+            course.name = rdr["course_name"].ToString();
+            try
+            {
+                course.description = Convert.ToString( rdr["description"]);
+            }
+            catch (Exception)
+            {
+                course.description = "";
+            }
+            
             try
             {
                 course.start_date = Convert.ToDateTime(rdr["start_date"]);
@@ -345,6 +358,15 @@ namespace CoursesPlatform.Crud
                 course.is_visible = is_visible_enum.visible;
             }
 
+            try
+            {
+                course.courseTypeName = Convert.ToString(rdr["course_type_name"]);
+            }catch(Exception ex)
+            {
+                course.courseTypeName = "";
+            }
+            
+
             course.courseDays       = getCourseDaysByCourseID(course.id);
             course.specializations  = getCourseSpecialization(course.id);
            
@@ -385,20 +407,6 @@ namespace CoursesPlatform.Crud
             return courseDaysList;
         }
 
-        private static List<Specialization> parse_specialization(SqlDataReader rdr)
-        {
-            List<Specialization> specializationsList = new List<Specialization>();
-
-            while (rdr.Read())
-            {
-                Specialization specialization = new Specialization();
-                specialization.id = Convert.ToInt64("id");
-                specialization.name = rdr["name"].ToString();
-                specializationsList.Add(specialization);
-            }
-
-            return specializationsList;
-        }
 
         #endregion
     }

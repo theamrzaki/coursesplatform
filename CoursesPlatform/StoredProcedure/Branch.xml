@@ -24,5 +24,10 @@
     select *  from Branch
     where id=@id;
   </action>
+
+  <action name='GetBranchNameAndCenterNameByID'>
+    select [Branch].[name] as branch_name , [Center].[name] as center_name from [Branch] , [Center]
+    where [Branch].[id]=@branch_id AND [Branch].[center_id] = [Center].[id];
+  </action>
   
 </procedure>

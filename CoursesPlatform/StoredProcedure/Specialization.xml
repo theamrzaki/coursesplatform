@@ -1,0 +1,9 @@
+﻿<procedure name='Specialization'>
+
+  <action name='GetSpecializationTags'>
+    SELECT * FROM SpecializationTag
+    WHERE specialization_id = @specialization_id;
+  </action>
+
+
+</procedure>

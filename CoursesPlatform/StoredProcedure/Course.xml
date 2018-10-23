@@ -57,8 +57,12 @@
   </action>
   
   <action name='GetCourseByID'>
-      select *  from [Course]   
-      where id=@id;
+      select * , [Course].[id] as course_id , 
+      [Course].[name] as course_name ,
+		  [CourseType].[name] as course_type_name  
+      from [Course] , [CourseType]   
+      where [Course].[course_type_id]= [CourseType].[id]
+      AND [Course].[id]=@id;
   </action>
   
   <action name='GetCourseDays'>
@@ -70,6 +74,11 @@
     select [Specialization].[id] , [Specialization].[name] from [SpecializationCourse] , [Specialization]
     where [SpecializationCourse].[course_id] = @course_id 
     AND [SpecializationCourse].[specialization_id] = [Specialization].[id]
+  </action>
+
+  <action name='GetCourseTypeName'>
+    select name from [CourseType]
+    where id = @id;
   </action>
 
 </procedure>

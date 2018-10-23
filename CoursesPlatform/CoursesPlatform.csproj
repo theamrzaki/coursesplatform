@@ -134,6 +134,7 @@
     <Compile Include="Crud\Course_crud.cs" />
     <Compile Include="Crud\PhoneNumber_crud.cs" />
     <Compile Include="Crud\SpecializationCenter_crud.cs" />
+    <Compile Include="Crud\Specialization_CRUD.cs" />
     <Compile Include="Crud\User_crud.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -7171,6 +7172,7 @@
     <EmbeddedResource Include="StoredProcedure\SpecializationCenter.xml" />
     <EmbeddedResource Include="StoredProcedure\User.xml" />
     <EmbeddedResource Include="StoredProcedure\Course.xml" />
+    <EmbeddedResource Include="StoredProcedure\Specialization.xml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

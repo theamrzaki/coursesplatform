@@ -26,6 +26,7 @@ namespace CoursesPlatform.Models
         public int step { get; set; }
 
         public List<Branch> branches { get; set; }
+        public List<Specialization> specializations { get; set; }
 
         public Center()
         {

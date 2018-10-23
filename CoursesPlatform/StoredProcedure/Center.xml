@@ -40,9 +40,13 @@
     select *  from Center   
       where id=@id;
   </action>
-    
-  
-  
+
+
+  <action name='GetSpecializationForCenter'>
+    select [Specialization].[id] , [Specialization].[name] from [SpecializationCenter] , [Specialization]
+    where [SpecializationCourse].[center_id] = @center_id
+    AND [SpecializationCourse].[specialization_id] = [Specialization].[id]
+  </action>
     
     
     

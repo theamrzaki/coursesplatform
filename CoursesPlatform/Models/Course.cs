@@ -29,13 +29,23 @@ namespace CoursesPlatform.Models
         public center_or_instructor_enum center_or_instructor  { get; set; }
         public is_visible_enum  is_visible                     { get; set; }
 
+        #region added values
+
+        public String instructorName{ get; set; }
+        public String branchName { get; set; }
+        public String centerName { get; set; }
+        public String courseTypeName { get; set; }
         public List<CourseDays> courseDays { get; set; }
         public List<Specialization> specializations { get; set; }
 
+        #endregion
+
         public Course()
         {
+            instructorName = "";
             courseDays = new List<CourseDays>();
             specializations = new List<Specialization>();
         }
+
     }
 }

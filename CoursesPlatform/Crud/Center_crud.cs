@@ -100,14 +100,13 @@ namespace CoursesPlatform.Crud
                 SQL_Utility.Stored_Procedure(ref com);
 
                 SqlDataReader rdr = com.ExecuteReader();
-                Center center = new Center();
+                Center center = null;
                 if (rdr.Read())
                 {
                     center = parse_center(rdr);
-
+                    center.branches = Branch_crud.getBranchesByCenterID(centerID);
+                    center.specializations = getCenterSpecialization(centerID);
                 }
-
-                center.branches = Branch_crud.getBranchesByCenterID(centerID);
 
                 return center;
             }
@@ -155,7 +154,30 @@ namespace CoursesPlatform.Crud
             center.step = Convert.ToInt32(rdr["step"]);
             return center;
         }
-        
+
+        #region Get Center Specialization
+
+        private static List<Specialization> getCenterSpecialization(long center_id)
+        {
+            using (SqlConnection con = new SqlConnection(Database.connection_string))
+            {
+                con.Open();
+                SqlCommand com = new SqlCommand("Center", con);
+                com.CommandType = CommandType.StoredProcedure;
+                com.Parameters.AddWithValue("@center_id", center_id);
+
+                com.Parameters.AddWithValue("@Action", "GetSpecializationForCenter");
+
+                SQL_Utility.Stored_Procedure(ref com);
+
+                SqlDataReader rdr = com.ExecuteReader();
+
+                return Specialization_CRUD.parse_specializations(rdr);
+            }
+
+        }
+        #endregion
+
         #endregion
     }
 }
