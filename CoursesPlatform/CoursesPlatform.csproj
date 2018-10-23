@@ -145,6 +145,7 @@
     <Compile Include="Models\CourseDays.cs" />
     <Compile Include="Models\CourseType.cs" />
     <Compile Include="Models\CourseTypeTag.cs" />
+    <Compile Include="Models\Helpers\Course_Insert_Helper.cs" />
     <Compile Include="Models\Helpers\Enums.cs" />
     <Compile Include="Models\Helpers\Database.cs" />
     <Compile Include="Models\Helpers\SpecializationTags.cs" />
