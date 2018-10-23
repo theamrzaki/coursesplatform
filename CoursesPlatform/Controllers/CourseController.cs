@@ -1,7 +1,11 @@
 ﻿using CoursesPlatform.Models;
+using CoursesPlatform.Models.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Json;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -15,11 +19,16 @@ namespace CoursesPlatform.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Add(Course C)
+        public JsonResult Add_Submit(string content)
         {
-            return View();
-        } 
+            using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(content)))
+            {
+                // Deserialization from JSON  
+                DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(Course_Insert_Helper));
+                Course_Insert_Helper center = (Course_Insert_Helper)deserializer.ReadObject(ms);
+            }
+            return Json("chamara", JsonRequestBehavior.AllowGet);
+        }
         #endregion
     }
 }
