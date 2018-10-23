@@ -135,7 +135,7 @@ namespace CoursesPlatform.Crud
             try
             {
                 center.date = Convert.ToDateTime(rdr["date"]);
-            }catch(Exception ex)
+            }catch(Exception)
             {
                 center.date = DateTime.Now;
             }
@@ -144,7 +144,7 @@ namespace CoursesPlatform.Crud
             {
                 center.edit_date = Convert.ToDateTime(rdr["edit_date"]);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 center.edit_date = DateTime.Now;
             }
