@@ -23,5 +23,9 @@ namespace CoursesPlatform.Models.Helpers
         public int no_of_hours_per_day             { get; set; }
         public double old_price                       { get; set; }
         public string start_date                      { get; set; }
+
+
+        public long branch_id { get; set; }
+
     }
 }
