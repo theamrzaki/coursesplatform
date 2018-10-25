@@ -106,6 +106,8 @@ namespace CoursesPlatform.Crud
                 {
                     branch = parse_Branche_complete(rdr);
                 }
+
+                branch.courses = Course_crud.getCoursesByBranchID(id);
                 return branch;
             }
         }

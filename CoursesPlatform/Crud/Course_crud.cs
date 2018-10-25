@@ -104,6 +104,8 @@ namespace CoursesPlatform.Crud
             return id;
         }
 
+     
+
         private static long addCourseDay(CourseDays courseDays)
         {
             long id = 0;
@@ -188,6 +190,34 @@ namespace CoursesPlatform.Crud
                 return course;
             }
 
+        }
+
+        internal static List<Course> getCoursesByBranchID(long branch_id)
+        {
+            using (SqlConnection con = new SqlConnection(Database.connection_string))
+            {
+                con.Open();
+                SqlCommand com = new SqlCommand("Course", con);
+                com.CommandType = CommandType.StoredProcedure;
+                com.Parameters.AddWithValue("@branch_id", branch_id);
+
+                com.Parameters.AddWithValue("@Action", "getCourseByBranchID");
+
+                SQL_Utility.Stored_Procedure(ref com);
+
+                SqlDataReader rdr = com.ExecuteReader();
+
+                List<Course> courses = new List<Course>();
+                while (rdr.Read())
+                {
+                    Course c = parse_course(rdr);
+                    c = parse_course(rdr);
+                    Branch_crud.getCourseCenteNamerAndBranchName(c);
+                    courses.Add(c);
+                }
+
+                return courses;
+            }
         }
         #endregion
 

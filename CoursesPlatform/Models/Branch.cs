@@ -21,7 +21,9 @@ namespace CoursesPlatform.Models
         public DateTime edit_date { get; set; }
         public bool is_blocked { get; set; }
 
-        public int courses { get; set; }
+        public int courses_count { get; set; }
+        public List<Course>  courses { get; set; }
+
         public int users { get; set; }
 
 

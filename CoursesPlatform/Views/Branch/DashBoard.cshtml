@@ -21,8 +21,8 @@
             <div>
                 <ul class="nav nav-tabs" style=" display: inline-block;
                     vertical-align: bottom;">
-                    <li class="active"><a href="#tab_1" data-toggle="tab">Sales</a></li>
-                    <li><a href="#tab_2" data-toggle="tab">Courses</a></li>
+                    <li class="active"><a href="#tab_1" data-toggle="tab">Ovrview</a></li>
+                    <li><a href="#tab_2" data-toggle="tab">All Courses</a></li>
                     <li><a href="#tab_3" data-toggle="tab">Instructors</a></li>
                     <li><a href="#tab_4" data-toggle="tab">Users</a></li>
                 </ul>
@@ -43,13 +43,13 @@
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">Sales</span>
-                                    <span class="info-box-number">3,410</span>
+                                    <span class="info-box-number">0</span>
 
                                     <div class="progress">
-                                        <div class="progress-bar" style="width: 70%"></div>
+                                        <div class="progress-bar" style="width: 0%"></div>
                                     </div>
                                     <span class="progress-description">
-                                        70% Increase in 30 Days
+                                        @*70% Increase in 30 Days*@
                                     </span>
                                 </div>
                                 <!-- /.info-box-content -->
@@ -62,14 +62,15 @@
                                 <span class="info-box-icon"><i class="fa fa-graduation-cap"></i></span>
 
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Courses</span>
+                                    <span class="info-box-text">Running Courses</span>
                                     <span class="info-box-number">53</span>
 
                                     <div class="progress">
-                                        <div class="progress-bar" style="width: 70%"></div>
+                                        <div class="progress-bar" style="width: 0%"></div>
                                     </div>
                                     <span class="progress-description">
-                                        70% Increase in 30 Days
+                                        <a style="color:white!important" href="/Course/Add/branch_id=@(((CoursesPlatform.Models.Branch)ViewBag.Branch).id)">Add Course</a>
+                                        @*70% Increase in 30 Days*@
                                     </span>
                                 </div>
                                 <!-- /.info-box-content -->
@@ -82,14 +83,14 @@
                                 <span class="info-box-icon"><i class="fa fa-user-graduate"></i></span>
 
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Instructor</span>
-                                    <span class="info-box-number">20</span>
+                                    <span class="info-box-text">Instructors</span>
+                                    <span class="info-box-number">0</span>
 
                                     <div class="progress">
-                                        <div class="progress-bar" style="width: 70%"></div>
+                                        <div class="progress-bar" style="width: 0%"></div>
                                     </div>
                                     <span class="progress-description">
-                                        70% Increase in 30 Days
+                                        @*70% Increase in 30 Days*@
                                     </span>
                                 </div>
                                 <!-- /.info-box-content -->
@@ -102,14 +103,14 @@
                                 <span class="info-box-icon"><i class="fa fa-user-plus"></i></span>
 
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Users</span>
-                                    <span class="info-box-number">410</span>
+                                    <span class="info-box-text">Current Students</span>
+                                    <span class="info-box-number">0</span>
 
                                     <div class="progress">
-                                        <div class="progress-bar" style="width: 70%"></div>
+                                        <div class="progress-bar" style="width: 0%"></div>
                                     </div>
                                     <span class="progress-description">
-                                        70% Increase in 30 Days
+                                        @*70% Increase in 30 Days*@
                                     </span>
                                 </div>
                                 <!-- /.info-box-content -->
@@ -120,8 +121,100 @@
 
                     </div>
                     <!-- /.row -->
+
                     <!-- Main row -->
                     <div class="row">
+                        <section class="col-lg-12 connectedSortable">
+                            <div class="col-md-4">
+                                <!-- Widget: user widget style 1 -->
+                                <a href="/Course/Add/branch_id=@(((CoursesPlatform.Models.Branch)ViewBag.Branch).id)">
+                                    <div class="box box-widget widget-user" style="height:380px">
+                                        <div class="row">
+                                            <div class="col-sm-12" style="margin-top:170px">
+                                                <div class="description-block">
+                                                    <h5 class="description-header">+ Add Course</h5>
+                                                    <span class="description-text">Add Course to @(((CoursesPlatform.Models.Branch)ViewBag.Branch).name) Branch </span>
+                                                </div>
+                                                <!-- /.description-block -->
+                                            </div>
+                                        </div>
+                                        <!-- /.widget-user -->
+                                    </div>
+                                </a>
+                            </div>
+                            @foreach (var Course in ((CoursesPlatform.Models.Branch)ViewBag.Branch).courses)
+                            {
+                                <div class="col-md-4">
+                                    <!-- Widget: user widget style 1 -->
+                                    <div class="box box-widget widget-user">
+                                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                                        <div class="widget-user-header bg-black" style="background: url('../../dist/img/photo1.png') center center;">
+                                            <h3 class="widget-user-username">@Course.name</h3>
+                                            <h5 class="widget-user-desc">@Course.description</h5>
+                                        </div>
+                                        <div class="widget-user-image">
+                                            <img class="img-circle" src="~/dist/img/user1-128x128.jpg" alt="User Avatar">
+                                        </div>
+                                        <div class="box-footer">
+                                            <div class="row">
+                                                <div class="col-sm-4 border-right">
+                                                    <div class="description-block">
+                                                        <h5 class="description-header">Amr</h5>
+                                                        <span class="description-text">Instructor</span>
+                                                    </div>
+                                                    <!-- /.description-block -->
+                                                </div>
+                                                <!-- /.col -->
+                                                <div class="col-sm-4 border-right">
+                                                    <div class="description-block">
+                                                        <h5 class="description-header">0 / @Course.capacity</h5>
+                                                        <span class="description-text">Capacity</span>
+                                                    </div>
+                                                    <!-- /.description-block -->
+                                                </div>
+                                                <!-- /.col -->
+                                                <div class="col-sm-4">
+                                                    <div class="description-block">
+                                                        <h5 class="description-header"><strike>@Course.old_price</strike> @Course.new_price</h5>
+                                                        <span class="description-text">Price</span>
+                                                    </div>
+                                                    <!-- /.description-block -->
+                                                </div>
+                                                <!-- /.col -->
+                                            </div>
+
+                                            <!-- /.row -->
+                                        </div>
+                                        <div class="box-footer no-padding">
+                                            <ul class="nav nav-stacked">
+                                                <li class="bg-green-gradient"><a href="#" style="color:white !important">start Date <span class="pull-right badge bg-blue">@Course.start_date.Date.ToShortDateString()</span> <span class="pull-right badge bg-navy">to</span> <span class="pull-right badge bg-blue">@Course.end_date.Date.ToShortDateString()</span></a></li>
+                                                <li><a href="#">number of hours <span class="pull-right badge bg-aqua">@Course.course_duration_in_hours</span></a></li>
+                                                <li><a href="#">Course Type <span class="pull-right badge bg-green">@Course.courseTypeName</span></a></li>
+                                                <li>
+                                                    <a href="#">
+                                                        Specializations
+                                                        @foreach (var spec in Course.specializations)
+                                                        {
+                                                            <span class="pull-right badge bg-navy">@spec.name</span>
+                                                        }
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        @Course.courseDays.Count Days
+                                                    @foreach (var d in Course.courseDays)
+                                                    {
+                                                        <span class="pull-right badge bg-red">@d.day @d.from_time.ToShortTimeString() to @d.to_time.ToShortTimeString()</span>
+                                                    }
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- /.widget-user -->
+                            </div>
+                            }
+                        </section>
                         <!-- Left col -->
                         <section class="col-lg-7 connectedSortable">
                             <!-- Custom tabs (Charts with tabs)-->
@@ -140,7 +233,7 @@
                             </div>
                             <!-- /.nav-tabs-custom -->
                             <!-- /.box -->
-                            <div class="col-md-4">
+                            @*<div class="col-md-4">
                                 <!-- Widget: user widget style 1 -->
                                 <a href="/Course/Add">
                                     <div class="box box-widget widget-user" style="height:380px">
@@ -156,7 +249,7 @@
                                         <!-- /.widget-user -->
                                     </div>
                                 </a>
-                            </div>
+                            </div>*@
                         </section>
                         <!-- /.Left col -->
                         <!-- right col (We are only adding the ID to make the widgets sortable)-->
@@ -230,116 +323,81 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-md-4">
-                    <!-- Widget: user widget style 1 -->
-                    <div class="box box-widget widget-user">
-                        <div class="widget-user-header bg-black" style="background-image: url('../../dist/img/photo1.png');">
-                            <h3 class="widget-user-username">Elizabeth Pierce</h3>
-                            <h5 class="widget-user-desc">Web Designer</h5>
-                        </div>
-                        <div class="widget-user-image">
-                            <img class="img-circle" src="~/dist/img/user1-128x128.jpg" alt="User Avatar">
-                        </div>
-                        <div class="box-footer">
-                            <div class="row">
-                                <div class="col-sm-4 border-right">
-                                    <div class="description-block">
-                                        <h5 class="description-header">3,200</h5>
-                                        <span class="description-text">SALES</span>
-                                    </div>
-                                    <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-sm-4 border-right">
-                                    <div class="description-block">
-                                        <h5 class="description-header">13,000</h5>
-                                        <span class="description-text">FOLLOWERS</span>
-                                    </div>
-                                    <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-sm-4">
-                                    <div class="description-block">
-                                        <h5 class="description-header">35</h5>
-                                        <span class="description-text">PRODUCTS</span>
-                                    </div>
-                                    <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
+                @foreach (var Course in ((CoursesPlatform.Models.Branch)ViewBag.Branch).courses)
+                {
+                    <div class="col-md-4">
+                        <!-- Widget: user widget style 1 -->
+                        <div class="box box-widget widget-user">
+                            <!-- Add the bg color to the header using any of the bg-* classes -->
+                            <div class="widget-user-header bg-black" style="background: url('../../dist/img/photo1.png') center center;">
+                                <h3 class="widget-user-username">@Course.name</h3>
+                                <h5 class="widget-user-desc">@Course.description</h5>
                             </div>
-
-                            <!-- /.row -->
-                        </div>
-                        <div class="box-footer no-padding">
-                            <ul class="nav nav-stacked">
-                                <li><a href="#">Projects <span class="pull-right badge bg-blue">31</span></a></li>
-                                <li><a href="#">Tasks <span class="pull-right badge bg-aqua">5</span></a></li>
-                                <li><a href="#">Completed Projects <span class="pull-right badge bg-green">12</span></a></li>
-                                <li><a href="#">Followers <span class="pull-right badge bg-red">842</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- /.widget-user -->
-                </div>
-                <div class="col-md-4">
-                    <!-- Widget: user widget style 1 -->
-                    <div class="box box-widget widget-user">
-                        <!-- Add the bg color to the header using any of the bg-* classes -->
-                        <div class="widget-user-header bg-black" style="background: url('../../dist/img/photo1.png') center center;">
-                            <h3 class="widget-user-username">Elizabeth Pierce</h3>
-                            <h5 class="widget-user-desc">Web Designer</h5>
-                        </div>
-                        <div class="widget-user-image">
-                            <img class="img-circle" src="~/dist/img/user1-128x128.jpg" alt="User Avatar">
-                        </div>
-                        <div class="box-footer">
-                            <div class="row">
-                                <div class="col-sm-4 border-right">
-                                    <div class="description-block">
-                                        <h5 class="description-header">3,200</h5>
-                                        <span class="description-text">SALES</span>
-                                    </div>
-                                    <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-sm-4 border-right">
-                                    <div class="description-block">
-                                        <h5 class="description-header">13,000</h5>
-                                        <span class="description-text">FOLLOWERS</span>
-                                    </div>
-                                    <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-sm-4">
-                                    <div class="description-block">
-                                        <h5 class="description-header">35</h5>
-                                        <span class="description-text">PRODUCTS</span>
-                                    </div>
-                                    <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
+                            <div class="widget-user-image">
+                                <img class="img-circle" src="~/dist/img/user1-128x128.jpg" alt="User Avatar">
                             </div>
+                            <div class="box-footer">
+                                <div class="row">
+                                    <div class="col-sm-4 border-right">
+                                        <div class="description-block">
+                                            <h5 class="description-header">Amr</h5>
+                                            <span class="description-text">Instructor</span>
+                                        </div>
+                                        <!-- /.description-block -->
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-sm-4 border-right">
+                                        <div class="description-block">
+                                            <h5 class="description-header">0 / @Course.capacity</h5>
+                                            <span class="description-text">Capacity</span>
+                                        </div>
+                                        <!-- /.description-block -->
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-sm-4">
+                                        <div class="description-block">
+                                            <h5 class="description-header"><strike>@Course.old_price</strike> @Course.new_price</h5>
+                                            <span class="description-text">Price</span>
+                                        </div>
+                                        <!-- /.description-block -->
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
 
-                            <!-- /.row -->
+                                <!-- /.row -->
+                            </div>
+                            <div class="box-footer no-padding">
+                                <ul class="nav nav-stacked">
+                                    <li class="bg-green-gradient"><a href="#" style="color:white !important">start Date <span class="pull-right badge bg-blue">@Course.start_date.Date.ToShortDateString()</span> <span class="pull-right badge bg-navy">to</span> <span class="pull-right badge bg-blue">@Course.end_date.Date.ToShortDateString()</span></a></li>
+                                    <li><a href="#">number of hours <span class="pull-right badge bg-aqua">@Course.course_duration_in_hours</span></a></li>
+                                    <li><a href="#">Course Type <span class="pull-right badge bg-green">@Course.courseTypeName</span></a></li>
+                                    <li><a href="#">Specializations
+                                            @foreach (var spec in Course.specializations)
+                                            {
+                                                <span class="pull-right badge bg-navy">@spec.name</span>
+                                            }
+                                        </a>
+                                    </li>
+                                    <li><a href="#">@Course.courseDays.Count Days
+                                            @foreach (var d in Course.courseDays)
+                                            {
+                                                <span class="pull-right badge bg-red">@d.day @d.from_time.ToShortTimeString() to @d.to_time.ToShortTimeString()</span>
+                                            }
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="box-footer no-padding">
-                            <ul class="nav nav-stacked">
-                                <li><a href="#">Projects <span class="pull-right badge bg-blue">31</span></a></li>
-                                <li><a href="#">Tasks <span class="pull-right badge bg-aqua">5</span></a></li>
-                                <li><a href="#">Completed Projects <span class="pull-right badge bg-green">12</span></a></li>
-                                <li><a href="#">Followers <span class="pull-right badge bg-red">842</span></a></li>
-                            </ul>
-                        </div>
+                        <!-- /.widget-user -->
                     </div>
-                    <!-- /.widget-user -->
-                </div>
+                }
                 <div class="col-md-4">
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user">
                         <!-- Add the bg color to the header using any of the bg-* classes -->
                         <div class="widget-user-header bg-black" style="background: url('../../dist/img/photo1.png') center center;">
-                            <h3 class="widget-user-username">Elizabeth Pierce</h3>
-                            <h5 class="widget-user-desc">Web Designer</h5>
+                            <h3 class="widget-user-username">name</h3>
+                            <h5 class="widget-user-desc">description</h5>
                         </div>
                         <div class="widget-user-image">
                             <img class="img-circle" src="~/dist/img/user1-128x128.jpg" alt="User Avatar">
@@ -348,24 +406,24 @@
                             <div class="row">
                                 <div class="col-sm-4 border-right">
                                     <div class="description-block">
-                                        <h5 class="description-header">3,200</h5>
-                                        <span class="description-text">SALES</span>
+                                        <h5 class="description-header">Amr</h5>
+                                        <span class="description-text">Instructor</span>
                                     </div>
                                     <!-- /.description-block -->
                                 </div>
                                 <!-- /.col -->
                                 <div class="col-sm-4 border-right">
                                     <div class="description-block">
-                                        <h5 class="description-header">13,000</h5>
-                                        <span class="description-text">FOLLOWERS</span>
+                                        <h5 class="description-header">0 / 241</h5>
+                                        <span class="description-text">Capacity</span>
                                     </div>
                                     <!-- /.description-block -->
                                 </div>
                                 <!-- /.col -->
                                 <div class="col-sm-4">
                                     <div class="description-block">
-                                        <h5 class="description-header">35</h5>
-                                        <span class="description-text">PRODUCTS</span>
+                                        <h5 class="description-header"><strike>500</strike> 350</h5>
+                                        <span class="description-text">Price</span>
                                     </div>
                                     <!-- /.description-block -->
                                 </div>
@@ -376,119 +434,27 @@
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked">
-                                <li><a href="#">Projects <span class="pull-right badge bg-blue">31</span></a></li>
-                                <li><a href="#">Tasks <span class="pull-right badge bg-aqua">5</span></a></li>
-                                <li><a href="#">Completed Projects <span class="pull-right badge bg-green">12</span></a></li>
-                                <li><a href="#">Followers <span class="pull-right badge bg-red">842</span></a></li>
-                            </ul>
-                        </div>
+                                <li class="bg-red-gradient" ><a href="#" style="color:white !important">start Date <span class="pull-right badge bg-blue">20/5/2018</span> <span class="pull-right badge bg-navy">to</span> <span class="pull-right badge bg-blue">30/5/2018</span></a></li>
+                                <li><a href="#">number of hours <span class="pull-right badge bg-aqua">30</span></a></li>
+                                <li><a href="#">Course Type <span class="pull-right badge bg-green">IT</span></a></li>
+                                <li>
+                                    <a href="#">
+                                        Specializations <span class="pull-right badge bg-navy">name</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        1 Days
+                                        <span class="pull-right badge bg-red">Sunday 5:00pm to 7:00pm </span>
+                                    
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                    <!-- /.widget-user -->
                 </div>
-                <div class="col-md-4">
-                    <!-- Widget: user widget style 1 -->
-                    <div class="box box-widget widget-user">
-                        <!-- Add the bg color to the header using any of the bg-* classes -->
-                        <div class="widget-user-header bg-black" style="background: url('../../dist/img/photo1.png') center center;">
-                            <h3 class="widget-user-username">Elizabeth Pierce</h3>
-                            <h5 class="widget-user-desc">Web Designer</h5>
-                        </div>
-                        <div class="widget-user-image">
-                            <img class="img-circle" src="~/dist/img/user1-128x128.jpg" alt="User Avatar">
-                        </div>
-                        <div class="box-footer">
-                            <div class="row">
-                                <div class="col-sm-4 border-right">
-                                    <div class="description-block">
-                                        <h5 class="description-header">3,200</h5>
-                                        <span class="description-text">SALES</span>
-                                    </div>
-                                    <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-sm-4 border-right">
-                                    <div class="description-block">
-                                        <h5 class="description-header">13,000</h5>
-                                        <span class="description-text">FOLLOWERS</span>
-                                    </div>
-                                    <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-sm-4">
-                                    <div class="description-block">
-                                        <h5 class="description-header">35</h5>
-                                        <span class="description-text">PRODUCTS</span>
-                                    </div>
-                                    <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
-                            </div>
+                <!-- /.widget-user -->
+            </div>
 
-                            <!-- /.row -->
-                        </div>
-                        <div class="box-footer no-padding">
-                            <ul class="nav nav-stacked">
-                                <li><a href="#">Projects <span class="pull-right badge bg-blue">31</span></a></li>
-                                <li><a href="#">Tasks <span class="pull-right badge bg-aqua">5</span></a></li>
-                                <li><a href="#">Completed Projects <span class="pull-right badge bg-green">12</span></a></li>
-                                <li><a href="#">Followers <span class="pull-right badge bg-red">842</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- /.widget-user -->
-                </div>
-                <div class="col-md-4">
-                    <!-- Widget: user widget style 1 -->
-                    <div class="box box-widget widget-user">
-                        <!-- Add the bg color to the header using any of the bg-* classes -->
-                        <div class="widget-user-header bg-black" style="background: url('../../dist/img/photo1.png') center center;">
-                            <h3 class="widget-user-username">Elizabeth Pierce</h3>
-                            <h5 class="widget-user-desc">Web Designer</h5>
-                        </div>
-                        <div class="widget-user-image">
-                            <img class="img-circle" src="~/dist/img/user1-128x128.jpg" alt="User Avatar">
-                        </div>
-                        <div class="box-footer">
-                            <div class="row">
-                                <div class="col-sm-4 border-right">
-                                    <div class="description-block">
-                                        <h5 class="description-header">3,200</h5>
-                                        <span class="description-text">SALES</span>
-                                    </div>
-                                    <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-sm-4 border-right">
-                                    <div class="description-block">
-                                        <h5 class="description-header">13,000</h5>
-                                        <span class="description-text">FOLLOWERS</span>
-                                    </div>
-                                    <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-sm-4">
-                                    <div class="description-block">
-                                        <h5 class="description-header">35</h5>
-                                        <span class="description-text">PRODUCTS</span>
-                                    </div>
-                                    <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
-                            </div>
-
-                            <!-- /.row -->
-                        </div>
-                        <div class="box-footer no-padding">
-                            <ul class="nav nav-stacked">
-                                <li><a href="#">Projects <span class="pull-right badge bg-blue">31</span></a></li>
-                                <li><a href="#">Tasks <span class="pull-right badge bg-aqua">5</span></a></li>
-                                <li><a href="#">Completed Projects <span class="pull-right badge bg-green">12</span></a></li>
-                                <li><a href="#">Followers <span class="pull-right badge bg-red">842</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- /.widget-user -->
-                </div>
             </div>
 
             <div class="tab-pane" id="tab_3">

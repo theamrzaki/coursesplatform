@@ -44,7 +44,7 @@ namespace CoursesPlatform.Crud
             while (rdr.Read())
             {
                 Specialization specialization = new Specialization();
-                specialization.id = Convert.ToInt64("id");
+                specialization.id = Convert.ToInt64(rdr["id"]);
                 specialization.name = rdr["name"].ToString();
                 specialization.specializationTags = getSpecializationTags(specialization.id);
 

@@ -15,9 +15,9 @@ namespace CoursesPlatform.Controllers
     public class CourseController : Controller
     {
         #region Add
-        public ActionResult Add(/*long branch_id*/)
+        public ActionResult Add(long branch_id)
         {
-            ViewBag.branch_id = 546;
+            ViewBag.branch_id = branch_id;
             return View();
         }
 

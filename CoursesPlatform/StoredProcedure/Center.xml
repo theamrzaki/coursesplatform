@@ -42,10 +42,10 @@
   </action>
 
 
-  <action name='GetSpecializationForCenter'>
+  <action name='GetSpecializationForCenter'>    
     select [Specialization].[id] , [Specialization].[name] from [SpecializationCenter] , [Specialization]
-    where [SpecializationCourse].[center_id] = @center_id
-    AND [SpecializationCourse].[specialization_id] = [Specialization].[id]
+    where [SpecializationCenter].[center_id] = @center_id
+    AND [SpecializationCenter].[specialization_id] = [Specialization].[id]
   </action>
     
     
