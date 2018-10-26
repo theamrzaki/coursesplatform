@@ -52,6 +52,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NHunspell">
+      <HintPath>D:\CoursesPlatform\Search Engine Concept\NHunspell.1.2.5554.16953\NHunspell.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -160,6 +163,10 @@
     <Compile Include="Utility\Language_Utility.cs" />
     <Compile Include="Utility\Logs_Utility.cs" />
     <Compile Include="Utility\Modules_Utility.cs" />
+    <Compile Include="Utility\SearchUtility\Normalizer.cs" />
+    <Compile Include="Utility\SearchUtility\SearchToken.cs" />
+    <Compile Include="Utility\SearchUtility\Soundex.cs" />
+    <Compile Include="Utility\SearchUtility\Tokenizer.cs" />
     <Compile Include="Utility\SQL_Utility.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -7174,6 +7181,12 @@
     <EmbeddedResource Include="StoredProcedure\User.xml" />
     <EmbeddedResource Include="StoredProcedure\Course.xml" />
     <EmbeddedResource Include="StoredProcedure\Specialization.xml" />
+    <Content Include="Utility\SearchUtility\res\Hunspellx64.dll" />
+    <Content Include="Utility\SearchUtility\res\Hunspellx64.pdb" />
+    <Content Include="Utility\SearchUtility\res\Hunspellx86.dll" />
+    <Content Include="Utility\SearchUtility\res\Hunspellx86.pdb" />
+    <Content Include="Utility\SearchUtility\res\NHunspell.dll" />
+    <Content Include="Utility\SearchUtility\res\NHunspell.pdb" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -7192,6 +7205,10 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Branch\Add.cshtml" />
     <Content Include="Views\Course\Add.cshtml" />
+    <Content Include="Utility\SearchUtility\res\en_US.aff" />
+    <Content Include="Utility\SearchUtility\res\en_US.dic" />
+    <Content Include="Utility\SearchUtility\res\hyph_en_US.dic" />
+    <Content Include="Utility\SearchUtility\res\th_en_US_new.dat" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
