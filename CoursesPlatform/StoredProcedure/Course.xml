@@ -64,6 +64,15 @@
       where [Course].[course_type_id]= [CourseType].[id]
       AND [Course].[id]=@id;
   </action>
+
+  <action name='getCourseByBranchID'>
+    select * , [Course].[id] as course_id ,
+    [Course].[name] as course_name ,
+    [CourseType].[name] as course_type_name
+    from [Course] , [CourseType]
+    where [Course].[course_type_id]= [CourseType].[id]
+    AND [Course].[branch_id]=@branch_id;
+  </action>
   
   <action name='GetCourseDays'>
     select * from [CourseDays]

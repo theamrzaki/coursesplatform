@@ -14,7 +14,57 @@ namespace CoursesPlatform.Crud
     public class Course_crud
     {
         #region Add Course
-        public static long addCourse(Course course)
+        public static long addCourse(Course_Insert_Helper helper)
+        {
+            Course course = new Course
+            {
+                instructor_id = 0,
+                branch_id = helper.branch_id,
+                course_type_id = helper.CourseType,
+
+                name = helper.name,
+                description = helper.description,
+
+                start_date = Convert.ToDateTime(helper.start_date),
+                end_date = Convert.ToDateTime(helper.end_date),
+                capacity = helper.capacity,
+
+                capacity_is_visible = is_visible_enum.visible,
+
+                old_price = helper.old_price,
+                new_price = helper.new_price,
+
+                expiration_register_date = Convert.ToDateTime(helper.expiration_register_date),
+                course_duration_in_hours = helper.course_duration_in_hours,
+                no_of_days_per_week = helper.no_of_days_per_week,
+                no_of_hours_per_day = helper.no_of_hours_per_day,
+
+                center_or_instructor = center_or_instructor_enum.center,
+                is_visible = is_visible_enum.visible
+            };
+            long course_id = addCourse(course);
+            int i = 0;
+            foreach (int item in helper.Days)
+            {
+                CourseDays day = new CourseDays();
+                day.course_id = course_id;
+                day.day = (days_of_week_enum)item;
+                day.to_time = Convert.ToDateTime( helper.Tos[i]);
+                day.from_time = Convert.ToDateTime(helper.froms[i]);
+                addCourseDay(day);
+                i++;
+            }
+
+            foreach (int item in helper.Specializations)
+            {
+                addCourseSpecialization(course_id, item);
+                 i++;
+            }
+            return course_id;
+        }
+
+
+        private static long addCourse(Course course)
         {
             long id = 0;
             using (SqlConnection con = new SqlConnection(Database.connection_string))
@@ -53,10 +103,10 @@ namespace CoursesPlatform.Crud
             }
             return id;
         }
-        #endregion
 
-        #region Add Course Day
-        public static long addCourseDay(CourseDays courseDays)
+     
+
+        private static long addCourseDay(CourseDays courseDays)
         {
             long id = 0;
             using (SqlConnection con = new SqlConnection(Database.connection_string))
@@ -68,7 +118,7 @@ namespace CoursesPlatform.Crud
                 com.Parameters.AddWithValue("@day", courseDays.day);
                 com.Parameters.AddWithValue("@from_time", courseDays.from_time);
                 com.Parameters.AddWithValue("@to_time", courseDays.to_time);
-               
+
 
                 com.Parameters.AddWithValue("@Action", "InsertCourseDay");
 
@@ -83,10 +133,8 @@ namespace CoursesPlatform.Crud
             }
             return id;
         }
-        #endregion
 
-        #region Add Course Specialization
-        public static long addCourseSpecialization(long course_id , long specialization_id)
+        private static long addCourseSpecialization(long course_id, long specialization_id)
         {
             long id = 0;
             using (SqlConnection con = new SqlConnection(Database.connection_string))
@@ -111,6 +159,8 @@ namespace CoursesPlatform.Crud
             return id;
         }
         #endregion
+
+
 
 
 
@@ -140,6 +190,34 @@ namespace CoursesPlatform.Crud
                 return course;
             }
 
+        }
+
+        internal static List<Course> getCoursesByBranchID(long branch_id)
+        {
+            using (SqlConnection con = new SqlConnection(Database.connection_string))
+            {
+                con.Open();
+                SqlCommand com = new SqlCommand("Course", con);
+                com.CommandType = CommandType.StoredProcedure;
+                com.Parameters.AddWithValue("@branch_id", branch_id);
+
+                com.Parameters.AddWithValue("@Action", "getCourseByBranchID");
+
+                SQL_Utility.Stored_Procedure(ref com);
+
+                SqlDataReader rdr = com.ExecuteReader();
+
+                List<Course> courses = new List<Course>();
+                while (rdr.Read())
+                {
+                    Course c = parse_course(rdr);
+                    c = parse_course(rdr);
+                    Branch_crud.getCourseCenteNamerAndBranchName(c);
+                    courses.Add(c);
+                }
+
+                return courses;
+            }
         }
         #endregion
 

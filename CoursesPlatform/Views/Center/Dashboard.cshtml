@@ -44,13 +44,14 @@
                 <span class="info-box-icon"><i class="fa fa-graduation-cap"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">Courses</span>
+                    <span class="info-box-text">Running Courses</span>
                     <span class="info-box-number">53</span>
 
                     <div class="progress">
                         <div class="progress-bar" style="width: 0%"></div>
                     </div>
-                    <span class="progress-description">
+                    <span class="progress-description" >
+                        <a style="color:white!important" href="/Course/Add">Add Course</a>
                         @*70% Increase in 30 Days*@
                     </span>
                 </div>
@@ -64,7 +65,7 @@
                 <span class="info-box-icon"><i class="fa fa-user-graduate"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">Instructor</span>
+                    <span class="info-box-text">Instructors</span>
                     <span class="info-box-number">0</span>
 
                     <div class="progress">
@@ -84,7 +85,7 @@
                 <span class="info-box-icon"><i class="fa fa-user-plus"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">Users</span>
+                    <span class="info-box-text">Current Students</span>
                     <span class="info-box-number">0</span>
 
                     <div class="progress">
@@ -126,7 +127,11 @@
                                     <h2>@Branch.name</h2>
                                 </div>
                                 <div class="col-md-2" style="padding: 20px;">
-                                    <span class="info-box-text">Courses</span>
+                                    <span class="info-box-text">Running Courses</span>
+                                    <span class="info-box-number">@Branch.courses</span>
+                                </div>
+                                <div class="col-md-2" style="padding: 20px;">
+                                    <span class="info-box-text">Current Students</span>
                                     <span class="info-box-number">@Branch.courses</span>
                                 </div>
                                 <div class="col-md-2" style="padding: 20px;">

@@ -19,6 +19,7 @@
                     </div>
                     <div class="form-horizontal">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.Hidden("branch_id", (object)ViewBag.branch_id)
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -266,8 +267,7 @@
 <script>
     var inputs = {};
 
-    function Add_Day()
-    {
+    function Add_Day() {
         var html = `
             <div class ="col-md-12 col-sm-12 col-xs-12">
                  <div class ="info-box bg-aqua">
@@ -314,8 +314,7 @@
     }
 
 
-    function onsumit_form()
-    {
+    function onsumit_form() {
         inputs = {}
 
         var Days = document.getElementsByClassName("Day");
@@ -326,14 +325,13 @@
         var Tos_array = [];
         var froms_array = [];
 
-        for (var i = 0; i < froms.length; i++)
-        {
+        for (var i = 0; i < froms.length; i++) {
             Days_array.push(Days[i].value)
             Tos_array.push(Tos[i].value)
             froms_array.push(froms[i].value)
         }
-        inputs["Days"]=Days_array
-        inputs["Tos"]=Tos_array
+        inputs["Days"] = Days_array
+        inputs["Tos"] = Tos_array
         inputs["froms"] = froms_array
 
         if (!validateForm()) return false;
@@ -349,7 +347,9 @@
                 'content': dataToSend
             },
             dataType: 'json',
-            success: function (msg) {
+            success: function (msg)
+            {
+                window.location.href = "/branch/dashboard/id=@(ViewBag.branch_id)";
             }
         });
     }
