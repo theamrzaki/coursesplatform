@@ -1,6 +1,7 @@
 ﻿using CoursesPlatform.Crud;
 using CoursesPlatform.Models;
 using CoursesPlatform.Models.Helpers;
+using CoursesPlatform.Utility.SearchUtility;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -118,6 +119,7 @@ namespace CoursesPlatform.Controllers
         #region Login
         public ActionResult Login()
         {
+            test();
             return View();
         }
 
@@ -138,6 +140,18 @@ namespace CoursesPlatform.Controllers
         #endregion
 
       
+
+
+        public void test()
+        {
+            List<SearchToken> search_tokeens = SearchToken.getTokens("Android Software Course using java or swift");
+        }
+
+
+
+
+
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

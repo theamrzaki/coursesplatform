@@ -1,6 +1,7 @@
 ﻿using NHunspell;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -135,7 +136,14 @@ namespace CoursesPlatform.Utility.SearchUtility
                     {
                         continue;
                     }
-                    Hunspell hunspell = new Hunspell("en_us.aff", "en_us.dic");
+
+                    string en_us_aff_virtual_path = "Utility\\SearchUtility\\res\\en_us.aff";
+                    string en_us_aff_path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, en_us_aff_virtual_path);
+
+                    string en_us_dic_virtual_path = "Utility\\SearchUtility\\res\\en_us.dic";
+                    string en_us_dic_path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, en_us_dic_virtual_path);
+                    
+                    Hunspell hunspell = new Hunspell(en_us_aff_path, en_us_dic_path);
                     
                    List<string> stems = hunspell.Stem(norm);
                     
