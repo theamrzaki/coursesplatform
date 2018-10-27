@@ -7216,6 +7216,8 @@
     <Content Include="Utility\SearchUtility\res\en_US.dic" />
     <Content Include="Utility\SearchUtility\res\hyph_en_US.dic" />
     <Content Include="Utility\SearchUtility\res\th_en_US_new.dat" />
+    <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\Shared\_Layout_NoSideBar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
