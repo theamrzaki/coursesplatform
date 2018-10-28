@@ -55,11 +55,7 @@ namespace CoursesPlatform.Crud
                 i++;
             }
 
-            //foreach (int item in helper.Specializations)
-            //{
-            //    addCourseSpecialization(course_id, item);
-            //     i++;
-            //}
+            
             return course_id;
         }
 
@@ -134,30 +130,6 @@ namespace CoursesPlatform.Crud
             return id;
         }
 
-        private static long addCourseSpecialization(long course_id, long specialization_id)
-        {
-            long id = 0;
-            using (SqlConnection con = new SqlConnection(Database.connection_string))
-            {
-                con.Open();
-                SqlCommand com = new SqlCommand("Course", con);
-                com.CommandType = CommandType.StoredProcedure;
-                com.Parameters.AddWithValue("@course_id", course_id);
-                com.Parameters.AddWithValue("@specialization_id", specialization_id);
-
-                com.Parameters.AddWithValue("@Action", "InsertSpecializationCourse");
-
-                SQL_Utility.Stored_Procedure(ref com);
-
-                SqlDataReader rdr = com.ExecuteReader();
-                if (rdr.Read())
-                {
-                    id = Convert.ToInt64(rdr[0]);
-                }
-
-            }
-            return id;
-        }
         #endregion
 
 
@@ -247,14 +219,14 @@ namespace CoursesPlatform.Crud
         #endregion
 
         #region Get Course Specialization
-        private static List<Specialization> getCourseSpecialization(long course_id)
+        private static List<Specialization> getCourseSpecialization(long course_type_id)
         {
             using (SqlConnection con = new SqlConnection(Database.connection_string))
             {
                 con.Open();
                 SqlCommand com = new SqlCommand("Course", con);
                 com.CommandType = CommandType.StoredProcedure;
-                com.Parameters.AddWithValue("@course_id", course_id);
+                com.Parameters.AddWithValue("@course_type_id", course_type_id);
 
                 com.Parameters.AddWithValue("@Action", "GetSpecializationForCourse");
 
@@ -446,7 +418,7 @@ namespace CoursesPlatform.Crud
             
 
             course.courseDays       = getCourseDaysByCourseID(course.id);
-            course.specializations  = getCourseSpecialization(course.id);
+            course.specializations  = getCourseSpecialization(course.course_type_id);
 
 
             if (course.end_date < DateTime.Now)

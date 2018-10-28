@@ -5,10 +5,10 @@ using System.Web;
 
 namespace CoursesPlatform.Models
 {
-    public class SpecializationCourse
+    public class SpecializationCourseType
     {
         public long id                  { get; set; }
-        public long course_id           { get; set; }
+        public long course_type_id      { get; set; }
         public long specialization_id   { get; set; }
     }
 }
