@@ -119,7 +119,7 @@ namespace CoursesPlatform.Controllers
         }
         #endregion
 
-        #region Login
+        #region Login / Logout
         public ActionResult Login()
         {
             test();
@@ -140,8 +140,13 @@ namespace CoursesPlatform.Controllers
                 return View();
             }
         }
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Login", "Home");
+        }
         #endregion
-        
+
         #region Search
         public ActionResult Search()
         {
@@ -154,13 +159,5 @@ namespace CoursesPlatform.Controllers
         {
             List<SearchToken> search_tokeens = SearchToken.getTokens("Android Software Course using java or swift");
         }
-
-
-      
-    }
-    public class msg
-    {
-        public bool done { get; set; }
-        public string message { get; set; }
     }
 }
