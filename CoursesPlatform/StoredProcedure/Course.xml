@@ -48,13 +48,6 @@
       (@course_id,@day ,@from_time , @to_time);
   </action>
   
-  <action name='InsertSpecializationCourse'>
-     INSERT INTO [SpecializationCourse]
-      (course_id,specialization_id)
-      output inserted.id
-      values
-      (@course_id,@specialization_id);
-  </action>
   
   <action name='GetCourseByID'>
       select * , [Course].[id] as course_id , 
@@ -80,9 +73,9 @@
   </action>
   
   <action name='GetSpecializationForCourse'>
-    select [Specialization].[id] , [Specialization].[name] from [SpecializationCourse] , [Specialization]
-    where [SpecializationCourse].[course_id] = @course_id 
-    AND [SpecializationCourse].[specialization_id] = [Specialization].[id]
+    select [Specialization].[id] , [Specialization].[name] from [SpecializationCourseType] , [Specialization]
+    where [SpecializationCourseType].[course_type_id] = @course_type_id
+    AND [SpecializationCourseType].[specialization_id] = [Specialization].[id]
   </action>
 
   <action name='GetCourseTypeName'>

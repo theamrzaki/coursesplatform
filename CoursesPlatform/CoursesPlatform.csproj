@@ -157,7 +157,7 @@
     <Compile Include="Models\PhoneNumber.cs" />
     <Compile Include="Models\Specialization.cs" />
     <Compile Include="Models\SpecializationCenter.cs" />
-    <Compile Include="Models\SpecializationCourse.cs" />
+    <Compile Include="Models\SpecializationCourseType.cs" />
     <Compile Include="Models\SpecializationTag.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
