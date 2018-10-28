@@ -37,6 +37,32 @@ namespace CoursesPlatform.Crud
             }
             
         }
+
+        public static void add(long center_id, List<string> listOfStrings)
+        {
+            String input = string.Join(" ", listOfStrings.ToArray());
+            List<SearchToken> searchTokens = SearchToken.getTokens(input);
+            using (SqlConnection con = new SqlConnection(Database.connection_string))
+            {
+                con.Open();
+                foreach (SearchToken st in searchTokens)
+                {
+                    SqlCommand com = new SqlCommand("CenterTag", con);
+                    com.CommandType = CommandType.StoredProcedure;
+                    com.Parameters.AddWithValue("@center_id", center_id);
+                    com.Parameters.AddWithValue("@tag", st.tag);
+                    com.Parameters.AddWithValue("@soundex", st.soundex);
+                    com.Parameters.AddWithValue("@source", st.source);
+                    com.Parameters.AddWithValue("@Action", "Insert");
+
+                    SQL_Utility.Stored_Procedure(ref com);
+
+                    com.ExecuteNonQuery();
+                }
+            }
+
+        }
+
         #endregion
     }
 }
