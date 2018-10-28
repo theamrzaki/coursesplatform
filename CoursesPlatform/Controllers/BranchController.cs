@@ -27,7 +27,7 @@ namespace CoursesPlatform.Controllers
 
         public ActionResult Dashboard(long id)
         {
-            Branch b=  Branch_crud.getBranchesByID(id);
+            Branch b=  Branch_crud.getBranchByID(id);
             ViewBag.Branch = b;
             return View();
         }
