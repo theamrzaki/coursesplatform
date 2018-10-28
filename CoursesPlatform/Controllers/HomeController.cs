@@ -110,9 +110,12 @@ namespace CoursesPlatform.Controllers
                     Session["Logged_in_user"] = user;
 
                     Center_crud.updateStep(user.center_id, RegistirationsSteps.Completed);
+
+                    return Json("done", JsonRequestBehavior.AllowGet);
+                 
                 }
             }
-            return Json("chamara", JsonRequestBehavior.AllowGet);
+            return Json("", JsonRequestBehavior.AllowGet);
         }
         #endregion
 
@@ -154,5 +157,10 @@ namespace CoursesPlatform.Controllers
 
 
       
+    }
+    public class msg
+    {
+        public bool done { get; set; }
+        public string message { get; set; }
     }
 }

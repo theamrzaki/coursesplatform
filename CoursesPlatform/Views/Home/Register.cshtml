@@ -253,6 +253,10 @@
                         },
                         dataType: 'json',
                         success: function (msg) {
+                            alert(msg)
+                            if (msg == "done") {
+                                window.location.href = "/Center/dashboard";
+                            }
                            // return false;
                             // Hide the current tab:
                             x[currentTab].style.display = "none";
@@ -265,7 +269,7 @@
                                 return false;
                             }
 
-
+                            
                             // Otherwise, display the correct tab:
                             showTab(currentTab);
 

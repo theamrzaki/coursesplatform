@@ -4,14 +4,10 @@
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
-    <h1>
-        Dashboard
-        <small>Branchs</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
-    </ol>
+    <h2 class="page-header">
+        @(((CoursesPlatform.Models.Center)ViewBag.Center).name) Dashboard
+        <small>@(((CoursesPlatform.Models.Center)ViewBag.Center).about)</small>
+    </h2>
 </section>
 
  <!-- Main content -->
@@ -105,7 +101,9 @@
     <!-- /.row -->
 
 
-    <h2 class="page-header">Branches</h2>
+   
+
+
 
     <div class="row">
         <style>
