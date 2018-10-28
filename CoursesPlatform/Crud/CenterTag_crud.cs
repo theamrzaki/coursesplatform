@@ -38,9 +38,9 @@ namespace CoursesPlatform.Crud
             
         }
 
-        public static void add(long center_id, List<string> listOfStrings)
+        public static void add(long center_id, string[] listOfStrings)
         {
-            String input = string.Join(" ", listOfStrings.ToArray());
+            String input = string.Join(" ", listOfStrings);
             List<SearchToken> searchTokens = SearchToken.getTokens(input);
             using (SqlConnection con = new SqlConnection(Database.connection_string))
             {
