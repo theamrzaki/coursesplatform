@@ -36,6 +36,9 @@ namespace CoursesPlatform.Controllers
                     long id = Center_crud.add(center);
                     Session["register_course_id"] = id;
 
+                    CenterTag_crud.add(id, center.name);
+                    CenterTag_crud.add(id, center.about);
+
                     Center_crud.updateStep(id, RegistirationsSteps.Step1);
                 }
             }
@@ -85,11 +88,8 @@ namespace CoursesPlatform.Controllers
                     {
                         SpecializationCenter_crud.add(id, s);
                     }
-
-                    foreach (var t in Spec_Tags.Tags)
-                    {
-                        CenterTag_crud.add(id, t);
-                    }
+                    
+                    CenterTag_crud.add(id, Spec_Tags.Tags);
 
                     Center_crud.updateStep(id, RegistirationsSteps.Step4);
                 }
