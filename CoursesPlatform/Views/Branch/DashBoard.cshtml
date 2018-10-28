@@ -142,7 +142,7 @@
                                     </div>
                                 </a>
                             </div>
-                            @foreach (var Course in ((CoursesPlatform.Models.Branch)ViewBag.Branch).courses)
+                            @foreach (var Course in ((CoursesPlatform.Models.Branch)ViewBag.Branch).courses.FindAll(c=>c.running == true))
                             {
                                 <div class="col-md-4">
                                     <!-- Widget: user widget style 1 -->
@@ -187,14 +187,8 @@
                                         </div>
                                         <div class="box-footer no-padding">
                                             <ul class="nav nav-stacked">
-                                                @if (Course.running)
-                                                {
-                                                    <li class="bg-green-gradient"><a href="#" style="color:white !important">start Date <span class="pull-right badge bg-blue">@Course.start_date.Date.ToShortDateString()</span> <span class="pull-right badge bg-navy">to</span> <span class="pull-right badge bg-blue">@Course.end_date.Date.ToShortDateString()</span></a></li>
-                                                }
-                                                else
-                                                {
-                                                    <li class="bg-red-gradient"><a href="#" style="color:white !important">start Date <span class="pull-right badge bg-blue">@Course.start_date.Date.ToShortDateString()</span> <span class="pull-right badge bg-navy">to</span> <span class="pull-right badge bg-blue">@Course.end_date.Date.ToShortDateString()</span></a></li>
-                                                }
+                                                <li class="bg-green-gradient"><a href="#" style="color:white !important">start Date <span class="pull-right badge bg-blue">@Course.start_date.Date.ToShortDateString()</span> <span class="pull-right badge bg-navy">to</span> <span class="pull-right badge bg-blue">@Course.end_date.Date.ToShortDateString()</span></a></li>
+                                                
                                                 <li><a href="#">number of hours <span class="pull-right badge bg-aqua">@Course.course_duration_in_hours</span></a></li>
                                                 <li><a href="#">Course Type <span class="pull-right badge bg-green">@Course.courseTypeName</span></a></li>
                                                 <li>
