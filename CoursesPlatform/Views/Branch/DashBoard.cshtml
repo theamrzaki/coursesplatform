@@ -187,7 +187,14 @@
                                         </div>
                                         <div class="box-footer no-padding">
                                             <ul class="nav nav-stacked">
-                                                <li class="bg-green-gradient"><a href="#" style="color:white !important">start Date <span class="pull-right badge bg-blue">@Course.start_date.Date.ToShortDateString()</span> <span class="pull-right badge bg-navy">to</span> <span class="pull-right badge bg-blue">@Course.end_date.Date.ToShortDateString()</span></a></li>
+                                                @if (Course.running)
+                                                {
+                                                    <li class="bg-green-gradient"><a href="#" style="color:white !important">start Date <span class="pull-right badge bg-blue">@Course.start_date.Date.ToShortDateString()</span> <span class="pull-right badge bg-navy">to</span> <span class="pull-right badge bg-blue">@Course.end_date.Date.ToShortDateString()</span></a></li>
+                                                }
+                                                else
+                                                {
+                                                    <li class="bg-red-gradient"><a href="#" style="color:white !important">start Date <span class="pull-right badge bg-blue">@Course.start_date.Date.ToShortDateString()</span> <span class="pull-right badge bg-navy">to</span> <span class="pull-right badge bg-blue">@Course.end_date.Date.ToShortDateString()</span></a></li>
+                                                }
                                                 <li><a href="#">number of hours <span class="pull-right badge bg-aqua">@Course.course_duration_in_hours</span></a></li>
                                                 <li><a href="#">Course Type <span class="pull-right badge bg-green">@Course.courseTypeName</span></a></li>
                                                 <li>
@@ -368,7 +375,14 @@
                             </div>
                             <div class="box-footer no-padding">
                                 <ul class="nav nav-stacked">
-                                    <li class="bg-green-gradient"><a href="#" style="color:white !important">start Date <span class="pull-right badge bg-blue">@Course.start_date.Date.ToShortDateString()</span> <span class="pull-right badge bg-navy">to</span> <span class="pull-right badge bg-blue">@Course.end_date.Date.ToShortDateString()</span></a></li>
+                                    @if (Course.running)
+                                    {
+                                        <li class="bg-green-gradient"><a href="#" style="color:white !important">start Date <span class="pull-right badge bg-blue">@Course.start_date.Date.ToShortDateString()</span> <span class="pull-right badge bg-navy">to</span> <span class="pull-right badge bg-blue">@Course.end_date.Date.ToShortDateString()</span></a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="bg-red-gradient"><a href="#" style="color:white !important">start Date <span class="pull-right badge bg-blue">@Course.start_date.Date.ToShortDateString()</span> <span class="pull-right badge bg-navy">to</span> <span class="pull-right badge bg-blue">@Course.end_date.Date.ToShortDateString()</span></a></li>
+                                    }
                                     <li><a href="#">number of hours <span class="pull-right badge bg-aqua">@Course.course_duration_in_hours</span></a></li>
                                     <li><a href="#">Course Type <span class="pull-right badge bg-green">@Course.courseTypeName</span></a></li>
                                     <li><a href="#">Specializations
@@ -391,69 +405,7 @@
                         <!-- /.widget-user -->
                     </div>
                 }
-                <div class="col-md-4">
-                    <!-- Widget: user widget style 1 -->
-                    <div class="box box-widget widget-user">
-                        <!-- Add the bg color to the header using any of the bg-* classes -->
-                        <div class="widget-user-header bg-black" style="background: url('../../dist/img/photo1.png') center center;">
-                            <h3 class="widget-user-username">name</h3>
-                            <h5 class="widget-user-desc">description</h5>
-                        </div>
-                        <div class="widget-user-image">
-                            <img class="img-circle" src="~/dist/img/user1-128x128.jpg" alt="User Avatar">
-                        </div>
-                        <div class="box-footer">
-                            <div class="row">
-                                <div class="col-sm-4 border-right">
-                                    <div class="description-block">
-                                        <h5 class="description-header">Amr</h5>
-                                        <span class="description-text">Instructor</span>
-                                    </div>
-                                    <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-sm-4 border-right">
-                                    <div class="description-block">
-                                        <h5 class="description-header">0 / 241</h5>
-                                        <span class="description-text">Capacity</span>
-                                    </div>
-                                    <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-sm-4">
-                                    <div class="description-block">
-                                        <h5 class="description-header"><strike>500</strike> 350</h5>
-                                        <span class="description-text">Price</span>
-                                    </div>
-                                    <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
-                            </div>
-
-                            <!-- /.row -->
-                        </div>
-                        <div class="box-footer no-padding">
-                            <ul class="nav nav-stacked">
-                                <li class="bg-red-gradient" ><a href="#" style="color:white !important">start Date <span class="pull-right badge bg-blue">20/5/2018</span> <span class="pull-right badge bg-navy">to</span> <span class="pull-right badge bg-blue">30/5/2018</span></a></li>
-                                <li><a href="#">number of hours <span class="pull-right badge bg-aqua">30</span></a></li>
-                                <li><a href="#">Course Type <span class="pull-right badge bg-green">IT</span></a></li>
-                                <li>
-                                    <a href="#">
-                                        Specializations <span class="pull-right badge bg-navy">name</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        1 Days
-                                        <span class="pull-right badge bg-red">Sunday 5:00pm to 7:00pm </span>
-                                    
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /.widget-user -->
-            </div>
+                
 
             </div>
 

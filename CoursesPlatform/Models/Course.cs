@@ -29,6 +29,8 @@ namespace CoursesPlatform.Models
         public center_or_instructor_enum center_or_instructor  { get; set; }
         public is_visible_enum  is_visible                     { get; set; }
 
+        public bool running { get; set; }
+
         #region added values
 
         public String instructorName{ get; set; }
