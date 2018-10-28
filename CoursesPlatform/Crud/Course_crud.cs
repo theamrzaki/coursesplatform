@@ -447,7 +447,17 @@ namespace CoursesPlatform.Crud
 
             course.courseDays       = getCourseDaysByCourseID(course.id);
             course.specializations  = getCourseSpecialization(course.id);
-           
+
+
+            if (course.end_date < DateTime.Now)
+            {
+                course.running = true;
+            }
+            else
+            {
+                course.running = false;
+            }
+
             return course;
         }
 
