@@ -55,11 +55,11 @@ namespace CoursesPlatform.Crud
                 i++;
             }
 
-            foreach (int item in helper.Specializations)
-            {
-                addCourseSpecialization(course_id, item);
-                 i++;
-            }
+            //foreach (int item in helper.Specializations)
+            //{
+            //    addCourseSpecialization(course_id, item);
+            //     i++;
+            //}
             return course_id;
         }
 

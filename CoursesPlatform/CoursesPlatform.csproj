@@ -171,6 +171,8 @@
     <Compile Include="Utility\SQL_Utility.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Hunspellx64.dll" />
+    <Content Include="bin\Hunspellx86.dll" />
     <Content Include="bin\itextsharp.dll" />
     <Content Include="bower_components\bootstrap-colorpicker\dist\css\bootstrap-colorpicker.css" />
     <Content Include="bower_components\bootstrap-colorpicker\dist\css\bootstrap-colorpicker.min.css" />
