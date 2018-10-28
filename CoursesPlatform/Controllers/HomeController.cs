@@ -110,13 +110,16 @@ namespace CoursesPlatform.Controllers
                     Session["Logged_in_user"] = user;
 
                     Center_crud.updateStep(user.center_id, RegistirationsSteps.Completed);
+
+                    return Json("done", JsonRequestBehavior.AllowGet);
+                 
                 }
             }
-            return Json("chamara", JsonRequestBehavior.AllowGet);
+            return Json("", JsonRequestBehavior.AllowGet);
         }
         #endregion
 
-        #region Login
+        #region Login / Logout
         public ActionResult Login()
         {
             test();
@@ -137,8 +140,13 @@ namespace CoursesPlatform.Controllers
                 return View();
             }
         }
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Login", "Home");
+        }
         #endregion
-        
+
         #region Search
         public ActionResult Search()
         {
@@ -151,8 +159,5 @@ namespace CoursesPlatform.Controllers
         {
             List<SearchToken> search_tokeens = SearchToken.getTokens("Android Software Course using java or swift");
         }
-
-
-      
     }
 }

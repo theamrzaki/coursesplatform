@@ -349,7 +349,7 @@
             dataType: 'json',
             success: function (msg)
             {
-                window.location.href = "/branch/dashboard/id=@(ViewBag.branch_id)";
+                window.location.href = "/branch/dashboard/@(ViewBag.branch_id)";
             }
         });
     }

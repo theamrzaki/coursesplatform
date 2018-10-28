@@ -87,7 +87,7 @@ namespace CoursesPlatform.Crud
 
         }
 
-        public static Branch getBranchesByID(long id)
+        public static Branch getBranchByID(long id)
         {
             using (SqlConnection con = new SqlConnection(Database.connection_string))
             {
@@ -102,10 +102,7 @@ namespace CoursesPlatform.Crud
                 SqlDataReader rdr = com.ExecuteReader();
 
                 Branch branch = null;
-                if(rdr.Read())
-                {
-                    branch = parse_Branche_complete(rdr);
-                }
+                branch = parse_Branch_complete(rdr);
 
                 branch.courses = Course_crud.getCoursesByBranchID(id);
                 return branch;
@@ -117,7 +114,7 @@ namespace CoursesPlatform.Crud
 
 
         #region Helper
-        private static Branch parse_Branche_complete(SqlDataReader rdr)
+        private static Branch parse_Branch_complete(SqlDataReader rdr)
         {
             Branch branch = new Branch();
             List<string> colors = new List<string> { "bg-aqua", "bg-green", "bg-yellow", "bg-red" };
