@@ -109,23 +109,24 @@ namespace CoursesPlatform.Utility.SearchUtility
         }
 
 
-        public static List<String> normalize(string[] input)
+        public static List<NormalizeToken> normalize(string[] input)
         {
             stopWords = stopwordsArray.ToList<String>();
-            List<String> ret = new List<String>();
-            string norm;
-            foreach(string i in input)
+            List<NormalizeToken> ret = new List<NormalizeToken>();
+            
+            foreach(string str in input)
             {
-                if(i == "")
+                String norm = str;
+                if(norm == "")
                 {
                     continue;
                 }
                 try
                 {
-                    norm = i.Normalize(NormalizationForm.FormD);
+                    norm = norm.Normalize(NormalizationForm.FormD);
                 }catch(Exception ex)
                 {
-                    norm = i;
+
                 }
 
                 if (!stopWords.Contains(norm))
@@ -145,22 +146,35 @@ namespace CoursesPlatform.Utility.SearchUtility
                     
                     Hunspell hunspell = new Hunspell(en_us_aff_path, en_us_dic_path);
                     
-                   List<string> stems = hunspell.Stem(norm);
+                    List<string> stems = hunspell.Stem(norm);
                     
                     if (stems.Count == 0)
                     {
-                        ret.Add(norm);
+                        NormalizeToken normalizeToken = new NormalizeToken();
+                        normalizeToken.source = str;
+                        normalizeToken.stem = norm;
+                        ret.Add(normalizeToken);
                     }
                     else
                     {
                         foreach (string stem in stems)
                         {
-                            ret.Add(stem);
+                            NormalizeToken normalizeToken = new NormalizeToken();
+                            normalizeToken.source = str;
+                            normalizeToken.stem = stem;
+                            ret.Add(normalizeToken);
                         }
                     }
                 }              
             }
             return ret;
         }
+        
+    }
+
+    public class NormalizeToken
+    {
+        public String source { get; set; }
+        public String stem { get; set; }
     }
 }

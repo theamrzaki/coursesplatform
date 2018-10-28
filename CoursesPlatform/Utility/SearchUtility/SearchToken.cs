@@ -9,6 +9,7 @@ namespace CoursesPlatform.Utility.SearchUtility
     {
         public String tag { get; set; }
         public String soundex { get; set; }
+        public String source { get; set; }
 
         public static List<SearchToken> getTokens(String input)
         {
@@ -16,15 +17,16 @@ namespace CoursesPlatform.Utility.SearchUtility
 
             String[] tokens = Tokenizer.getTokens(input);
 
-            List<String> stems = Normalizer.normalize(tokens);
+            List<NormalizeToken> normalizeTokensList = Normalizer.normalize(tokens);
 
-            foreach (String stem in stems)
+            foreach (NormalizeToken normalizeToken in normalizeTokensList)
             {
-                String soundexText = Soundex.Generate(stem);
+                String soundexText = Soundex.Generate(normalizeToken.stem);
                 SearchToken searchToken = new SearchToken()
                 {
-                    tag = stem ,
-                    soundex = soundexText
+                    tag = normalizeToken.stem,
+                    soundex = soundexText,
+                    source = normalizeToken.source
                 };
                 searchTokens.Add(searchToken);
             }

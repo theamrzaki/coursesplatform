@@ -9,9 +9,7 @@ namespace CoursesPlatform.Utility.SearchUtility
 {
     class Tokenizer
     {
-
         
-
         public static string[] getTokens(String input)
         {
             input = input.ToLower();

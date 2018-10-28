@@ -63,7 +63,9 @@ namespace CoursesPlatform.Crud
                 SpecializationTag specializationTag = new SpecializationTag();
                 specializationTag.id = Convert.ToInt64("id");
                 specializationTag.specialization_id = Convert.ToInt64("specialization_id");
-                specializationTag.name = rdr["name"].ToString();
+                specializationTag.tag = rdr["tag"].ToString();
+                specializationTag.soundex = rdr["soundex"].ToString();
+                specializationTag.source = rdr["source"].ToString();
 
 
                 specializationTagList.Add(specializationTag);

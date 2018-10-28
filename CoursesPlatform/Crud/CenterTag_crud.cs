@@ -1,5 +1,6 @@
 ﻿using CoursesPlatform.Models;
 using CoursesPlatform.Models.Helpers;
+using CoursesPlatform.Utility.SearchUtility;
 using HRsystem.Utility;
 using System;
 using System.Collections.Generic;
@@ -13,28 +14,28 @@ namespace CoursesPlatform.Crud
     public class CenterTag_crud
     {
         #region Add
-        public static long add(long center_id , string name)
+        public static void add(long center_id , string input)
         {
-            long id = 0;
+            List<SearchToken> searchTokens = SearchToken.getTokens(input);
             using (SqlConnection con = new SqlConnection(Database.connection_string))
             {
                 con.Open();
-                SqlCommand com = new SqlCommand("CenterTag", con);
-                com.CommandType = CommandType.StoredProcedure;
-                com.Parameters.AddWithValue("@center_id", center_id);
-                com.Parameters.AddWithValue("@name", name);
-                com.Parameters.AddWithValue("@Action", "Insert");
+                foreach (SearchToken st in searchTokens)
+                { 
+                    SqlCommand com = new SqlCommand("CenterTag", con);
+                    com.CommandType = CommandType.StoredProcedure;
+                    com.Parameters.AddWithValue("@center_id", center_id);
+                    com.Parameters.AddWithValue("@tag", st.tag);
+                    com.Parameters.AddWithValue("@soundex", st.soundex);
+                    com.Parameters.AddWithValue("@source", st.source);
+                    com.Parameters.AddWithValue("@Action", "Insert");
 
-                SQL_Utility.Stored_Procedure(ref com);
+                    SQL_Utility.Stored_Procedure(ref com);
 
-                SqlDataReader rdr = com.ExecuteReader();
-                if (rdr.Read())
-                {
-                    id = Convert.ToInt64(rdr[0]);
+                    com.ExecuteNonQuery();
                 }
-
             }
-            return id;
+            
         }
         #endregion
     }
