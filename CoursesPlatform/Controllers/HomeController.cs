@@ -157,7 +157,7 @@ namespace CoursesPlatform.Controllers
 
         public void test()
         {
-            List<SearchToken> search_tokeens = SearchToken.getTokens("Android Software Course using java or swift");
+            List<SearchToken> search_tokeens = SearchToken.getTokens("Android اندرويد Software سوفوير Course كورس using java جافا or swift سويفت");
         }
     }
 }
