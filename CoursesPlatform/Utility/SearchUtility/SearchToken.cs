@@ -10,6 +10,7 @@ namespace CoursesPlatform.Utility.SearchUtility
         public String tag { get; set; }
         public String soundex { get; set; }
         public String source { get; set; }
+        public bool isEn { get; set; }
 
         public static List<SearchToken> getTokens(String input)
         {
@@ -21,14 +22,33 @@ namespace CoursesPlatform.Utility.SearchUtility
 
             foreach (NormalizeToken normalizeToken in normalizeTokensList)
             {
-                String soundexText = Soundex.Generate(normalizeToken.stem);
-                SearchToken searchToken = new SearchToken()
+                if (normalizeToken.isEn)
                 {
-                    tag = normalizeToken.stem,
-                    soundex = soundexText,
-                    source = normalizeToken.source
-                };
-                searchTokens.Add(searchToken);
+                    String soundexText = EnglishSoundex.Generate(normalizeToken.stem);
+                    SearchToken searchToken = new SearchToken()
+                    {
+                        tag = normalizeToken.stem,
+                        soundex = soundexText,
+                        source = normalizeToken.source,
+                        isEn = true
+                        
+                    };
+                    searchTokens.Add(searchToken);
+                }else
+                {
+                    List<String> soundexList = ArabicSoundex.Generate(normalizeToken.stem);
+                    foreach(String s in soundexList)
+                    {
+                        SearchToken searchToken = new SearchToken()
+                        {
+                            tag = normalizeToken.stem,
+                            soundex = s,
+                            source = normalizeToken.source,
+                            isEn = false
+                        };
+                        searchTokens.Add(searchToken);
+                    }
+                }
             }
             return searchTokens;
         }

@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace CoursesPlatform.Utility.SearchUtility
 {
-    class Soundex
+    class EnglishSoundex
     {
         public const string Empty = "0000";
 

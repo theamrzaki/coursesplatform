@@ -165,8 +165,9 @@
     <Compile Include="Utility\Logs_Utility.cs" />
     <Compile Include="Utility\Modules_Utility.cs" />
     <Compile Include="Utility\SearchUtility\Normalizer.cs" />
+    <Compile Include="Utility\SearchUtility\ArabicSoundex.cs" />
     <Compile Include="Utility\SearchUtility\SearchToken.cs" />
-    <Compile Include="Utility\SearchUtility\Soundex.cs" />
+    <Compile Include="Utility\SearchUtility\EnglishSoundex.cs" />
     <Compile Include="Utility\SearchUtility\Tokenizer.cs" />
     <Compile Include="Utility\SQL_Utility.cs" />
   </ItemGroup>
@@ -7208,6 +7209,8 @@
     <Content Include="Utility\SearchUtility\res\th_en_US_new.dat" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Shared\_Layout_NoSideBar.cshtml" />
+    <Content Include="Utility\SearchUtility\res\ar.aff" />
+    <Content Include="Utility\SearchUtility\res\ar.dic" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
