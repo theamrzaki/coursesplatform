@@ -7184,12 +7184,6 @@
     <EmbeddedResource Include="StoredProcedure\User.xml" />
     <EmbeddedResource Include="StoredProcedure\Course.xml" />
     <EmbeddedResource Include="StoredProcedure\Specialization.xml" />
-    <Content Include="Utility\SearchUtility\res\Hunspellx64.dll" />
-    <Content Include="Utility\SearchUtility\res\Hunspellx64.pdb" />
-    <Content Include="Utility\SearchUtility\res\Hunspellx86.dll" />
-    <Content Include="Utility\SearchUtility\res\Hunspellx86.pdb" />
-    <Content Include="Utility\SearchUtility\res\NHunspell.dll" />
-    <Content Include="Utility\SearchUtility\res\NHunspell.pdb" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
