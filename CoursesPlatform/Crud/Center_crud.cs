@@ -26,6 +26,7 @@ namespace CoursesPlatform.Crud
                 com.CommandType = CommandType.StoredProcedure;
                 com.Parameters.AddWithValue("@name", center.name);
                 com.Parameters.AddWithValue("@about", center.about);
+                com.Parameters.AddWithValue("@about_ar", center.about_ar);
                 com.Parameters.AddWithValue("@email", center.email);
                 com.Parameters.AddWithValue("@website", center.website);
                 com.Parameters.AddWithValue("@Action", "InsertPrimary");
@@ -124,6 +125,7 @@ namespace CoursesPlatform.Crud
             center.id = Convert.ToInt64(rdr["id"]);
             center.name = rdr["name"].ToString();
             center.about = rdr["about"].ToString();
+            center.about_ar = rdr["about_ar"].ToString();
             center.email = rdr["email"].ToString();
             center.website = rdr["website"].ToString();
             center.fb_page = rdr["fb_page"].ToString();

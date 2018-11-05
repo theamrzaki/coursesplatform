@@ -209,7 +209,9 @@ namespace CoursesPlatform.Utility.SearchUtility
                     charList.Add('S');
                     break;
                 case 'ف':
+                case 'ڤ':
                     charList.Add('F');
+                    charList.Add('V');
                     break;
                 case 'ق':
                     charList.Add('Q');

@@ -13,7 +13,9 @@ namespace CoursesPlatform.Models
         public long             branch_id                      { get; set; }
         public long             course_type_id                 { get; set; }
         public string           name                           { get; set; }
+        public string           name_ar                        { get; set; }
         public string           description                    { get; set; }
+        public string           description_ar                 { get; set; }
         public DateTime         start_date                     { get; set; }
         public DateTime         end_date                       { get; set; }
         public int              capacity                       { get; set; }

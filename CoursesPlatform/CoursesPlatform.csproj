@@ -148,6 +148,7 @@
     <Compile Include="Models\CenterTag.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CourseDays.cs" />
+    <Compile Include="Models\CourseTag.cs" />
     <Compile Include="Models\CourseType.cs" />
     <Compile Include="Models\CourseTypeTag.cs" />
     <Compile Include="Models\Helpers\Course_Insert_Helper.cs" />

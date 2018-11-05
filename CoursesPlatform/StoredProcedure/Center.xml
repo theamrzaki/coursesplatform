@@ -14,10 +14,10 @@
 
   <action name='InsertPrimary'>
     Insert into Center
-      (name,about , email , website )
+      (name,about,about_ar , email , website )
       output inserted.Id
       values
-      (@name,@about ,@email , @website);
+      (@name,@about,@about_ar ,@email , @website);
  
   </action>
   
