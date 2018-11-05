@@ -38,6 +38,7 @@ namespace CoursesPlatform.Controllers
 
                     CenterTag_crud.add(id, center.name);
                     CenterTag_crud.add(id, center.about);
+                    CenterTag_crud.add(id, center.about_ar);
 
                     Center_crud.updateStep(id, RegistirationsSteps.Step1);
                 }
