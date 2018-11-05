@@ -51,7 +51,13 @@
       values
       (@course_id,@day ,@from_time , @to_time);
   </action>
-  
+
+  <action name='InsertCourseTag'>
+    Insert into CourseTag
+    (course_id , tag , soundex , source )
+    values
+    (@course_id,@tag,@soundex,@source);
+  </action>
   
   <action name='GetCourseByID'>
       select * , [Course].[id] as course_id , 

@@ -1,5 +1,6 @@
 ﻿using CoursesPlatform.Models;
 using CoursesPlatform.Models.Helpers;
+using CoursesPlatform.Utility.SearchUtility;
 using HRsystem.Utility;
 using System;
 using System.Collections.Generic;
@@ -136,8 +137,59 @@ namespace CoursesPlatform.Crud
 
         #endregion
 
+        #region Add Course Tag
 
+        public static void addCourseTag(long course_id, string input)
+        {
+            List<SearchToken> searchTokens = SearchToken.getTokens(input);
+            using (SqlConnection con = new SqlConnection(Database.connection_string))
+            {
+                con.Open();
+                foreach (SearchToken st in searchTokens)
+                {
+                    SqlCommand com = new SqlCommand("Course", con);
+                    com.CommandType = CommandType.StoredProcedure;
+                    com.Parameters.AddWithValue("@course_id", course_id);
+                    com.Parameters.AddWithValue("@tag", st.tag);
+                    com.Parameters.AddWithValue("@soundex", st.soundex);
+                    com.Parameters.AddWithValue("@source", st.source);
+                    com.Parameters.AddWithValue("@Action", "InsertCourseTag");
 
+                    SQL_Utility.Stored_Procedure(ref com);
+
+                    com.ExecuteNonQuery();
+                }
+            }
+
+        }
+
+        public static void addCourseTag(long course_id, string[] listOfStrings)
+        {
+            String input = string.Join(" ", listOfStrings);
+            List<SearchToken> searchTokens = SearchToken.getTokens(input);
+            using (SqlConnection con = new SqlConnection(Database.connection_string))
+            {
+                con.Open();
+                foreach (SearchToken st in searchTokens)
+                {
+                    SqlCommand com = new SqlCommand("Course", con);
+                    com.CommandType = CommandType.StoredProcedure;
+                    com.Parameters.AddWithValue("@course_id", course_id);
+                    com.Parameters.AddWithValue("@tag", st.tag);
+                    com.Parameters.AddWithValue("@soundex", st.soundex);
+                    com.Parameters.AddWithValue("@source", st.source);
+                    com.Parameters.AddWithValue("@Action", "InsertCourseTag");
+
+                    SQL_Utility.Stored_Procedure(ref com);
+
+                    com.ExecuteNonQuery();
+                }
+            }
+
+        }
+
+        
+        #endregion
 
 
         #region Get Course Data
