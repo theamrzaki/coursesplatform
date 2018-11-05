@@ -11,16 +11,18 @@ namespace CoursesPlatform.Models.Helpers
         public int[] Days                             { get; set; }
         public int[] Specializations                  { get; set; }
         public string[] Tos                           { get; set; }
-        public int capacity                        { get; set; }
-        public int course_duration_in_hours        { get; set; }
+        public int capacity                           { get; set; }
+        public int course_duration_in_hours           { get; set; }
         public string description                     { get; set; }
+        public string description_ar                  { get; set; }
         public string end_date                        { get; set; }
         public string expiration_register_date        { get; set; }
         public string[] froms                         { get; set; }
         public string name                            { get; set; }
+        public string name_ar                         { get; set; }
         public double new_price                       { get; set; }
-        public int no_of_days_per_week             { get; set; }
-        public int no_of_hours_per_day             { get; set; }
+        public int no_of_days_per_week                { get; set; }
+        public int no_of_hours_per_day                { get; set; }
         public double old_price                       { get; set; }
         public string start_date                      { get; set; }
 

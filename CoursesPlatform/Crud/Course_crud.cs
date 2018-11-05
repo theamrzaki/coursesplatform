@@ -23,7 +23,9 @@ namespace CoursesPlatform.Crud
                 course_type_id = helper.CourseType,
 
                 name = helper.name,
+                name_ar = helper.name_ar,
                 description = helper.description,
+                description_ar = helper.description_ar,
 
                 start_date = Convert.ToDateTime(helper.start_date),
                 end_date = Convert.ToDateTime(helper.end_date),
@@ -72,7 +74,9 @@ namespace CoursesPlatform.Crud
                 com.Parameters.AddWithValue("@branch_id", course.branch_id);
                 com.Parameters.AddWithValue("@course_type_id", course.course_type_id);
                 com.Parameters.AddWithValue("@name", course.name);
+                com.Parameters.AddWithValue("@name_ar", course.name_ar);
                 com.Parameters.AddWithValue("@description", course.description);
+                com.Parameters.AddWithValue("@description_ar", course.description_ar);
                 com.Parameters.AddWithValue("@start_date", course.start_date);
                 com.Parameters.AddWithValue("@end_date", course.end_date);
                 com.Parameters.AddWithValue("@capacity", course.capacity);
@@ -241,6 +245,8 @@ namespace CoursesPlatform.Crud
         #endregion
 
 
+
+
         private static Course parse_course(SqlDataReader rdr)
         {
             Course course = new Course();
@@ -271,8 +277,21 @@ namespace CoursesPlatform.Crud
                 course.course_type_id = 0;
             }
 
+            try
+            {
+                course.name = Convert.ToString( rdr["course_name"]);
+            }catch(Exception)
+            {
+                course.name = "";
+            }
 
-            course.name = rdr["course_name"].ToString();
+            try
+            {
+                course.name_ar = Convert.ToString( rdr["course_name_ar"]);
+            }catch(Exception )
+            {
+                course.name_ar = "";
+            }
             try
             {
                 course.description = Convert.ToString( rdr["description"]);
@@ -281,7 +300,17 @@ namespace CoursesPlatform.Crud
             {
                 course.description = "";
             }
-            
+
+            try
+            {
+                course.description_ar = Convert.ToString(rdr["description_ar"]);
+            }
+            catch (Exception)
+            {
+                course.description_ar = "";
+            }
+
+
             try
             {
                 course.start_date = Convert.ToDateTime(rdr["start_date"]);

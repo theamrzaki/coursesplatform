@@ -6,7 +6,9 @@
     ,[branch_id]
     ,[course_type_id]
     ,[name]
+    ,[name_ar]
     ,[description]
+    ,[description_ar]
     ,[start_date]
     ,[end_date]
     ,[capacity]
@@ -25,7 +27,9 @@
     ,@branch_id
     ,@course_type_id
     ,@name
+    ,@name_ar
     ,@description
+    ,@description_ar
     ,@start_date
     ,@end_date
     ,@capacity
@@ -52,6 +56,7 @@
   <action name='GetCourseByID'>
       select * , [Course].[id] as course_id , 
       [Course].[name] as course_name ,
+      [Course].[name_ar] as course_name_ar ,
 		  [CourseType].[name] as course_type_name  
       from [Course] , [CourseType]   
       where [Course].[course_type_id]= [CourseType].[id]
