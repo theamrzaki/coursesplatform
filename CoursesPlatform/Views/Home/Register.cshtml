@@ -217,11 +217,11 @@
                     var x = document.getElementsByClassName("tab");
                     x[n].style.display = "block";
                     // ... and fix the Previous/Next buttons:
-                    if (n == 0) {
-                        document.getElementById("prevBtn").style.display = "none";
-                    } else {
-                        document.getElementById("prevBtn").style.display = "inline";
-                    }
+                    //if (n == 0) {
+                    //    //document.getElementById("prevBtn").style.display = "none";
+                    //} else {
+                    //    document.getElementById("prevBtn").style.display = "inline";
+                    //}
                     if (n == (x.length - 1)) {
                         document.getElementById("nextBtn").innerHTML = "Submit";
                     } else {
@@ -246,8 +246,8 @@
                     var dataToSend = [];
                     dataToSend = JSON.stringify(inputs);
 
+
                     $.ajax({
-                        type: "POST",
                         url: '@Url.Action("step")',
                         data: {
                             'step_number': this.step_num,
@@ -271,16 +271,19 @@
                                 return false;
                             }
 
-                            
+
                             // Otherwise, display the correct tab:
                             showTab(currentTab);
 
+                        },
+                        fail: function(xhr, textStatus, errorThrown){
+                            alert('request failed');
                         }
                     });
 
                     this.step_num += 1
                 }
-                
+
                 function validateForm() {
                     inputs = {}
                     // This function deals with validation of the form fields
@@ -307,7 +310,7 @@
                         {
                             inputs[y[i].id] = y[i].value
                         }
-                        
+
                     }
                     // If the valid status is true, mark the step as finished and valid:
                     if (valid) {

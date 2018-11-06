@@ -21,7 +21,7 @@ namespace CoursesPlatform.Controllers
             return View();
         }
 
-        public JsonResult Add_Submit(string content)
+        public JsonResult add_Submit(string content)
         {
             using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(content)))
             {
@@ -29,6 +29,12 @@ namespace CoursesPlatform.Controllers
                 DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(Course_Insert_Helper));
                 Course_Insert_Helper course = (Course_Insert_Helper)deserializer.ReadObject(ms);
                 long id= Course_crud.addCourse(course);
+
+                Course_crud.addCourseTag(id, course.name);
+                Course_crud.addCourseTag(id, course.name_ar);
+                Course_crud.addCourseTag(id, course.description);
+                Course_crud.addCourseTag(id, course.description_ar);
+
             }
             return Json("chamara", JsonRequestBehavior.AllowGet);
         }
