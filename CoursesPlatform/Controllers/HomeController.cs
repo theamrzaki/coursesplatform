@@ -158,7 +158,7 @@ namespace CoursesPlatform.Controllers
         public ActionResult Search(string search_string)
         {
             List<Course> courses = Search_crud.search_course(search_string);
-            
+            ViewBag.courses = courses;
             return View();
         }
         #endregion

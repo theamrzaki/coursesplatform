@@ -40,7 +40,7 @@
                 }
             </style>
 
-            <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="col-md-12 col-sm-12 col-xs-12" style="display:none">
                 <div class="info-box">
                     <div class="info-box-content" style="padding:0 !important">
                         <div class="inner">
@@ -95,81 +95,93 @@
                 <!-- /.info-box -->
             </div>
 
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon  bg-navy" >aa</span>
 
-                    <div class="info-box-content" style="padding:0 !important">
-                        <div class="inner">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <h2>Android</h2>
-                                    <p>Lorem Ipsum is simply dummy text of the printing 
-                                    and typesetting industry. Lorem Ipsum has been the 
-                                    scrambled it to make a type specimen book. </p>
-                                    <h5><b>10/12/2018</b> to <b>1/1/2019</b></h5>
-                                    <span class="pull-left badge bg-green" 
-                                          style="font-size:large">
-                                    1250 L.E
-                                    </span>
-                                </div>
-                                <div class="col-md-6">
+            @if (ViewBag.courses != null)
+            {
+                foreach (var course in ((List<CoursesPlatform.Models.Course>)ViewBag.courses))
+                {
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon  bg-navy">@course.name</span>
+
+                            <div class="info-box-content" style="padding:0 !important">
+                                <div class="inner">
                                     <div class="row">
-                                        <div class="col-md-4" style="padding: 20px;">
-                                            <span class="info-box-text">Center</span>
-                                            <span class="info-box-number">Yat / Masr El gdeda</span>
-                                        </div>
-                                        <div class="col-md-4" style="padding: 20px;">
-                                            <span class="info-box-text">Instructor</span>
-                                            <span class="info-box-number">Amr Zaki</span>
-                                        </div>
-                                        <div class="col-md-4" style="padding: 20px;">
-                                            <span class="info-box-text">Current Students</span>
-                                            <span class="info-box-number">3/30</span>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4" style="padding: 20px;">
-                                            <span class="info-box-text">Days</span>
-                                            <span class="info-box-number">
-                                                <span class="badge bg-red">Sunday 7:00pm to 10:00pm</span>
-                                                <span class="badge bg-red">Monday 7:00pm to 10:00pm</span>
+                                        <div class="col-md-4">
+                                            <h2>@course.name</h2>
+                                            <p>
+                                               @course.description
+                                            </p>
+                                            <h5><b>@course.start_date</b> to <b>@course.end_date</b></h5>
+                                            <span class="pull-left badge bg-green"
+                                                  style="font-size:large">
+                                                @course.new_price L.E
                                             </span>
                                         </div>
-                                        <div class="col-md-4" style="padding: 20px;">
-                                            <span class="info-box-text">Num Hours</span>
-                                            <span class="info-box-number">30 Hours</span>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-4" style="padding: 20px;">
+                                                    <span class="info-box-text">Center</span>
+                                                    <span class="info-box-number">@course.centerName / @course.branchName</span>
+                                                </div>
+                                                <div class="col-md-4" style="padding: 20px;">
+                                                    <span class="info-box-text">Instructor</span>
+                                                    <span class="info-box-number">@course.instructorName</span>
+                                                </div>
+                                                <div class="col-md-4" style="padding: 20px;">
+                                                    <span class="info-box-text">Current Students</span>
+                                                    <span class="info-box-number">3/@course.capacity</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6" style="padding: 20px;">
+                                                    <span class="info-box-text">Days</span>
+                                                    <span class="info-box-number">
+                                                        @foreach (var day in course.courseDays)
+                                                        {
+                                                            <span class="badge bg-red">@day.day @day.from_time.ToShortDateString() to @day.to_time.ToShortDateString()</span>
+                                                        }
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-3" style="padding: 20px;">
+                                                    <span class="info-box-text">Num Hours</span>
+                                                    <span class="info-box-number">@course.course_duration_in_hours Hours</span>
+                                                </div>
+                                                <div class="col-md-3" style="padding: 20px;">
+                                                    <span class="info-box-text">Specializations</span>
+                                                    <span class="info-box-number">
+                                                        @foreach (var spec in course.specializations)
+                                                        {
+                                                            <span class="badge bg-red">@spec.name</span>
+                                                        }
+                                                    </span>
+                                                </div>
+
+                                            </div>
                                         </div>
-                                        <div class="col-md-4" style="padding: 20px;">
-                                            <span class="info-box-text">Specializations</span>
-                                            <span class="info-box-number">
-                                                <span class="badge bg-blue">Android</span> 
-                                                <span class="badge bg-blue">Java</span>
-                                            </span>
-                                        </div>
-                                        
                                     </div>
+
                                 </div>
+
+                            </div>
+                            <!-- /.info-box-content -->
+
+                            <div class="box-footer">
+
+                                <input type="submit" value="Apply" class="btn btn-sm btn-info btn-flat pull-right" />
+                                <input type="submit" value="Bookmark" style="margin-right:10px" class="btn btn-sm btn-default btn-flat pull-right" />
+
+                                <p class="pull-left">@course.courseTypeName</p>
                             </div>
 
                         </div>
-
+                        <!-- /.info-box -->
                     </div>
-                    <!-- /.info-box-content -->
+                }
+            }
+            
 
-                    <div class="box-footer">
-
-                        <input type="submit" value="Apply" class="btn btn-sm btn-info btn-flat pull-right" />
-                        <input type="submit" value="Bookmark"  style="margin-right:10px" class="btn btn-sm btn-default btn-flat pull-right" />
-
-                        <p class="pull-left">IT courses</p>
-                    </div>
-
-                </div>
-                <!-- /.info-box -->
-            </div>
-
-            <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="col-md-12 col-sm-12 col-xs-12" style="display:none">
                 <div class="info-box">
                     <span class="info-box-icon  bg-blue" ><p>YAT</p></span>
 

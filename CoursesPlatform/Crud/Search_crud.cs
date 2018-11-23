@@ -19,9 +19,7 @@ namespace CoursesPlatform.Crud
             List<SearchToken> search_tokens = SearchToken.getTokens(query);
 
             List<Course> courses = new List<Course>();
-            List<Course> coursesByTag = search_courses_by_course_tag(search_tokens);
-
-            courses.AddRange(courses);
+            courses.AddRange(search_courses_by_course_tag(search_tokens));
 
 
             return courses;
