@@ -242,7 +242,7 @@ namespace CoursesPlatform.Crud
             return branches;
         }
         
-        private static string abbrv(string Name)
+        public static string abbrv(string Name)
         {
             List<char> letters = Name.Split(' ').Select(y => y[0]).ToList();
             StringBuilder output = new StringBuilder();

@@ -1,11 +1,11 @@
 ﻿<procedure name='Search'>
   
   <action name='SearchCoursesByCourseTag' search='multiple'>
-    SELECT distinct Course.* , Course.id as course_id
+    SELECT distinct Course.* , Course.id as course_id , Course.name as course_name , Course.name_ar as course_name_ar
     FROM [coursesplatformd].[dbo].[CourseTag] , [coursesplatformd].[dbo].[Course]
     where [coursesplatformd].[dbo].[CourseTag].course_id = [coursesplatformd].[dbo].[Course].id
     AND [coursesplatformd].[dbo].[CourseTag].[soundex] in ({0});
-    
+
   </action>
  
 </procedure>

@@ -32,6 +32,7 @@ namespace CoursesPlatform.Models
         public is_visible_enum  is_visible                     { get; set; }
 
         public bool running { get; set; }
+        public String abreviation_name { get; set; }
 
         #region added values
 

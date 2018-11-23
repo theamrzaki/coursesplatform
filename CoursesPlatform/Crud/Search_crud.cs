@@ -54,6 +54,8 @@ namespace CoursesPlatform.Crud
                 {
                     Course c = Course_crud.parse_course(rdr);
                     Branch_crud.getCourseCenteNamerAndBranchName(c);
+                    c.specializations = Course_crud.getCourseSpecialization(c.course_type_id);
+                    
                     courses.Add(c);
                 }
 

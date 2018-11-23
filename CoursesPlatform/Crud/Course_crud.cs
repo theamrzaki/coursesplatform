@@ -274,7 +274,7 @@ namespace CoursesPlatform.Crud
         #endregion
 
         #region Get Course Specialization
-        private static List<Specialization> getCourseSpecialization(long course_type_id)
+        public static List<Specialization> getCourseSpecialization(long course_type_id)
         {
             using (SqlConnection con = new SqlConnection(Database.connection_string))
             {
@@ -509,6 +509,8 @@ namespace CoursesPlatform.Crud
             {
                 course.running = true;
             }
+
+            course.abreviation_name = Branch_crud.abbrv(course.name);
 
             return course;
         }
