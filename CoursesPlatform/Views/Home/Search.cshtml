@@ -102,7 +102,7 @@
                 {
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="info-box">
-                            <span class="info-box-icon  bg-navy">@course.name</span>
+                            <span class="info-box-icon  bg-navy">@course.abreviation_name</span>
 
                             <div class="info-box-content" style="padding:0 !important">
                                 <div class="inner">
@@ -112,7 +112,7 @@
                                             <p>
                                                @course.description
                                             </p>
-                                            <h5><b>@course.start_date</b> to <b>@course.end_date</b></h5>
+                                            <h5><b>@course.start_date.ToShortDateString()</b> to <b>@course.end_date.ToShortDateString()</b></h5>
                                             <span class="pull-left badge bg-green"
                                                   style="font-size:large">
                                                 @course.new_price L.E
