@@ -150,6 +150,7 @@ namespace CoursesPlatform.Utility.SearchUtility
                     {
                         charList.Add('A');
                     }
+                    charList.Add('E');
                     break;
                 case 'ع':
                     charList.Add('A');
@@ -157,6 +158,7 @@ namespace CoursesPlatform.Utility.SearchUtility
                     break;
                 case 'ب':
                     charList.Add('B');
+                    charList.Add('P');
                     break;
                 case 'ت':
                 case 'ث':
