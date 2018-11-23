@@ -504,11 +504,11 @@ namespace CoursesPlatform.Crud
 
             if (course.end_date < DateTime.Now)
             {
-                course.running = true;
+                course.running = false;
             }
             else
             {
-                course.running = false;
+                course.running = true;
             }
 
             return course;

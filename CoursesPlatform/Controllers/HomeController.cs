@@ -152,7 +152,15 @@ namespace CoursesPlatform.Controllers
         public ActionResult Search()
         {
             return View();
-        } 
+        }
+
+        [HttpPost]
+        public ActionResult Search(string search_string)
+        {
+            List<SearchToken> search_tokeens = SearchToken.getTokens(search_string);
+
+            return View();
+        }
         #endregion
 
 
