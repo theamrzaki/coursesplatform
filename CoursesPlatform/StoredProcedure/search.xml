@@ -1,0 +1,9 @@
+﻿<procedure name='Search'>
+  
+  <action name='SearchCenterTag' search='multiple'>
+    SELECT *
+    FROM [coursesplatformd].[dbo].[CenterTag]
+    where [coursesplatformd].[dbo].[CenterTag].[soundex] in ({0});
+  </action>
+ 
+</procedure>

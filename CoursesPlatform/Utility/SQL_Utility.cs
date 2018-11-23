@@ -12,7 +12,7 @@ namespace HRsystem.Utility
 {
     public class SQL_Utility
     {
-        internal static void Stored_Procedure(ref SqlCommand com)
+        internal static void Stored_Procedure(ref SqlCommand com, List<string> query_list = null)
         {
            string Procedure = com.CommandText;
             string Action = "";
@@ -25,11 +25,18 @@ namespace HRsystem.Utility
                 Action = Procedure;
             }
 
-           com.CommandText = Stored_Procedure(Procedure, Action, com.Parameters);
-           com.CommandType = System.Data.CommandType.Text;
+            if (query_list == null)
+            {
+                com.CommandText = Stored_Procedure(Procedure, Action, com.Parameters);
+            }
+            else
+            {
+                com.CommandText = Stored_Procedure(Procedure, Action, com.Parameters, query_list);
+            }
+            com.CommandType = System.Data.CommandType.Text;
         }
 
-        private static string Stored_Procedure(string Procedure, string action, SqlParameterCollection parameters)
+        private static string Stored_Procedure(string Procedure, string action, SqlParameterCollection parameters , List<string> query_list = null)
         {
             //string virtual_path = "StoredProcedure\\" + Procedure + ".xml";
             //string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, virtual_path);
@@ -73,7 +80,7 @@ namespace HRsystem.Utility
                         int i = 0;
                         foreach (var li in lines)
                         {
-                            var pattern =  item.ToString() + @"\b";
+                            var pattern = item.ToString() + @"\b";
                             var result = Regex.IsMatch(li, pattern); // returns false
 
                             if (result)
@@ -88,6 +95,20 @@ namespace HRsystem.Utility
                         lines[item] = "--" + lines[item];
                     }
                     return string.Join("", lines.ToArray()) + inner_text;
+                }
+            }
+            catch { }
+            try { 
+                if (node.Attributes["search"].Value == "multiple" && query_list!=null)
+                {
+                    //string commandText = "DELETE FROM Students WHERE name IN ({0})";
+                    string[] paramNames = query_list.Select(
+                        (s, i) => "@tag" + i.ToString()
+                    ).ToArray();
+
+                    string inClause = string.Join(",", paramNames);
+
+                    return string.Format(inner_text, inClause);
                 }
             }
             catch (Exception){ }
