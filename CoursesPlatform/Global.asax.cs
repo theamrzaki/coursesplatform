@@ -18,7 +18,7 @@ namespace CoursesPlatform
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             //function to test sessions
-            //GlobalFilters.Filters.Add(new SessionsFilter());
+           // GlobalFilters.Filters.Add(new SessionsFilter());
         }
     }
 
