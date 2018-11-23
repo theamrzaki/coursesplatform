@@ -239,7 +239,6 @@ namespace CoursesPlatform.Crud
                 while (rdr.Read())
                 {
                     Course c = parse_course(rdr);
-                    c = parse_course(rdr);
                     Branch_crud.getCourseCenteNamerAndBranchName(c);
                     courses.Add(c);
                 }
@@ -299,7 +298,7 @@ namespace CoursesPlatform.Crud
 
 
 
-        private static Course parse_course(SqlDataReader rdr)
+        public static Course parse_course(SqlDataReader rdr)
         {
             Course course = new Course();
             course.id = Convert.ToInt64(rdr["course_id"]);

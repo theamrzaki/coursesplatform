@@ -68,6 +68,7 @@ namespace CoursesPlatform.Utility.SearchUtility
                             case 'ش':
                             case 'و':
                             case 'ي':
+                            case 'ى':
                                 currCode = 0;
                                 break;
                             case 'ف':
@@ -76,6 +77,7 @@ namespace CoursesPlatform.Utility.SearchUtility
                                 break;
 
                             case 'ج':
+                            case 'چ':
                             case 'ز':
                             case 'س':
                             case 'ص':
@@ -141,12 +143,18 @@ namespace CoursesPlatform.Utility.SearchUtility
                 case 'أ':
                 case 'إ':
                 case 'آ':
-                    if (chars[1] == 'ي' || chars[1] == 'ى')
+                    if (chars.Length > 1)
                     {
-                        charList.Add('I');
+                        if (chars[1] == 'ي' || chars[1] == 'ى')
+                        {
+                            charList.Add('I');
 
-                    }
-                    else
+                        }
+                        else
+                        {
+                            charList.Add('A');
+                        }
+                    }else
                     {
                         charList.Add('A');
                     }
@@ -197,11 +205,17 @@ namespace CoursesPlatform.Utility.SearchUtility
                     charList.Add('R');
                     break;
                 case 'س':
-                    if (chars[1] == 'ي' || chars[1] == 'ى')
+                    if (chars.Length > 1)
                     {
-                        charList.Add('C');
-                    }
-                    else
+                        if (chars[1] == 'ي' || chars[1] == 'ى')
+                        {
+                            charList.Add('C');
+                        }
+                        else
+                        {
+                            charList.Add('S');
+                        }
+                    }else
                     {
                         charList.Add('S');
                     }

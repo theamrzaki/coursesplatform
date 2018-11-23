@@ -157,7 +157,7 @@ namespace CoursesPlatform.Controllers
         [HttpPost]
         public ActionResult Search(string search_string)
         {
-            List<int> centers_id = Search_crud.search_center_tag(search_string);
+            List<Course> courses = Search_crud.search_course(search_string);
             
             return View();
         }

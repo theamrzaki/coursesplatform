@@ -13,9 +13,22 @@ namespace CoursesPlatform.Crud
 {
     public class Search_crud
     {
-        public static List<int> search_center_tag(string query)
+
+        public static List<Course> search_course(string query)
         {
             List<SearchToken> search_tokens = SearchToken.getTokens(query);
+
+            List<Course> courses = new List<Course>();
+            List<Course> coursesByTag = search_courses_by_course_tag(search_tokens);
+
+            courses.AddRange(courses);
+
+
+            return courses;
+        }
+
+        private static List<Course> search_courses_by_course_tag(List<SearchToken> search_tokens)
+        {
 
             using (SqlConnection con = new SqlConnection(Database.connection_string))
             {
@@ -30,19 +43,21 @@ namespace CoursesPlatform.Crud
                     search_soundex.Add(item.soundex);
                     i++;
                 }
-                com.Parameters.AddWithValue("@Action", "SearchCenterTag");
+                com.Parameters.AddWithValue("@Action", "SearchCoursesByCourseTag");
 
                 SQL_Utility.Stored_Procedure(ref com, search_soundex);
 
                 SqlDataReader rdr = com.ExecuteReader();
-                Center center = null;
-                List<int> centers_id = new List<int>();
+
+                List<Course> courses = new List<Course>();
                 while (rdr.Read())
                 {
-                    centers_id.Add( Convert.ToInt32(rdr[0]));
+                    Course c = Course_crud.parse_course(rdr);
+                    Branch_crud.getCourseCenteNamerAndBranchName(c);
+                    courses.Add(c);
                 }
 
-                return centers_id;
+                return courses;
             }
 
         }
