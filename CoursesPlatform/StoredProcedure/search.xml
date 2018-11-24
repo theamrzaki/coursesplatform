@@ -1,11 +1,58 @@
 ﻿<procedure name='Search'>
   
   <action name='SearchCoursesByCourseTag' search='multiple'>
-    SELECT distinct Course.* , Course.id as course_id , Course.name as course_name , Course.name_ar as course_name_ar
-    FROM [coursesplatformd].[dbo].[CourseTag] , [coursesplatformd].[dbo].[Course]
-    where [coursesplatformd].[dbo].[CourseTag].course_id = [coursesplatformd].[dbo].[Course].id
+    SELECT distinct Course.* 
+    , Course.id as course_id 
+    , Course.name as course_name
+    , Course.name_ar as course_name_ar
+    , [CourseType].[name] as course_type_name 
+    FROM 
+    [coursesplatformd].[dbo].[CourseTag] 
+    , [coursesplatformd].[dbo].[Course] 
+    , [coursesplatformd].[dbo].[CourseType] 
+    where 
+    [coursesplatformd].[dbo].[CourseTag].course_id = [coursesplatformd].[dbo].[Course].id
+    AND [Course].[course_type_id]= [CourseType].[id]
     AND [coursesplatformd].[dbo].[CourseTag].[soundex] in ({0});
 
   </action>
- 
+
+  <action name='SearchCoursesByCourseTypeTag' search='multiple'>
+      SELECT distinct Course.* 
+      , Course.id as course_id 
+      , Course.name as course_name
+      , Course.name_ar as course_name_ar
+      , [CourseType].[name] as course_type_name 
+      FROM 
+      [coursesplatformd].[dbo].[CourseTypeTag] 
+      , [coursesplatformd].[dbo].[Course] 
+      , [coursesplatformd].[dbo].[CourseType] 
+      where 
+      [coursesplatformd].[dbo].[CourseTypeTag].course_type_id = [coursesplatformd].[dbo].[CourseType].id
+      AND [Course].[course_type_id]= [CourseType].[id]
+      AND [coursesplatformd].[dbo].[CourseTypeTag].[soundex] in ({0});
+
+    </action>
+  
+  <action name='SearchCoursesBySpecializationTag' search='multiple'>
+    SELECT distinct Course.* 
+    , Course.id as course_id 
+    , Course.name as course_name
+    , Course.name_ar as course_name_ar
+    , [CourseType].[name] as course_type_name 
+    FROM 
+    [coursesplatformd].[dbo].[SpecializationTag] 
+    , [coursesplatformd].[dbo].[Specialization] 
+    , [coursesplatformd].[dbo].[SpecializationCourseType] 
+    , [coursesplatformd].[dbo].[Course] 
+    , [coursesplatformd].[dbo].[CourseType] 
+    where 
+    [coursesplatformd].[dbo].[SpecializationTag].specialization_id = [coursesplatformd].[dbo].[Specialization].id
+    AND [coursesplatformd].[dbo].[SpecializationCourseType].specialization_id = [coursesplatformd].[dbo].[Specialization].id
+    AND [coursesplatformd].[dbo].[SpecializationCourseType].id = [coursesplatformd].[dbo].[CourseType].id
+    AND [Course].[course_type_id]= [CourseType].[id]
+    AND [coursesplatformd].[dbo].[SpecializationTag].[soundex] in ({0});
+
+  </action>
+
 </procedure>
